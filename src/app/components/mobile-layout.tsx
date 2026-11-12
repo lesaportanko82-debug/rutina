@@ -2,7 +2,7 @@ import { AppIcon } from "./app-icon";
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { PAYMENTS_ENABLED } from "./payments-config";
 import { Outlet, useNavigate, useLocation } from "react-router";
-import { Home, ListChecks, Repeat, Smile, User, Lock, CheckCircle2, Loader2 } from "lucide-react";
+import { Home, ListChecks, Repeat, Compass, User, Lock, CheckCircle2, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { supabase, projectId } from "./supabase-client";
 import { useApp } from "./app-context";
@@ -11,34 +11,24 @@ import { CelebrationOverlay } from "./confetti";
 import { Onboarding } from "./onboarding";
 import { Toaster } from "sonner";
 import { getThemeColors } from "./theme";
-import { FeatureTour, dashboardTour, tasksTour, habitsTour, moodTour, profileTour } from "./feature-tour";
 import { BreathingWidget } from "./breathing-widget";
 import { LeafMascot } from "./leaf-mascot";
-import { FloatingDock } from "./floating-dock";
-import { AmbientBlobs, SparkleField, MeshGradientBg } from "./ambient-elements";
 
 const PAYMENT_ENDPOINT = "https://oqucupnybysgiekdagzu.supabase.co/functions/v1/create-payment-rutina";
 
 const tabs = [
-  { path: "/app", icon: Home, label: "Главная" },
+  { path: "/app", icon: Home, label: "Сегодня" },
   { path: "/app/tasks", icon: ListChecks, label: "Задачи" },
   { path: "/app/habits", icon: Repeat, label: "Привычки" },
-  { path: "/app/mood", icon: Smile, label: "Настроение" },
+  { path: "/app/practices", icon: Compass, label: "Практики" },
   { path: "/app/profile", icon: User, label: "Профиль" },
 ];
 
-const tourMap: Record<string, { key: string; steps: typeof dashboardTour }> = {
-  "/app": { key: "tour-dashboard", steps: dashboardTour },
-  "/app/tasks": { key: "tour-tasks", steps: tasksTour },
-  "/app/habits": { key: "tour-habits", steps: habitsTour },
-  "/app/mood": { key: "tour-mood", steps: moodTour },
-  "/app/profile": { key: "tour-profile", steps: profileTour },
-};
 
 export function MobileLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { darkMode, onboardingDone, seenTours, markTourSeen } = useApp();
+  const { darkMode, onboardingDone } = useApp();
   const t = getThemeColors(darkMode);
 
   // ─── Track input focus to hide bottom nav ───
@@ -309,8 +299,6 @@ export function MobileLayout() {
         className="h-dvh flex items-center justify-center relative overflow-hidden"
         style={{ background: darkMode ? "#1A1918" : "#FAF8F5" }}
       >
-        <MeshGradientBg darkMode={darkMode} variant="calm" />
-        <AmbientBlobs darkMode={darkMode} variant="calm" />
         <div className="relative z-[1] text-center">
           <motion.div
             className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"
@@ -339,7 +327,6 @@ export function MobileLayout() {
     return <Onboarding />;
   }
 
-  const currentTour = tourMap[location.pathname];
 
   return (
     <>
@@ -357,37 +344,13 @@ export function MobileLayout() {
         }}
       >
         <div
-          className="w-full max-w-[430px] md:rounded-[2.5rem] md:shadow-sm md:border flex flex-col overflow-hidden relative"
+          className="w-full max-w-[430px] md:rounded-xl md:border flex flex-col overflow-hidden relative"
           data-mobile-root
           style={{
             borderColor: darkMode ? "#3A373430" : "#E8E3DC60",
             height: stableHeight ? `${containerHeight}px` : '100dvh',
           }}
         >
-          {/* Animated mesh gradient background */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              opacity: Math.max(fadeConfig.meshFloor, 1 - scrollY / fadeConfig.meshDist),
-              willChange: "opacity",
-              transition: "opacity 0.3s ease-out",
-            }}
-          >
-            <MeshGradientBg darkMode={darkMode} variant={meshVariant} />
-          </div>
-
-          {/* Ambient decorative blobs + sparkles */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              opacity: Math.max(fadeConfig.ambFloor, 1 - scrollY / fadeConfig.ambDist),
-              willChange: "opacity",
-              transition: "opacity 0.35s ease-out",
-            }}
-          >
-            <AmbientBlobs darkMode={darkMode} variant={meshVariant === "warm" ? "focus" : meshVariant} />
-            <SparkleField count={meshVariant === "night" ? 15 : 10} darkMode={darkMode} />
-          </div>
 
           {/* Free mode banner */}
           {isPremium === false && (
@@ -431,7 +394,7 @@ export function MobileLayout() {
             </motion.div>
           )}
 
-          <div ref={scrollRef} onScroll={handleScroll} className="flex-1 overflow-y-auto overflow-x-hidden pb-28 relative z-[1]">
+          <div ref={scrollRef} onScroll={handleScroll} className="flex-1 overflow-y-auto overflow-x-hidden pb-24 relative z-[1]">
             <Outlet />
           </div>
 
@@ -445,11 +408,8 @@ export function MobileLayout() {
             transition={{ duration: 0.25, ease: "easeInOut" }}
             style={{
               pointerEvents: inputFocused ? "none" : "auto",
-              backgroundColor: darkMode ? "rgba(26,25,24,0.85)" : "rgba(250,248,245,0.75)",
-              borderTop: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.5)"}`,
-              boxShadow: darkMode
-                ? "0 -4px 20px rgba(0,0,0,0.3)"
-                : "0 -4px 20px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.6)",
+              backgroundColor: darkMode ? "#1A1918" : "#FAF8F5",
+              borderTop: `1px solid ${darkMode ? "#3A3734" : "#E8E3DC"}`,
               zIndex: 10,
             }}
           >
@@ -495,11 +455,6 @@ export function MobileLayout() {
           <PomodoroTimer />
           <BreathingWidget />
           <LeafMascot />
-          <FloatingDock
-            pomodoroActive={pomodoroState.isRunning}
-            pomodoroTime={pomodoroState.time}
-            pomodoroColor={pomodoroState.color}
-          />
 
           {/* Upgrade sheet — shown when free user taps a premium tab */}
           <AnimatePresence>
@@ -601,18 +556,6 @@ export function MobileLayout() {
           </AnimatePresence>
         </div>
       </div>
-
-      {/* Contextual feature tour */}
-      {currentTour && (
-        <FeatureTour
-          key={currentTour.key}
-          tourKey={currentTour.key}
-          steps={currentTour.steps}
-          seenTours={seenTours}
-          onComplete={markTourSeen}
-          delay={1000}
-        />
-      )}
     </>
   );
 }

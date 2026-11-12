@@ -107,16 +107,6 @@ export function TasksPage() {
         Свайп вправо: выполнить, влево: удалить
       </p>
 
-      {/* Inline tip */}
-      <InlineTip
-        tipKey="tip-tasks-priority"
-        text="Цвет точки: приоритет задачи. Нажмите ▼, чтобы изменить."
-        emoji="🎨"
-        seenTips={seenTips}
-        onDismiss={dismissTip}
-        color="#7EA8BE"
-      />
-
       {/* Add form */}
       <AnimatePresence>
         {showForm && (

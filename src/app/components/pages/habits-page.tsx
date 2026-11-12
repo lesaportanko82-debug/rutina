@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useApp } from "../app-context";
+import { suggestedHabits } from "../use-app-store";
 import { useTheme } from "../theme";
 import { motion, AnimatePresence } from "motion/react";
 import { Plus, Flame, Trophy, CheckCircle2, X, Sparkles, Trash2, Search, ChevronDown, ChevronUp, Star, Check, Snowflake, Focus, Zap } from "lucide-react";
@@ -474,16 +475,6 @@ export function HabitsPage() {
         {/* LIST */}
         {mode === "list" && (
           <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            {/* Compassionate message */}
-            <div className="mb-4">
-              <CompassionateCard
-                habits={habits}
-                moods={moods}
-                dismissKey="habits-compassion"
-                dismissed={(seenTips || []).includes("habits-compassion")}
-                onDismiss={() => dismissTip("habits-compassion")}
-              />
-            </div>
 
             <div className="space-y-3">
               {habits.map((habit, i) => {
@@ -690,9 +681,19 @@ export function HabitsPage() {
               })}
             </div>
             {habits.length === 0 && (
-              <div className="text-center py-12">
-                <AppIcon icon="🌱" size={36} color={th.sage} />
-                <p style={{ fontSize: "0.9rem", color: th.textMuted, marginTop: 8 }}>Добавьте первую привычку</p>
+              <div className="py-4">
+                <p style={{ fontSize: "0.9rem", color: th.text, fontWeight: 600, marginBottom: 4 }}>Привычек пока нет</p>
+                <p style={{ fontSize: "0.8rem", color: th.textMuted, marginBottom: 12 }}>Начните с одной из этих или нажмите +</p>
+                <div className="space-y-2">
+                  {suggestedHabits.map((h) => (
+                    <button key={h.title} onClick={() => addHabit(h)} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left"
+                      style={{ background: th.card, border: `1px solid ${th.border}` }}>
+                      <AppIcon icon={h.icon} size={18} color={h.color} />
+                      <span className="flex-1" style={{ fontSize: "0.9rem", color: th.text }}>{h.title}</span>
+                      <Plus className="w-4 h-4" style={{ color: "#5B8A64" }} />
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </motion.div>

@@ -123,18 +123,18 @@ export function SleepPage() {
               <Moon className="w-3.5 h-3.5" style={{ color: t.lavender }} />
               <span style={{ fontSize: "0.72rem", fontWeight: 500, color: t.textMuted }}>Лёг</span>
             </div>
-            <input type="time" value={bedtime} onChange={(e) => setBedtime(e.target.value)}
-              className="w-full rounded-lg px-2 py-2 text-center outline-none"
-              style={{ fontSize: "0.85rem", backgroundColor: t.bgSecondary, color: t.text, border: `1px solid ${t.border}` }} />
+            <input type="time" lang="ru-RU" step={300} value={bedtime} onChange={(e) => setBedtime(e.target.value)}
+              className="w-full rounded-lg px-1 py-2 text-center outline-none"
+              style={{ fontSize: "0.8rem", backgroundColor: t.bgSecondary, color: t.text, border: `1px solid ${t.border}` }} />
           </div>
           <div>
             <div className="flex items-center gap-1.5 mb-2">
               <Sun className="w-3.5 h-3.5" style={{ color: t.gold }} />
               <span style={{ fontSize: "0.72rem", fontWeight: 500, color: t.textMuted }}>Встал</span>
             </div>
-            <input type="time" value={wakeTime} onChange={(e) => setWakeTime(e.target.value)}
-              className="w-full rounded-lg px-2 py-2 text-center outline-none"
-              style={{ fontSize: "0.85rem", backgroundColor: t.bgSecondary, color: t.text, border: `1px solid ${t.border}` }} />
+            <input type="time" lang="ru-RU" step={300} value={wakeTime} onChange={(e) => setWakeTime(e.target.value)}
+              className="w-full rounded-lg px-1 py-2 text-center outline-none"
+              style={{ fontSize: "0.8rem", backgroundColor: t.bgSecondary, color: t.text, border: `1px solid ${t.border}` }} />
           </div>
           <div>
             <div className="flex items-center gap-1.5 mb-2">
@@ -143,8 +143,8 @@ export function SleepPage() {
             </div>
             <input type="number" min={0} max={16} step={0.5} value={hours}
               onChange={(e) => setHours(Number(e.target.value))}
-              className="w-full rounded-lg px-2 py-2 text-center outline-none"
-              style={{ fontSize: "0.85rem", backgroundColor: t.bgSecondary, color: t.text, border: `1px solid ${t.border}` }} />
+              className="w-full rounded-lg px-1 py-2 text-center outline-none"
+              style={{ fontSize: "0.8rem", backgroundColor: t.bgSecondary, color: t.text, border: `1px solid ${t.border}` }} />
           </div>
         </div>
         </motion.div>

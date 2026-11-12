@@ -242,84 +242,19 @@ export interface SleepEntry {
 
 const today = () => new Date().toISOString().split("T")[0];
 
-const defaultTasks: Task[] = [
-  {
-    id: "t1",
-    title: "Подготовить презентацию",
-    description: "Финальная версия для клиента",
-    completed: false,
-    subtasks: [
-      { id: "s1", title: "Собрать данные", completed: true },
-      { id: "s2", title: "Сделать слайды", completed: false },
-      { id: "s3", title: "Прорепетировать", completed: false },
-    ],
-    category: "work",
-    priority: "high",
-    dueDate: today(),
-    createdAt: today(),
-  },
-  {
-    id: "t2",
-    title: "Купить продукты",
-    completed: false,
-    subtasks: [
-      { id: "s4", title: "Молоко", completed: false },
-      { id: "s5", title: "Хлеб", completed: true },
-      { id: "s6", title: "Овощи", completed: false },
-    ],
-    category: "personal",
-    priority: "medium",
-    createdAt: today(),
-  },
-  {
-    id: "t3",
-    title: "Утренняя пробежка",
-    completed: true,
-    subtasks: [],
-    category: "health",
-    priority: "medium",
-    recurring: "daily",
-    createdAt: today(),
-  },
-  {
-    id: "t4",
-    title: "Прочитать главу книги",
-    completed: false,
-    subtasks: [],
-    category: "study",
-    priority: "low",
-    recurring: "daily",
-    createdAt: today(),
-  },
-  {
-    id: "t5",
-    title: "Позвонить маме",
-    completed: false,
-    subtasks: [],
-    category: "personal",
-    priority: "medium",
-    recurring: "weekly",
-    createdAt: today(),
-  },
+const defaultTasks: Task[] = [];
+
+const defaultHabits: Habit[] = [];
+
+// Шаблоны для пустого состояния
+export const suggestedHabits: Omit<Habit, "id" | "streak" | "bestStreak" | "completedDates" | "frozenDates">[] = [
+  { title: "Пить воду", icon: "💧", color: "#7BAFB0", target: 7, category: "health" },
+  { title: "10 минут чтения", icon: "📚", color: "#7EA8BE", target: 5, category: "productivity" },
+  { title: "Прогулка", icon: "🚶", color: "#8DB596", target: 5, category: "fitness" },
+  { title: "Без телефона перед сном", icon: "📵", color: "#C4A86C", target: 7, category: "mindfulness" },
 ];
 
-const defaultHabits: Habit[] = [
-  { id: "h1", title: "Медитация", icon: "🧘", color: "#9B8EC4", streak: 12, bestStreak: 21, completedDates: [], frozenDates: [], target: 7, category: "mindfulness" },
-  { id: "h2", title: "Чтение", icon: "📚", color: "#7EA8BE", streak: 5, bestStreak: 14, completedDates: [], frozenDates: [], target: 5, category: "productivity" },
-  { id: "h3", title: "Тренировка", icon: "💪", color: "#C4876C", streak: 3, bestStreak: 30, completedDates: [], frozenDates: [], target: 4, category: "fitness" },
-  { id: "h4", title: "Пить воду", icon: "💧", color: "#7BAFB0", streak: 8, bestStreak: 45, completedDates: [], frozenDates: [], target: 7, category: "health" },
-  { id: "h5", title: "Без телефона перед сном", icon: "📵", color: "#C4A86C", streak: 2, bestStreak: 7, completedDates: [], frozenDates: [], target: 7, category: "mindfulness" },
-  { id: "h6", title: "Журнал благодарности", icon: "📝", color: "#8DB596", streak: 15, bestStreak: 15, completedDates: [], frozenDates: [], target: 7, category: "mindfulness" },
-];
-
-const defaultMoods: MoodEntry[] = [
-  { id: "m1", date: "2026-03-01", mood: "Радость", color: "#D4B896", energy: 4 },
-  { id: "m2", date: "2026-03-02", mood: "Спокойствие", color: "#8FAEBB", energy: 3 },
-  { id: "m3", date: "2026-03-03", mood: "Энергия", color: "#C4956A", energy: 5 },
-  { id: "m4", date: "2026-03-04", mood: "Тревога", color: "#9B8EC4", energy: 2 },
-  { id: "m5", date: "2026-03-05", mood: "Радость", color: "#D4B896", energy: 4 },
-  { id: "m6", date: "2026-03-06", mood: "Усталость", color: "#A3ADB8", energy: 1 },
-];
+const defaultMoods: MoodEntry[] = [];
 
 const defaultProfile: UserProfile = {
   name: "Пользователь",
@@ -349,14 +284,7 @@ const defaultPomodoroSettings: PomodoroSettings = {
   soundEnabled: true,
 };
 
-const defaultReminders: Reminder[] = [
-  { id: "r1", title: "Утренняя медитация", time: "07:00", days: [1, 2, 3, 4, 5, 6, 0], enabled: true, type: "habit", icon: "🧘" },
-  { id: "r2", title: "Выпить воду", time: "09:00", days: [1, 2, 3, 4, 5, 6, 0], enabled: true, type: "water", icon: "💧" },
-  { id: "r3", title: "Проверить задачи", time: "10:00", days: [1, 2, 3, 4, 5], enabled: true, type: "task", icon: "📋" },
-  { id: "r4", title: "Обеденный перерыв", time: "13:00", days: [1, 2, 3, 4, 5], enabled: false, type: "custom", icon: "🍽️" },
-  { id: "r5", title: "Отметить настроение", time: "21:00", days: [1, 2, 3, 4, 5, 6, 0], enabled: true, type: "mood", icon: "😊" },
-  { id: "r6", title: "Вечернее чтение", time: "22:00", days: [1, 2, 3, 4, 5, 6, 0], enabled: true, type: "habit", icon: "📚" },
-];
+const defaultReminders: Reminder[] = [];
 
 const defaultQuestionnaire: Questionnaire = {
   filled: false, name: "", age: "", goals: [], stressLevel: 3, sleepHours: "",

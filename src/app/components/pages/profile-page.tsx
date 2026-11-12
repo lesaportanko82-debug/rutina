@@ -63,7 +63,7 @@ export function ProfilePage() {
   const { profile, tasks, habits, moods, questionnaire, saveQuestionnaire, resetQuestionnaire, darkMode, toggleDarkMode, exportData, resetTours, seenTours, seenTips, softAchievements, plantState, waterPlant, interactPlant, renamePlant, journalEntries, pomodoroStats, anxietyEntries, worryEntries, sleepEntries } = useApp();
   const t = useTheme();
   const navigate = useNavigate();
-  const [showQuestionnaire, setShowQuestionnaire] = useState(!questionnaire.filled);
+  const [showQuestionnaire, setShowQuestionnaire] = useState(false);
   const [step, setStep] = useState(0);
   const [profileTab, setProfileTab] = useState<"profile" | "plant" | "achievements">("profile");
 

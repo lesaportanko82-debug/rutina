@@ -35,30 +35,6 @@ const features = [
     description: "Вы видите, как двигаетесь",
     color: "#7EA8BE",
   },
-  {
-    emoji: "📅",
-    title: "Структура дня",
-    description: "Понимаете, что и когда делать",
-    color: "#C4A86C",
-  },
-  {
-    emoji: "🎯",
-    title: "Фокус",
-    description: "Меньше лишнего — больше результата",
-    color: "#B88FA7",
-  },
-  {
-    emoji: "💚",
-    title: "Снижение перегруза",
-    description: "Система убирает хаос",
-    color: "#7BAFB0",
-  },
-  {
-    emoji: "⚡",
-    title: "Простота",
-    description: "Без сложных инструментов",
-    color: "#C4876C",
-  },
 ];
 
 const beforeAfter = {
@@ -338,49 +314,6 @@ export function OnboardingPricingPage() {
           </div>
         </motion.div>
 
-        {/* 5. ДО / ПОСЛЕ */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* До */}
-            <GlassPanel darkMode={darkMode} className="p-6 rounded-xl">
-              <div className="text-center mb-4">
-                <span className="text-3xl"><AppIcon icon="😓" size={20} /></span>
-                <h4 className="font-bold mt-2 text-lg" style={{ color: t.text }}>До</h4>
-              </div>
-              <div className="space-y-2.5">
-                {beforeAfter.before.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <Circle className="w-4 h-4 flex-shrink-0" style={{ color: "#C4876C", opacity: 0.5 }} />
-                    <span style={{ color: t.textMuted, fontSize: "0.9rem" }}>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </GlassPanel>
-
-            {/* После */}
-            <GlassPanel darkMode={darkMode} className="p-6 rounded-xl" color="#8DB596">
-              <div className="text-center mb-4">
-                <span className="text-3xl"><AppIcon icon="✨" size={20} /></span>
-                <h4 className="font-bold mt-2 text-lg" style={{ color: t.text }}>После</h4>
-              </div>
-              <div className="space-y-2.5">
-                {beforeAfter.after.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: "#8DB596" }} />
-                    <span style={{ color: t.text, fontSize: "0.9rem", fontWeight: 500 }}>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </GlassPanel>
-          </div>
-        </motion.div>
-
         {/* 6. КАК ЭТО РАБОТАЕТ */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -562,37 +495,6 @@ export function OnboardingPricingPage() {
 
         </>)}
 
-        {/* 8. ДОЖИМ */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mb-16"
-        >
-          <GlassPanel darkMode={darkMode} className="p-8 rounded-xl text-center">
-            <p className="text-xl mb-3" style={{ color: t.text, lineHeight: 1.6 }}>
-              Изменения происходят не за один день
-            </p>
-            <p className="text-lg" style={{ color: t.textMuted, lineHeight: 1.6 }}>
-              Они происходят, когда система работает каждый день
-            </p>
-
-            <div className="my-6 flex justify-center">
-              <div className="w-12 h-0.5 rounded-full" style={{ backgroundColor: t.border }} />
-            </div>
-
-            {PAYMENTS_ENABLED && (
-              <p className="text-base mb-2" style={{ color: t.textMuted }}>
-                500 ₽ — это меньше, чем случайные траты
-              </p>
-            )}
-            <p className="text-lg font-medium" style={{ color: t.text }}>
-              Именно система даёт результат
-            </p>
-          </GlassPanel>
-        </motion.div>
-
         {/* 9. ФИНАЛЬНЫЙ CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -605,7 +507,7 @@ export function OnboardingPricingPage() {
             Начните с одного дня
           </h3>
           <p className="text-lg mb-6" style={{ color: t.textMuted }}>
-            Создайте первую рутину и почувствуйте разницу
+            Регистрация занимает минуту
           </p>
 
           <motion.button

@@ -29,8 +29,15 @@ export const router = createBrowserRouter([
           {
             index: true,
             lazy: async () => {
-              const { Dashboard } = await import("./components/pages/dashboard");
-              return { Component: Dashboard };
+              const { TodayPage } = await import("./components/pages/today-page");
+              return { Component: TodayPage };
+            },
+          },
+          {
+            path: "practices",
+            lazy: async () => {
+              const { PracticesPage } = await import("./components/pages/practices-page");
+              return { Component: PracticesPage };
             },
           },
           {
@@ -159,6 +166,13 @@ export const router = createBrowserRouter([
             lazy: async () => {
               const { CapsulePage } = await import("./components/pages/capsule-page");
               return { Component: CapsulePage };
+            },
+          },
+          {
+            path: "meditation",
+            lazy: async () => {
+              const { MeditationPage } = await import("./components/pages/meditation-page");
+              return { Component: MeditationPage };
             },
           },
           {

@@ -394,14 +394,6 @@ export function AuthPage({ onAuth }: AuthPageProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          <button
-            className="flex items-center gap-1.5"
-            style={{ fontSize: "0.7rem", color: C.textFaint }}
-            onClick={() => setShowAdmin(!showAdmin)}
-          >
-            <Shield className="w-3 h-3" />
-            Вход для администратора
-          </button>
 
           <AnimatePresence>
             {showAdmin && (
