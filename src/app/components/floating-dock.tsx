@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTheme } from "./theme";
@@ -92,8 +93,8 @@ export function FloatingDock({ pomodoroActive, pomodoroTime, pomodoroColor }: Fl
       emoji: "🍅",
       label: pomodoroActive ? pomodoroTime : undefined,
       gradient: pomodoroActive
-        ? `linear-gradient(135deg, ${pomodoroColor || "#7B8F71"}, ${pomodoroColor || "#7B8F71"}CC)`
-        : "linear-gradient(135deg, #A3907A, #8D7F6B)",
+        ? `${pomodoroColor || "#7B8F71"}`
+        : "#A3907A",
       onClick: openPomodoro,
       pulse: pomodoroActive,
       hint: "Помидоро",
@@ -103,7 +104,7 @@ export function FloatingDock({ pomodoroActive, pomodoroTime, pomodoroColor }: Fl
       icon: <Wind className="w-4 h-4" />,
       emoji: undefined,
       label: undefined,
-      gradient: "linear-gradient(135deg, #7EA8BE, #9B8EC4)",
+      gradient: "#7EA8BE",
       onClick: openBreathing,
       pulse: false,
       hint: "Дыхание",
@@ -114,8 +115,8 @@ export function FloatingDock({ pomodoroActive, pomodoroTime, pomodoroColor }: Fl
       emoji: "🍃",
       label: undefined,
       gradient: darkMode
-        ? "linear-gradient(135deg, #4ADB65, #2AAF48)"
-        : "linear-gradient(135deg, #B8F5C5, #5DC26E)",
+        ? "#4ADB65"
+        : "#B8F5C5",
       onClick: openMascot,
       pulse: false,
       hint: "Листик",
@@ -175,11 +176,11 @@ export function FloatingDock({ pomodoroActive, pomodoroTime, pomodoroColor }: Fl
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
                   <div
-                    className="rounded-2xl px-4 py-2.5 shadow-lg whitespace-nowrap relative"
+                    className="rounded-xl px-4 py-2.5 shadow-sm whitespace-nowrap relative"
                     style={{
                       backgroundColor: darkMode ? "#2A2D28" : "#fff",
                       border: `1px solid ${darkMode ? "rgba(141,181,150,0.3)" : "rgba(141,181,150,0.4)"}`,
-                      boxShadow: `0 4px 20px ${darkMode ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.1)"}`,
+                      boxShadow: "none",
                     }}
                   >
                     <div className="flex items-center gap-2">
@@ -187,9 +188,7 @@ export function FloatingDock({ pomodoroActive, pomodoroTime, pomodoroColor }: Fl
                         style={{ fontSize: "1rem" }}
                         animate={{ rotate: [0, 15, -15, 0] }}
                         transition={{ duration: 1.5, repeat: Infinity }}
-                      >
-                        🌿
-                      </motion.span>
+                      ><AppIcon icon="🌿" size={20} /></motion.span>
                       <span style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text }}>
                         Виджеты
                       </span>
@@ -234,10 +233,10 @@ export function FloatingDock({ pomodoroActive, pomodoroTime, pomodoroColor }: Fl
             {dockItems.map((item, i) => (
               <motion.div key={item.id} className="relative">
                 <motion.button
-                  className="w-11 h-11 rounded-2xl flex items-center justify-center shadow-md relative"
+                  className="w-11 h-11 rounded-xl flex items-center justify-center shadow-sm relative"
                   style={{
                     background: item.gradient,
-                    boxShadow: `0 2px 12px ${darkMode ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.12)"}`,
+                    boxShadow: "none",
                   }}
                   onClick={(e) => {
                     e.stopPropagation();
@@ -253,15 +252,15 @@ export function FloatingDock({ pomodoroActive, pomodoroTime, pomodoroColor }: Fl
                       {item.label}
                     </span>
                   ) : item.emoji ? (
-                    <span style={{ fontSize: "1.1rem" }}>{item.emoji}</span>
+                    <span style={{ fontSize: "1.1rem" }}><AppIcon icon={item.emoji} size={18} /></span>
                   ) : (
-                    <span className="text-white">{item.icon}</span>
+                    <span className="text-white"><AppIcon icon={item.icon} size={18} /></span>
                   )}
 
                   {/* Pulse ring for active pomodoro */}
                   {item.pulse && (
                     <motion.div
-                      className="absolute inset-0 rounded-2xl border-2"
+                      className="absolute inset-0 rounded-xl border-2"
                       style={{ borderColor: pomodoroColor || "#7B8F71" }}
                       animate={{ scale: [1, 1.25, 1], opacity: [0.5, 0, 0.5] }}
                       transition={{ duration: 2, repeat: Infinity }}
@@ -285,7 +284,6 @@ export function FloatingDock({ pomodoroActive, pomodoroTime, pomodoroColor }: Fl
                         backgroundColor: darkMode ? "rgba(42,45,40,0.85)" : "rgba(255,255,255,0.85)",
                         padding: "2px 6px",
                         borderRadius: 6,
-                        backdropFilter: "blur(4px)",
                       }}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -321,12 +319,11 @@ export function FloatingDock({ pomodoroActive, pomodoroTime, pomodoroColor }: Fl
         ) : (
           <motion.button
             key="collapsed"
-            className="w-10 h-10 rounded-full flex items-center justify-center shadow-md"
+            className="w-10 h-10 rounded-full flex items-center justify-center shadow-sm"
             style={{
               background: darkMode
-                ? "linear-gradient(135deg, rgba(141,181,150,0.3), rgba(126,168,190,0.3))"
-                : "linear-gradient(135deg, rgba(141,181,150,0.5), rgba(126,168,190,0.5))",
-              backdropFilter: "blur(12px)",
+                ? "rgba(141,181,150,0.3)"
+                : "rgba(141,181,150,0.5)",
               border: `1px solid ${darkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
             }}
             onClick={(e) => {

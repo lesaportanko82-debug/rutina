@@ -197,15 +197,15 @@ export function OnboardingPricingPage() {
         >
           <div className="flex justify-center mb-6">
             <motion.div
-              className="w-20 h-20 rounded-3xl flex items-center justify-center"
+              className="w-20 h-20 rounded-xl flex items-center justify-center"
               style={{
-                background: "linear-gradient(135deg, rgba(141,181,150,0.2), rgba(155,142,196,0.15))",
-                boxShadow: "0 8px 32px rgba(141,181,150,0.15)",
+                background: "rgba(141,181,150,0.2)",
+                boxShadow: "none",
               }}
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             >
-              <span style={{ fontSize: "2.5rem" }}>🌿</span>
+              <span style={{ fontSize: "2.5rem" }}><AppIcon icon="🌿" size={20} /></span>
             </motion.div>
           </div>
 
@@ -219,9 +219,9 @@ export function OnboardingPricingPage() {
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
             <motion.button
-              className="px-8 py-3.5 rounded-xl font-medium shadow-lg"
+              className="px-8 py-3.5 rounded-xl font-medium shadow-sm"
               style={{
-                background: "linear-gradient(135deg, #8DB596, #7EA8BE)",
+                background: "#5B8A64",
                 color: "white",
               }}
               whileHover={{ scale: 1.02 }}
@@ -256,7 +256,7 @@ export function OnboardingPricingPage() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <GlassPanel darkMode={darkMode} className="p-8 rounded-3xl">
+          <GlassPanel darkMode={darkMode} className="p-8 rounded-xl">
             <div className="text-center mb-6">
               <p className="text-xl leading-relaxed mb-4" style={{ color: t.text }}>
                 Вы начинаете — но не продолжаете<br />
@@ -315,7 +315,7 @@ export function OnboardingPricingPage() {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.05 }}
               >
-                <GlassPanel darkMode={darkMode} color={feature.color} className="p-5 rounded-2xl h-full">
+                <GlassPanel darkMode={darkMode} color={feature.color} className="p-5 rounded-xl h-full">
                   <div className="flex items-start gap-3">
                     <div
                       className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -348,9 +348,9 @@ export function OnboardingPricingPage() {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* До */}
-            <GlassPanel darkMode={darkMode} className="p-6 rounded-2xl">
+            <GlassPanel darkMode={darkMode} className="p-6 rounded-xl">
               <div className="text-center mb-4">
-                <span className="text-3xl">😓</span>
+                <span className="text-3xl"><AppIcon icon="😓" size={20} /></span>
                 <h4 className="font-bold mt-2 text-lg" style={{ color: t.text }}>До</h4>
               </div>
               <div className="space-y-2.5">
@@ -364,9 +364,9 @@ export function OnboardingPricingPage() {
             </GlassPanel>
 
             {/* После */}
-            <GlassPanel darkMode={darkMode} className="p-6 rounded-2xl" color="#8DB596">
+            <GlassPanel darkMode={darkMode} className="p-6 rounded-xl" color="#8DB596">
               <div className="text-center mb-4">
-                <span className="text-3xl">✨</span>
+                <span className="text-3xl"><AppIcon icon="✨" size={20} /></span>
                 <h4 className="font-bold mt-2 text-lg" style={{ color: t.text }}>После</h4>
               </div>
               <div className="space-y-2.5">
@@ -394,7 +394,7 @@ export function OnboardingPricingPage() {
             Как это работает
           </h3>
 
-          <GlassPanel darkMode={darkMode} className="p-8 rounded-3xl">
+          <GlassPanel darkMode={darkMode} className="p-8 rounded-xl">
             <div className="space-y-5">
               {steps.map((step, idx) => (
                 <motion.div
@@ -408,7 +408,7 @@ export function OnboardingPricingPage() {
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 font-bold"
                     style={{
-                      background: "linear-gradient(135deg, #8DB596, #7EA8BE)",
+                      background: "#5B8A64",
                       color: "white",
                     }}
                   >
@@ -442,18 +442,18 @@ export function OnboardingPricingPage() {
               whileHover={{ y: -4 }}
               transition={{ duration: 0.2 }}
             >
-              <GlassPanel darkMode={darkMode} className="p-8 rounded-3xl relative overflow-visible" color="#8DB596">
+              <GlassPanel darkMode={darkMode} className="p-8 rounded-xl relative overflow-visible" color="#8DB596">
                 {/* Бейдж "Рекомендуем" */}
                 <div
                   className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap"
                   style={{
-                    background: "linear-gradient(135deg, #C4A86C, #B88FA7)",
+                    background: "#C4A86C",
                     color: "white",
-                    boxShadow: "0 4px 12px rgba(196,168,108,0.3)",
+                    boxShadow: "none",
                     zIndex: 10,
                   }}
                 >
-                  🔥 Рекомендуем
+                   Рекомендуем
                 </div>
 
                 <div className="text-center mb-6" style={{ paddingTop: '2rem' }}>
@@ -485,11 +485,11 @@ export function OnboardingPricingPage() {
                 </div>
 
                 <motion.button
-                  className="w-full py-3.5 rounded-xl font-semibold shadow-lg flex items-center justify-center gap-2"
+                  className="w-full py-3.5 rounded-xl font-semibold shadow-sm flex items-center justify-center gap-2"
                   style={{
                     background: loading
-                      ? "linear-gradient(135deg, #8DB59688, #7EA8BE88)"
-                      : "linear-gradient(135deg, #8DB596, #7EA8BE)",
+                      ? "#8DB59688"
+                      : "#8DB596",
                     color: "white",
                     cursor: loading ? "not-allowed" : "pointer",
                   }}
@@ -515,7 +515,7 @@ export function OnboardingPricingPage() {
               whileHover={{ y: -4 }}
               transition={{ duration: 0.2 }}
             >
-              <GlassPanel darkMode={darkMode} className="p-8 rounded-3xl">
+              <GlassPanel darkMode={darkMode} className="p-8 rounded-xl">
                 <div className="text-center mb-6">
                   <h4 className="text-2xl font-bold mb-2" style={{ color: t.text }}>
                     Бесплатно
@@ -570,7 +570,7 @@ export function OnboardingPricingPage() {
           transition={{ duration: 0.6 }}
           className="mb-16"
         >
-          <GlassPanel darkMode={darkMode} className="p-8 rounded-3xl text-center">
+          <GlassPanel darkMode={darkMode} className="p-8 rounded-xl text-center">
             <p className="text-xl mb-3" style={{ color: t.text, lineHeight: 1.6 }}>
               Изменения происходят не за один день
             </p>
@@ -609,9 +609,9 @@ export function OnboardingPricingPage() {
           </p>
 
           <motion.button
-            className="px-10 py-4 rounded-xl font-semibold text-lg shadow-xl"
+            className="px-10 py-4 rounded-xl font-semibold text-lg shadow-sm"
             style={{
-              background: "linear-gradient(135deg, #8DB596, #7EA8BE)",
+              background: "#5B8A64",
               color: "white",
             }}
             whileHover={{ scale: 1.05 }}

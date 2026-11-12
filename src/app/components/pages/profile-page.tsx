@@ -246,18 +246,18 @@ export function ProfilePage() {
   const levelProgress = (profile.xp / profile.xpToNext) * 100;
 
   const getTier = (level: number) => {
-    if (level >= 50) return { name: "Легенда", icon: "👑", color: "#C4A86C", gradient: "linear-gradient(135deg, #C4A86C, #D4B896)", minLevel: 50 };
-    if (level >= 40) return { name: "Мудрец", icon: "🧙", color: "#9B8EC4", gradient: "linear-gradient(135deg, #9B8EC4, #B88FA7)", minLevel: 40 };
-    if (level >= 30) return { name: "Хранитель", icon: "🦋", color: "#B88FA7", gradient: "linear-gradient(135deg, #B88FA7, #9B8EC4)", minLevel: 30 };
-    if (level >= 25) return { name: "Лес", icon: "🌲", color: "#6B8F71", gradient: "linear-gradient(135deg, #6B8F71, #7B8F71)", minLevel: 25 };
-    if (level >= 20) return { name: "Роща", icon: "🌳", color: "#7BAFB0", gradient: "linear-gradient(135deg, #7BAFB0, #8DB596)", minLevel: 20 };
-    if (level >= 17) return { name: "Сад", icon: "🏡", color: "#C4A86C", gradient: "linear-gradient(135deg, #C4A86C, #C4876C)", minLevel: 17 };
-    if (level >= 14) return { name: "Дерево", icon: "🌴", color: "#8DB596", gradient: "linear-gradient(135deg, #8DB596, #6B8F71)", minLevel: 14 };
-    if (level >= 11) return { name: "Куст", icon: "🌿", color: "#7EA8BE", gradient: "linear-gradient(135deg, #7EA8BE, #7BAFB0)", minLevel: 11 };
-    if (level >= 8) return { name: "Цветок", icon: "🌸", color: "#B88FA7", gradient: "linear-gradient(135deg, #B88FA7, #C4876C)", minLevel: 8 };
-    if (level >= 5) return { name: "Побег", icon: "🌱", color: "#8DB596", gradient: "linear-gradient(135deg, #8DB596, #7BAFB0)", minLevel: 5 };
-    if (level >= 3) return { name: "Росток", icon: "🌾", color: "#C4A86C", gradient: "linear-gradient(135deg, #C4A86C, #C4876C)", minLevel: 3 };
-    return { name: "Семечко", icon: "🌰", color: "#A3ADB8", gradient: "linear-gradient(135deg, #A3ADB8, #B5AFA6)", minLevel: 0 };
+    if (level >= 50) return { name: "Легенда", icon: "👑", color: "#C4A86C", gradient: "#C4A86C", minLevel: 50 };
+    if (level >= 40) return { name: "Мудрец", icon: "🧙", color: "#9B8EC4", gradient: "#9B8EC4", minLevel: 40 };
+    if (level >= 30) return { name: "Хранитель", icon: "🦋", color: "#B88FA7", gradient: "#B88FA7", minLevel: 30 };
+    if (level >= 25) return { name: "Лес", icon: "🌲", color: "#6B8F71", gradient: "#6B8F71", minLevel: 25 };
+    if (level >= 20) return { name: "Роща", icon: "🌳", color: "#7BAFB0", gradient: "#7BAFB0", minLevel: 20 };
+    if (level >= 17) return { name: "Сад", icon: "🏡", color: "#C4A86C", gradient: "#C4A86C", minLevel: 17 };
+    if (level >= 14) return { name: "Дерево", icon: "🌴", color: "#8DB596", gradient: "#8DB596", minLevel: 14 };
+    if (level >= 11) return { name: "Куст", icon: "🌿", color: "#7EA8BE", gradient: "#7EA8BE", minLevel: 11 };
+    if (level >= 8) return { name: "Цветок", icon: "🌸", color: "#B88FA7", gradient: "#B88FA7", minLevel: 8 };
+    if (level >= 5) return { name: "Побег", icon: "🌱", color: "#8DB596", gradient: "#8DB596", minLevel: 5 };
+    if (level >= 3) return { name: "Росток", icon: "🌾", color: "#C4A86C", gradient: "#C4A86C", minLevel: 3 };
+    return { name: "Семечко", icon: "🌰", color: "#A3ADB8", gradient: "#A3ADB8", minLevel: 0 };
   };
 
   const allTiers = [
@@ -303,18 +303,18 @@ export function ProfilePage() {
     // Step 0: Name & Age
     <div key="step0">
       <div className="text-center mb-6">
-        <span style={{ fontSize: "2rem" }}>🌿</span>
-        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 8 }}>Давайте познакомимся</h3>
-        <p style={{ fontSize: "0.78rem", color: t.textMuted, marginTop: 4 }}>Расскажите немного о себе</p>
+        <span style={{ fontSize: "2rem" }}><AppIcon icon="🌿" size={20} /></span>
+        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 8 }}>О вас</h3>
+        <p style={{ fontSize: "0.78rem", color: t.textMuted, marginTop: 4 }}>Нужно для обращения и подсказок</p>
       </div>
       <div className="space-y-4">
         <div>
           <label style={{ fontSize: "0.8rem", fontWeight: 500, color: t.textSecondary, marginBottom: 6, display: "block" }}>Как к вам обращаться?</label>
-          <input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Ваше имя..."
+          <input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Имя"
             className="w-full rounded-xl px-4 py-3 border outline-none" style={{ fontSize: "0.9rem", backgroundColor: t.inputBg, borderColor: t.borderLight, color: t.text }} />
         </div>
         <div>
-          <label style={{ fontSize: "0.8rem", fontWeight: 500, color: t.textSecondary, marginBottom: 6, display: "block" }}>Ваш возраст</label>
+          <label style={{ fontSize: "0.8rem", fontWeight: 500, color: t.textSecondary, marginBottom: 6, display: "block" }}>Возраст</label>
           <input value={formData.age} onChange={(e) => setFormData({ ...formData, age: e.target.value })} placeholder="Необязательно..."
             className="w-full rounded-xl px-4 py-3 border outline-none" style={{ fontSize: "0.9rem", backgroundColor: t.inputBg, borderColor: t.borderLight, color: t.text }} />
         </div>
@@ -335,7 +335,7 @@ export function ProfilePage() {
     // Step 1: Goals
     <div key="step1">
       <div className="text-center mb-6">
-        <span style={{ fontSize: "2rem" }}>🎯</span>
+        <span style={{ fontSize: "2rem" }}><AppIcon icon="🎯" size={20} /></span>
         <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 8 }}>Что для вас важно?</h3>
         <p style={{ fontSize: "0.78rem", color: t.textMuted, marginTop: 4 }}>Выберите направления</p>
       </div>
@@ -353,7 +353,7 @@ export function ProfilePage() {
     // Step 2: Stress & Sleep
     <div key="step2">
       <div className="text-center mb-6">
-        <span style={{ fontSize: "2rem" }}>🌊</span>
+        <span style={{ fontSize: "2rem" }}><AppIcon icon="🌊" size={20} /></span>
         <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 8 }}>Как вы себя чувствуете?</h3>
       </div>
       <div className="space-y-5">
@@ -395,7 +395,7 @@ export function ProfilePage() {
     // Step 3: Habits & Exercise
     <div key="step3">
       <div className="text-center mb-6">
-        <span style={{ fontSize: "2rem" }}>🌱</span>
+        <span style={{ fontSize: "2rem" }}><AppIcon icon="🌱" size={20} /></span>
         <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 8 }}>Привычки и движение</h3>
       </div>
       <div className="space-y-5">
@@ -422,7 +422,7 @@ export function ProfilePage() {
     // Step 4: Blockers & Relax
     <div key="step4">
       <div className="text-center mb-6">
-        <span style={{ fontSize: "2rem" }}>🦋</span>
+        <span style={{ fontSize: "2rem" }}><AppIcon icon="🦋" size={20} /></span>
         <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 8 }}>Сложности и ресурсы</h3>
       </div>
       <div className="space-y-5">
@@ -458,7 +458,7 @@ export function ProfilePage() {
     // Step 5: Free text
     <div key="step5">
       <div className="text-center mb-6">
-        <span style={{ fontSize: "2rem" }}>✨</span>
+        <span style={{ fontSize: "2rem" }}><AppIcon icon="✨" size={20} /></span>
         <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 8 }}>Последние штрихи</h3>
       </div>
       <div className="space-y-4">
@@ -505,8 +505,8 @@ export function ProfilePage() {
                   onClick={() => setStep(step + 1)}>Дальше</button>
               ) : (
                 <button className="flex-1 py-3 rounded-xl text-white"
-                  style={{ background: "linear-gradient(135deg, #8DB596, #7BAFB0)", fontSize: "0.9rem", fontWeight: 600 }}
-                  onClick={handleSave}>Сохранить ✓</button>
+                  style={{ background: "#8DB596", fontSize: "0.9rem", fontWeight: 600 }}
+                  onClick={handleSave}>Сохранить </button>
               )}
             </div>
           </motion.div>
@@ -517,7 +517,7 @@ export function ProfilePage() {
               <div className="relative inline-block mb-3">
                 {/* Avatar circle */}
                 <motion.div
-                  className="w-24 h-24 rounded-full shadow-md mx-auto overflow-hidden relative"
+                  className="w-24 h-24 rounded-full shadow-sm mx-auto overflow-hidden relative"
                   style={{ background: tier.gradient }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -575,7 +575,7 @@ export function ProfilePage() {
             </motion.div>
 
             {/* Settings section */}
-            <GlassPanel darkMode={darkMode} className="rounded-2xl mb-5 overflow-hidden"
+            <GlassPanel darkMode={darkMode} className="rounded-xl mb-5 overflow-hidden"
               style={{ padding: 0 }}>
               {/* Dark mode */}
               <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
@@ -667,7 +667,7 @@ export function ProfilePage() {
 
             {/* Account Management Section */}
             {!isAdmin && (
-              <GlassPanel darkMode={darkMode} className="rounded-2xl mb-5 overflow-hidden" style={{ padding: 0 }}>
+              <GlassPanel darkMode={darkMode} className="rounded-xl mb-5 overflow-hidden" style={{ padding: 0 }}>
                 <div className="px-4 pt-3 pb-1">
                   <span style={{ fontSize: "0.72rem", fontWeight: 600, color: t.textFaint, letterSpacing: "0.5px", textTransform: "uppercase" as const }}>Аккаунт</span>
                 </div>
@@ -712,7 +712,7 @@ export function ProfilePage() {
             {/* Admin Logout (simplified) */}
             {isAdmin && (
               <motion.button
-                className="w-full rounded-2xl p-4 flex items-center gap-3 mb-5 border"
+                className="w-full rounded-xl p-4 flex items-center gap-3 mb-5 border"
                 style={{ backgroundColor: t.terracotta + "08", borderColor: t.terracotta + "20" }}
                 onClick={handleLogout} whileTap={{ scale: 0.98 }}
               >
@@ -727,14 +727,14 @@ export function ProfilePage() {
 
             {/* Questionnaire summary */}
             {questionnaire.filled && (
-              <motion.div className="rounded-2xl p-4 mb-5 border"
+              <motion.div className="rounded-xl p-4 mb-5 border"
                 style={{ backgroundColor: t.sage + "10", borderColor: t.sage + "25" }}
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 }}>
-                <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text, marginBottom: 8, display: "block" }}>О вас 🌿</span>
+                <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text, marginBottom: 8, display: "block" }}>О вас </span>
                 <div className="space-y-2">
                   {questionnaire.goals.length > 0 && (
                     <p style={{ fontSize: "0.78rem", color: t.textSecondary }}>
-                      <span style={{ color: t.textMuted }}>Фокус:</span> {questionnaire.goals.map(g => goalOptions.find(o => o.value === g)?.label).filter(Boolean).join(", ")}
+                      <span style={{ color: t.textMuted }}>Фокус:</span> {questionnaire.goals.map(g => goalOptions.find(o => o.value === g)?.label).filter(Boolean).join(",")}
                     </p>
                   )}
                   {questionnaire.peakTime && (
@@ -744,7 +744,7 @@ export function ProfilePage() {
                   )}
                   {questionnaire.desiredHabits.length > 0 && (
                     <p style={{ fontSize: "0.78rem", color: t.textSecondary }}>
-                      <span style={{ color: t.textMuted }}>Хочет:</span> {questionnaire.desiredHabits.join(", ")}
+                      <span style={{ color: t.textMuted }}>Хочет:</span> {questionnaire.desiredHabits.join(",")}
                     </p>
                   )}
                   {questionnaire.monthGoals && (
@@ -755,27 +755,27 @@ export function ProfilePage() {
             )}
 
             {/* ═══ Plant Companion Widget ═══ */}
-            <motion.div className="rounded-2xl p-4 mb-5 border overflow-hidden relative"
+            <motion.div className="rounded-xl p-4 mb-5 border overflow-hidden relative"
               style={{ backgroundColor: t.card, borderColor: t.sage + "30" }}
               initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.09 }}>
               <div className="flex items-start gap-4">
                 {/* Plant visual */}
                 <motion.div
-                  className="w-20 h-20 rounded-2xl flex items-center justify-center shrink-0 relative"
-                  style={{ background: `linear-gradient(135deg, ${t.sage}15, ${t.sage}08)`, border: `1px solid ${t.sage}20` }}
+                  className="w-20 h-20 rounded-xl flex items-center justify-center shrink-0 relative"
+                  style={{ background: `${t.sage}15`, border: `1px solid ${t.sage}20` }}
                   animate={{ y: [0, -3, 0] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                 >
                   <span style={{ fontSize: "2.5rem" }}>
                     {(() => {
                       const gp = plantState.growthPoints;
-                      if (gp >= 200) return "🌳";
-                      if (gp >= 150) return "🌴";
-                      if (gp >= 100) return "🌿";
-                      if (gp >= 70) return "🌸";
-                      if (gp >= 40) return "🌱";
-                      if (gp >= 15) return "🌾";
-                      return "🌰";
+                      if (gp >= 200) return "";
+                      if (gp >= 150) return "";
+                      if (gp >= 100) return "";
+                      if (gp >= 70) return "";
+                      if (gp >= 40) return "";
+                      if (gp >= 15) return "";
+                      return "";
                     })()}
                   </span>
                   {plantState.butterflies > 0 && (
@@ -784,9 +784,7 @@ export function ProfilePage() {
                       style={{ fontSize: "0.8rem" }}
                       animate={{ y: [0, -3, 0], x: [0, 2, 0] }}
                       transition={{ duration: 2, repeat: Infinity }}
-                    >
-                      🦋
-                    </motion.span>
+                    ><AppIcon icon="🦋" size={20} /></motion.span>
                   )}
                 </motion.div>
 
@@ -875,21 +873,21 @@ export function ProfilePage() {
             </motion.div>
 
             {/* XP bar */}
-            <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-4 mb-5"
+            <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-4 mb-5"
               style={{}}>
               <div className="flex items-center justify-between mb-2">
                 <span style={{ fontSize: "0.8rem", fontWeight: 500, color: t.textMuted }}>Уровень {profile.level} → {profile.level + 1}</span>
                 <span style={{ fontSize: "0.8rem", fontWeight: 600, color: t.sage }}>{profile.xp}/{profile.xpToNext} XP</span>
               </div>
               <div className="w-full rounded-full h-3" style={{ backgroundColor: darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }}>
-                <motion.div className="h-3 rounded-full" style={{ background: "linear-gradient(90deg, #8DB596, #7BAFB0)" }}
+                <motion.div className="h-3 rounded-full" style={{ background: "#8DB596" }}
                   initial={{ width: 0 }} animate={{ width: `${levelProgress}%` }} transition={{ delay: 0.3, duration: 1 }} />
               </div>
               <p style={{ fontSize: "0.7rem", color: t.textFaint, marginTop: 6 }}>Ещё {profile.xpToNext - profile.xp} XP — вы почти у цели!</p>
             </GlassPanel>
 
             {/* Tier roadmap */}
-            <GlassPanel darkMode={darkMode} color={tier.color} className="rounded-2xl p-4 mb-5">
+            <GlassPanel darkMode={darkMode} color={tier.color} className="rounded-xl p-4 mb-5">
               <div className="flex items-center gap-2 mb-3">
                 <AppIcon icon={tier.icon} size={18} color={tier.color} />
                 <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Путь роста</span>
@@ -949,7 +947,7 @@ export function ProfilePage() {
             {/* Stats grid */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {stats.map((stat, i) => (
-                <GlassPanel key={stat.label} darkMode={darkMode} color={stat.color} className="rounded-2xl p-4">
+                <GlassPanel key={stat.label} darkMode={darkMode} color={stat.color} className="rounded-xl p-4">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.15 + i * 0.05 }}>
                     <stat.icon className="w-5 h-5 mb-2" style={{ color: stat.color }} />
@@ -981,7 +979,7 @@ export function ProfilePage() {
                   };
                   const color = catColors[ach.category] || t.textFaint;
                   return (
-                    <motion.div key={ach.id} className="rounded-2xl p-3.5 border"
+                    <motion.div key={ach.id} className="rounded-xl p-3.5 border"
                       style={{
                         backgroundColor: ach.unlocked ? color + "10" : t.bgSecondary,
                         borderColor: ach.unlocked ? color + "25" : t.border,
@@ -1000,7 +998,7 @@ export function ProfilePage() {
                       </span>
                       {ach.unlocked && ach.unlockedAt && (
                         <span className="block" style={{ fontSize: "0.55rem", color, marginTop: 3 }}>
-                          ✓ {new Date(ach.unlockedAt).toLocaleDateString("ru-RU")}
+                           {new Date(ach.unlockedAt).toLocaleDateString("ru-RU")}
                         </span>
                       )}
                     </motion.div>
@@ -1020,7 +1018,7 @@ export function ProfilePage() {
           <motion.div className="fixed inset-0 z-[150] flex items-center justify-center px-6"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="absolute inset-0 bg-black/40" onClick={() => setShowChangeName(false)} />
-            <motion.div className="relative w-full max-w-[380px] rounded-2xl p-5 border shadow-xl"
+            <motion.div className="relative w-full max-w-[380px] rounded-xl p-5 border shadow-sm"
               style={{ backgroundColor: t.bg, borderColor: t.border }}
               initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 30 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}>
@@ -1053,7 +1051,7 @@ export function ProfilePage() {
                   </motion.p>
                 )}
                 <button className="w-full py-3 rounded-xl text-white flex items-center justify-center gap-2"
-                  style={{ background: `linear-gradient(135deg, ${t.dustyBlue}, ${t.teal})`, fontSize: "0.9rem", fontWeight: 600, opacity: accountLoading ? 0.7 : 1 }}
+                  style={{ background: `${t.dustyBlue}`, fontSize: "0.9rem", fontWeight: 600, opacity: accountLoading ? 0.7 : 1 }}
                   onClick={handleChangeName} disabled={accountLoading}>
                   {accountLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
                   {accountLoading ? "Сохранение..." : "Сохранить"}
@@ -1070,7 +1068,7 @@ export function ProfilePage() {
           <motion.div className="fixed inset-0 z-[150] flex items-center justify-center px-6"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="absolute inset-0 bg-black/40" onClick={() => setShowChangePassword(false)} />
-            <motion.div className="relative w-full max-w-[380px] rounded-2xl p-5 border shadow-xl"
+            <motion.div className="relative w-full max-w-[380px] rounded-xl p-5 border shadow-sm"
               style={{ backgroundColor: t.bg, borderColor: t.border }}
               initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 30 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}>
@@ -1133,7 +1131,7 @@ export function ProfilePage() {
                   </motion.p>
                 )}
                 <button className="w-full py-3 rounded-xl text-white flex items-center justify-center gap-2"
-                  style={{ background: `linear-gradient(135deg, ${t.lavender}, ${t.dustyBlue})`, fontSize: "0.9rem", fontWeight: 600, opacity: accountLoading ? 0.7 : 1 }}
+                  style={{ background: `${t.lavender}`, fontSize: "0.9rem", fontWeight: 600, opacity: accountLoading ? 0.7 : 1 }}
                   onClick={handleChangePassword} disabled={accountLoading}>
                   {accountLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
                   {accountLoading ? "Сохранение..." : "Изменить пароль"}
@@ -1150,11 +1148,11 @@ export function ProfilePage() {
           <motion.div className="fixed inset-0 z-[150] flex items-center justify-center px-6"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <div className="absolute inset-0 bg-black/40" onClick={() => setShowLogoutConfirm(false)} />
-            <motion.div className="relative w-full max-w-[340px] rounded-2xl p-5 border shadow-xl text-center"
+            <motion.div className="relative w-full max-w-[340px] rounded-xl p-5 border shadow-sm text-center"
               style={{ backgroundColor: t.bg, borderColor: t.border }}
               initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 30 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}>
-              <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: t.terracotta + "12" }}>
+              <div className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: t.terracotta + "12" }}>
                 <LogOut className="w-7 h-7" style={{ color: t.terracotta }} />
               </div>
               <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: t.text, marginBottom: 6 }}>Выйти из аккаунта?</h3>

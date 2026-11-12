@@ -158,7 +158,7 @@ export function BingoPage() {
         </button>
         <div className="flex-1">
           <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Self-Care Бинго</h1>
-          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Заполните линию — получите бонус!</p>
+          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Собрать линию из 4 за неделю</p>
         </div>
         <button onClick={regenerateCard} className="p-2 rounded-xl" style={{ backgroundColor: t.bgSecondary }}>
           <RefreshCw className="w-4 h-4" style={{ color: t.textFaint }} />
@@ -166,7 +166,7 @@ export function BingoPage() {
       </div>
 
       {/* Progress */}
-      <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-2xl p-4 mb-4">
+      <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-xl p-4 mb-4">
         <motion.div
           initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center justify-between mb-2">
@@ -180,7 +180,7 @@ export function BingoPage() {
           </div>
           <div className="w-full rounded-full h-2" style={{ backgroundColor: t.border }}>
             <motion.div className="h-2 rounded-full"
-              style={{ background: allCompleted ? "linear-gradient(90deg, #C4A86C, #8DB596)" : "linear-gradient(90deg, #9B8EC4, #7EA8BE)" }}
+              style={{ background: allCompleted ? "#C4A86C" : "#9B8EC4" }}
               animate={{ width: `${(completedCount / 16) * 100}%` }}
               transition={{ duration: 0.5 }}
             />
@@ -226,7 +226,7 @@ export function BingoPage() {
                 <motion.div className="absolute top-1 right-1 w-4 h-4 rounded-full flex items-center justify-center"
                   style={{ backgroundColor: t.sage }}
                   initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                  <span style={{ fontSize: "0.5rem", color: "#fff" }}>✓</span>
+                  <span style={{ fontSize: "0.5rem", color: "#fff" }}><AppIcon icon="✓" size={20} /></span>
                 </motion.div>
               )}
             </motion.button>
@@ -236,9 +236,9 @@ export function BingoPage() {
 
       {/* All completed celebration */}
       {allCompleted && (
-        <GlassPanel darkMode={darkMode} color={t.gold} className="rounded-2xl p-5 mb-4 text-center">
+        <GlassPanel darkMode={darkMode} color={t.gold} className="rounded-xl p-5 mb-4 text-center">
           <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
-          <span style={{ fontSize: "2rem" }}>🎉</span>
+          <span style={{ fontSize: "2rem" }}><AppIcon icon="🎉" size={20} /></span>
           <p style={{ fontSize: "0.95rem", fontWeight: 700, color: t.text, marginTop: 8 }}>
             Полное бинго!
           </p>

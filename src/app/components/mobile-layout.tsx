@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { PAYMENTS_ENABLED } from "./payments-config";
 import { Outlet, useNavigate, useLocation } from "react-router";
@@ -182,10 +183,10 @@ export function MobileLayout() {
   // Fade-out thresholds per variant (night fades slower, warm/calm faster)
   const fadeConfig = useMemo(() => {
     switch (meshVariant) {
-      case "night":  return { meshDist: 1800, meshFloor: 0.05, ambDist: 2200, ambFloor: 0.2 };
-      case "warm":   return { meshDist: 1000, meshFloor: 0,    ambDist: 1300, ambFloor: 0.12 };
-      case "calm":   return { meshDist: 1100, meshFloor: 0,    ambDist: 1400, ambFloor: 0.15 };
-      default:       return { meshDist: 1200, meshFloor: 0,    ambDist: 1500, ambFloor: 0.15 };
+      case "night": return { meshDist: 1800, meshFloor: 0.05, ambDist: 2200, ambFloor: 0.2 };
+      case "warm": return { meshDist: 1000, meshFloor: 0, ambDist: 1300, ambFloor: 0.12 };
+      case "calm": return { meshDist: 1100, meshFloor: 0, ambDist: 1400, ambFloor: 0.15 };
+      default: return { meshDist: 1200, meshFloor: 0, ambDist: 1500, ambFloor: 0.15 };
     }
   }, [meshVariant]);
 
@@ -314,13 +315,13 @@ export function MobileLayout() {
           <motion.div
             className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"
             style={{
-              background: "linear-gradient(135deg, rgba(141,181,150,0.15), rgba(155,142,196,0.12))",
-              boxShadow: "0 8px 32px rgba(141,181,150,0.1)",
+              background: "rgba(141,181,150,0.15)",
+              boxShadow: "none",
             }}
             animate={{ scale: [1, 1.08, 1] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <span style={{ fontSize: "2.2rem" }}>🌿</span>
+            <span style={{ fontSize: "2.2rem" }}><AppIcon icon="🌿" size={20} /></span>
           </motion.div>
           <motion.p
             style={{ fontSize: "0.82rem", color: "#9B9489", fontWeight: 500 }}
@@ -347,16 +348,16 @@ export function MobileLayout() {
       <div
         className="flex items-center justify-center relative overflow-hidden"
         style={{
-          fontFamily: "'Inter', sans-serif",
+          fontFamily: "'Manrope', system-ui, sans-serif",
           height: stableHeight ? `${stableHeight}px` : '100dvh',
           minHeight: stableHeight ? `${stableHeight}px` : '100dvh',
           background: darkMode
-            ? "linear-gradient(135deg, #1A1918 0%, #1E1D1C 40%, #1A1918 100%)"
-            : "linear-gradient(135deg, #F0EDE8 0%, #EDE9E2 30%, #F2EFE9 60%, #F0EDE8 100%)",
+            ? "#1A1918"
+            : "#F0EDE8",
         }}
       >
         <div
-          className="w-full max-w-[430px] md:rounded-[2.5rem] md:shadow-2xl md:border flex flex-col overflow-hidden relative"
+          className="w-full max-w-[430px] md:rounded-[2.5rem] md:shadow-sm md:border flex flex-col overflow-hidden relative"
           data-mobile-root
           style={{
             borderColor: darkMode ? "#3A373430" : "#E8E3DC60",
@@ -397,13 +398,12 @@ export function MobileLayout() {
               style={{
                 background: darkMode
                   ? "rgba(141,181,150,0.08)"
-                  : "linear-gradient(90deg, rgba(141,181,150,0.12), rgba(123,175,176,0.08))",
+                  : "rgba(141,181,150,0.12)",
                 borderBottom: `1px solid rgba(141,181,150,0.2)`,
-                backdropFilter: "blur(8px)",
               }}
             >
               <div className="flex items-center gap-1.5">
-                <span style={{ fontSize: "0.8rem" }}>🌿</span>
+                <span style={{ fontSize: "0.8rem" }}><AppIcon icon="🌿" size={20} /></span>
                 <span style={{ fontSize: "0.72rem", color: "#8DB596", fontWeight: 600 }}>
                   Бесплатный режим
                 </span>
@@ -414,7 +414,7 @@ export function MobileLayout() {
                 disabled={paymentLoading}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
                 style={{
-                  background: "linear-gradient(135deg, #8DB596, #7EA8BE)",
+                  background: "#5B8A64",
                   color: "white",
                   fontSize: "0.7rem",
                   fontWeight: 600,
@@ -446,8 +446,6 @@ export function MobileLayout() {
             style={{
               pointerEvents: inputFocused ? "none" : "auto",
               backgroundColor: darkMode ? "rgba(26,25,24,0.85)" : "rgba(250,248,245,0.75)",
-              backdropFilter: "blur(24px) saturate(1.3)",
-              WebkitBackdropFilter: "blur(24px) saturate(1.3)",
               borderTop: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.5)"}`,
               boxShadow: darkMode
                 ? "0 -4px 20px rgba(0,0,0,0.3)"
@@ -513,8 +511,6 @@ export function MobileLayout() {
                 exit={{ opacity: 0 }}
                 style={{
                   backgroundColor: "rgba(0,0,0,0.45)",
-                  backdropFilter: "blur(6px)",
-                  WebkitBackdropFilter: "blur(6px)",
                 }}
                 onClick={() => setShowUpgradeSheet(false)}
               >
@@ -540,9 +536,9 @@ export function MobileLayout() {
 
                   <div className="text-center mb-5">
                     <div
-                      className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3"
+                      className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-3"
                       style={{
-                        background: "linear-gradient(135deg, rgba(141,181,150,0.18), rgba(123,175,176,0.12))",
+                        background: "rgba(141,181,150,0.18)",
                       }}
                     >
                       <Lock className="w-7 h-7" style={{ color: "#8DB596" }} />
@@ -575,9 +571,9 @@ export function MobileLayout() {
                   <motion.button
                     onClick={handlePayFromApp}
                     disabled={paymentLoading}
-                    className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-lg"
+                    className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-sm"
                     style={{
-                      background: "linear-gradient(135deg, #8DB596, #7EA8BE)",
+                      background: "#5B8A64",
                       color: "white",
                       fontWeight: 600,
                       fontSize: "0.95rem",

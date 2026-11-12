@@ -76,7 +76,7 @@ const habitCatalog: CatalogCategory[] = [
 
 const allCatalogHabits = habitCatalog.flatMap((c) => c.habits);
 const categoryLabels: Record<string, string> = {
-  health: "🌿 Здоровье", productivity: "📖 Продуктивность", mindfulness: "🧘 Осознанность", fitness: "🏔️ Движение",
+  health: " Здоровье", productivity: " Продуктивность", mindfulness: " Осознанность", fitness: " Движение",
 };
 
 export function HabitsPage() {
@@ -91,13 +91,13 @@ export function HabitsPage() {
   const [selectedCatalogHabits, setSelectedCatalogHabits] = useState<Set<string>>(new Set());
 
   const [newTitle, setNewTitle] = useState("");
-  const [newIcon, setNewIcon] = useState("🎯");
+  const [newIcon, setNewIcon] = useState("");
   const [newColor, setNewColor] = useState("#9B8EC4");
   const [newTarget, setNewTarget] = useState(7);
   const [newCategory, setNewCategory] = useState<"health" | "productivity" | "mindfulness" | "fitness">("health");
   const [newMicroVersion, setNewMicroVersion] = useState("");
 
-  const defaultIcons = ["🧘", "📚", "💪", "💧", "🏃", "📝", "🎯", "🌱", "☀️", "🧠", "🎨", "🎵"];
+  const defaultIcons = ["", "", "", "", "", "", "", "", "", "", "", ""];
   const defaultColors = ["#9B8EC4", "#7EA8BE", "#C4876C", "#7BAFB0", "#C4A86C", "#8DB596", "#B88FA7", "#A3907A"];
 
   const d = today();
@@ -188,7 +188,7 @@ export function HabitsPage() {
   return (
     <div className="px-5 pt-14 pb-8">
       <div className="flex items-center justify-between mb-2">
-        <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: th.text }}>Ваши привычки</h1>
+        <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: th.text }}>Привычки</h1>
         {mode === "list" ? (
           <motion.button
             className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm"
@@ -210,7 +210,7 @@ export function HabitsPage() {
         )}
       </div>
       <p style={{ fontSize: "0.78rem", color: th.textMuted, marginBottom: 16 }}>
-        {mode === "list" && "Маленькие шаги каждый день — это и есть путь"}
+        {mode === "list" && ""}
         {mode === "catalog" && "Выберите привычки — мы всё настроим за вас"}
         {mode === "custom" && "Создайте свою уникальную привычку"}
       </p>
@@ -218,17 +218,17 @@ export function HabitsPage() {
       {/* Stats */}
       {mode === "list" && (
         <div className="flex gap-3 mb-5">
-          <GlassPanel darkMode={darkMode} color={th.gold} className="flex-1 rounded-2xl p-3 text-center">
+          <GlassPanel darkMode={darkMode} color={th.gold} className="flex-1 rounded-xl p-3 text-center">
             <Flame className="w-5 h-5 mx-auto mb-1" style={{ color: th.gold }} />
             <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: th.text }}>{totalStreak}</span>
             <span style={{ fontSize: "0.65rem", color: th.textMuted }}>Общий стрик</span>
           </GlassPanel>
-          <GlassPanel darkMode={darkMode} color={th.sage} className="flex-1 rounded-2xl p-3 text-center">
+          <GlassPanel darkMode={darkMode} color={th.sage} className="flex-1 rounded-xl p-3 text-center">
             <CheckCircle2 className="w-5 h-5 mx-auto mb-1" style={{ color: th.sage }} />
             <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: th.text }}>{doneToday}/{habits.length}</span>
             <span style={{ fontSize: "0.65rem", color: th.textMuted }}>Сегодня</span>
           </GlassPanel>
-          <GlassPanel darkMode={darkMode} color={th.lavender} className="flex-1 rounded-2xl p-3 text-center">
+          <GlassPanel darkMode={darkMode} color={th.lavender} className="flex-1 rounded-xl p-3 text-center">
             <Trophy className="w-5 h-5 mx-auto mb-1" style={{ color: th.lavender }} />
             <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: th.text }}>
               {Math.max(...habits.map((h) => h.bestStreak), 0)}
@@ -241,7 +241,7 @@ export function HabitsPage() {
       {/* Recommended for you */}
       {mode === "list" && recommendedHabits.length > 0 && (
         <motion.div
-          className="rounded-2xl p-4 mb-5 border"
+          className="rounded-xl p-4 mb-5 border"
           style={{ backgroundColor: th.gold + "10", borderColor: th.gold + "25" }}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -364,12 +364,12 @@ export function HabitsPage() {
             ))}
             {filteredCatalog.length === 0 && (
               <div className="text-center py-8">
-                <span style={{ fontSize: "2rem" }}>🔍</span>
+                <span style={{ fontSize: "2rem" }}><AppIcon icon="🔍" size={20} /></span>
                 <p style={{ fontSize: "0.85rem", color: th.textMuted, marginTop: 8 }}>Ничего не найдено</p>
               </div>
             )}
             <motion.button
-              className="w-full rounded-2xl p-4 border flex items-center gap-3 mt-2"
+              className="w-full rounded-xl p-4 border flex items-center gap-3 mt-2"
               style={{ backgroundColor: th.bgSecondary, borderColor: th.border }}
               onClick={() => setMode("custom")}
               whileTap={{ scale: 0.98 }}
@@ -394,18 +394,18 @@ export function HabitsPage() {
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 >
                   <motion.button
-                    className="w-full text-white rounded-2xl py-4 shadow-lg flex items-center justify-center gap-2"
+                    className="w-full text-white rounded-xl py-4 shadow-sm flex items-center justify-center gap-2"
                     style={{
                       fontSize: "0.95rem",
                       fontWeight: 600,
-                      background: `linear-gradient(135deg, #8DB596, #7BAFB0)`,
-                      boxShadow: "0 4px 20px rgba(141, 181, 150, 0.4)",
+                      background: `#8DB596`,
+                      boxShadow: "none",
                     }}
                     onClick={handleSaveSelectedHabits}
                     whileTap={{ scale: 0.98 }}
                   >
                     <CheckCircle2 className="w-5 h-5" />
-                    Сохранить {selectedCatalogHabits.size}{" "}
+                    Сохранить {selectedCatalogHabits.size}{""}
                     {selectedCatalogHabits.size === 1
                       ? "привычку"
                       : selectedCatalogHabits.size >= 2 && selectedCatalogHabits.size <= 4
@@ -420,7 +420,7 @@ export function HabitsPage() {
 
         {/* CUSTOM FORM */}
         {mode === "custom" && (
-          <motion.div key="custom" className="rounded-2xl p-4 mb-5 border" style={{ backgroundColor: th.bgSecondary, borderColor: th.border }}
+          <motion.div key="custom" className="rounded-xl p-4 mb-5 border" style={{ backgroundColor: th.bgSecondary, borderColor: th.border }}
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
             <input value={newTitle} onChange={(e) => setNewTitle(e.target.value)} placeholder="Какую привычку хотите развить?..."
               className="w-full rounded-xl px-4 py-3 border outline-none"
@@ -494,15 +494,13 @@ export function HabitsPage() {
                 const heatmapData = showHeatmap === habit.id ? generateHeatmap(habit.completedDates) : [];
 
                 return (
-                  <motion.div key={habit.id} className="rounded-2xl overflow-hidden"
+                  <motion.div key={habit.id} className="rounded-xl overflow-hidden"
                     style={{
                       background: isFrozenToday
-                        ? (darkMode ? `linear-gradient(135deg, rgba(126,168,190,0.08), rgba(36,34,32,0.5))` : `linear-gradient(135deg, rgba(126,168,190,0.1), rgba(255,255,255,0.4))`)
+                        ? (darkMode ? `rgba(126,168,190,0.08)` : `rgba(126,168,190,0.1)`)
                         : isDoneToday
-                          ? (darkMode ? `linear-gradient(135deg, rgba(141,181,150,0.08), rgba(36,34,32,0.5))` : `linear-gradient(135deg, rgba(141,181,150,0.1), rgba(255,255,255,0.4))`)
-                          : (darkMode ? `linear-gradient(135deg, rgba(36,34,32,0.7), rgba(36,34,32,0.4))` : `linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.35))`),
-                      backdropFilter: "blur(16px)",
-                      WebkitBackdropFilter: "blur(16px)",
+                          ? (darkMode ? `rgba(141,181,150,0.08)` : `rgba(141,181,150,0.1)`)
+                          : (darkMode ? `rgba(36,34,32,0.7)` : `rgba(255,255,255,0.7)`),
                       border: `1px solid ${isFrozenToday ? th.dustyBlue + "30" : isDoneToday ? th.sage + "30" : (darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.55)")}`,
                       boxShadow: darkMode
                         ? "0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)"
@@ -510,7 +508,7 @@ export function HabitsPage() {
                     }}
                     initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} layout>
                     <div className="p-4 flex items-center gap-3">
-                      <motion.button className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                      <motion.button className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
                         style={{ backgroundColor: isFrozenToday ? th.dustyBlue + "18" : isDoneToday ? th.sage + "18" : habit.color + "15" }}
                         onClick={() => !isFrozenToday && toggleHabitToday(habit.id)} whileTap={{ scale: 0.85 }}>
                         {isFrozenToday ? (
@@ -590,7 +588,7 @@ export function HabitsPage() {
                                 onClick={() => setFocusHabitId(focusHabit.habitId === habit.id ? null : habit.id)}
                               >
                                 <Focus className="w-3.5 h-3.5" />
-                                {focusHabit.habitId === habit.id ? "Фокус ✓" : "Фокус недели"}
+                                {focusHabit.habitId === habit.id ? "Фокус " : "Фокус недели"}
                               </button>
                               <button
                                 className="w-full py-2 rounded-xl text-center flex-1"

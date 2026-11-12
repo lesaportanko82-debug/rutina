@@ -278,10 +278,10 @@ async function fetchTTSAudio(text: string): Promise<string> {
   // Add natural pauses between phrases: insert commas after every ~3-4 words
   // and ellipses between sentences for meditative pacing
   const pausedText = text
-    .replace(/\. /g, "... ")          // longer pauses between sentences
-    .replace(/\, /g, ",... ")         // extend comma pauses  
-    .replace(/— /g, "—... ")         // extend dash pauses
-    .replace(/\? /g, "?... ");        // extend question pauses
+    .replace(/\. /g, "...") // longer pauses between sentences
+    .replace(/\, /g,",...") // extend comma pauses  
+    .replace(/— /g, "—...") // extend dash pauses
+    .replace(/\? /g, "?..."); // extend question pauses
 
   const res = await fetch(`${API_BASE}/tts`, {
     method: "POST",
@@ -705,7 +705,7 @@ export function MeditationPage() {
 
         <div className="space-y-3">
           {meditations.map((med, i) => (
-            <GlassPanel key={med.id} darkMode={darkMode} color={med.color} className="rounded-2xl">
+            <GlassPanel key={med.id} darkMode={darkMode} color={med.color} className="rounded-xl">
             <motion.button
               className="w-full p-5 text-left relative overflow-hidden"
               initial={{ opacity: 0, y: 16 }}
@@ -717,7 +717,7 @@ export function MeditationPage() {
               <div className="absolute -right-4 -top-4 w-20 h-20 rounded-full opacity-10" style={{ backgroundColor: med.color }} />
               <div className="flex items-start gap-3">
                 <motion.div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                  className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
                   style={{ backgroundColor: med.color + "20" }}
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 3, repeat: Infinity, delay: i * 0.5 }}
@@ -745,7 +745,7 @@ export function MeditationPage() {
         <GlassPanel darkMode={darkMode} color="#9B8EC4" className="rounded-xl mt-6">
           <div className="p-3.5">
           <p style={{ fontSize: "0.7rem", color: t.textMuted, lineHeight: 1.6 }}>
-            🎙 Медитации озвучиваются голосом AI (OpenAI). Для лучшего опыта используйте наушники. Фоновые звуки природы создают атмосферу для расслабления.
+             Медитации озвучиваются голосом AI (OpenAI). Для лучшего опыта используйте наушники. Фоновые звуки природы создают атмосферу для расслабления.
           </p>
           </div>
         </GlassPanel>
@@ -755,7 +755,7 @@ export function MeditationPage() {
 
   // ─── Player view ───
   return (
-    <div className="min-h-full flex flex-col" style={{ background: `linear-gradient(180deg, ${selected.color}12, ${selected.colorEnd}08, ${t.bg})` }}>
+    <div className="min-h-full flex flex-col" style={{ background: `${selected.color}12` }}>
       {/* Header */}
       <div className="px-5 pt-12 pb-4 flex items-center justify-between">
         <button onClick={goBack} className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.bgSecondary }}>
@@ -784,7 +784,7 @@ export function MeditationPage() {
         <div className="w-full rounded-full h-1.5" style={{ backgroundColor: t.border }}>
           <motion.div
             className="h-1.5 rounded-full"
-            style={{ background: `linear-gradient(90deg, ${selected.color}, ${selected.colorEnd})` }}
+            style={{ background: `${selected.color}` }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.5 }}
           />
@@ -808,13 +808,13 @@ export function MeditationPage() {
           <div
             className="w-36 h-36 rounded-full flex items-center justify-center relative"
             style={{
-              background: `radial-gradient(circle, ${selected.color}30, ${selected.color}10)`,
+              background: `${selected.color}30`,
               boxShadow: playing ? `0 0 60px ${selected.color}20` : "none",
             }}
           >
             <motion.div
               className="absolute inset-4 rounded-full"
-              style={{ background: `radial-gradient(circle, ${selected.color}25, transparent)` }}
+              style={{ background: `${selected.color}25` }}
               animate={playing ? { opacity: [0.3, 0.7, 0.3] } : { opacity: 0.3 }}
               transition={{ duration: 4, repeat: Infinity }}
             />
@@ -871,9 +871,7 @@ export function MeditationPage() {
                 style={{ fontSize: "2rem", display: "block", marginBottom: 8 }}
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 1.5 }}
-              >
-                ✨
-              </motion.span>
+              ><AppIcon icon="✨" size={20} /></motion.span>
               <p style={{ fontSize: "0.9rem", fontWeight: 600, color: t.text, marginBottom: 4 }}>Медитация завершена</p>
               <p style={{ fontSize: "0.75rem", color: t.textMuted }}>Вы позаботились о себе. +20 XP</p>
             </motion.div>
@@ -916,8 +914,8 @@ export function MeditationPage() {
                   pauseMeditation();
                 }
               }}
-              className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
-              style={{ background: `linear-gradient(135deg, ${selected.color}, ${selected.colorEnd})` }}
+              className="w-16 h-16 rounded-full flex items-center justify-center shadow-sm"
+              style={{ background: `${selected.color}` }}
               whileTap={{ scale: 0.92 }}
             >
               {playing ? <Pause className="w-6 h-6 text-white" /> : <Play className="w-6 h-6 text-white ml-0.5" />}
@@ -944,7 +942,7 @@ export function MeditationPage() {
             <button
               onClick={() => { stopAll(); setSelected(null); setCompleted(false); setCurrentStep(0); }}
               className="flex-1 py-3.5 rounded-xl text-white"
-              style={{ fontSize: "0.82rem", fontWeight: 600, background: `linear-gradient(135deg, ${selected.color}, ${selected.colorEnd})` }}
+              style={{ fontSize: "0.82rem", fontWeight: 600, background: `${selected.color}` }}
             >
               Готово
             </button>

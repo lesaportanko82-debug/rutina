@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { motion } from "motion/react";
 import { useMemo } from "react";
 
@@ -28,6 +29,9 @@ function seededRandom(seed: number) {
 
 /** Large glass-morphism blobs that float slowly */
 export function AmbientBlobs({ variant = "default", darkMode = false }: AmbientBackgroundProps) {
+  return null;
+  // decorative background removed
+
   const colors = palettes[variant];
   const opacity = darkMode ? "08" : "12";
 
@@ -54,7 +58,7 @@ export function AmbientBlobs({ variant = "default", darkMode = false }: AmbientB
             height: b.size,
             left: `${b.x}%`,
             top: `${b.y}%`,
-            background: `radial-gradient(circle, ${b.color}${opacity} 0%, transparent 70%)`,
+            background: `${b.color}${opacity}`,
             filter: "blur(40px)",
             transform: "translate(-50%, -50%)",
           }}
@@ -77,6 +81,9 @@ export function AmbientBlobs({ variant = "default", darkMode = false }: AmbientB
 
 /** Tiny floating sparkle dots */
 export function SparkleField({ count = 12, darkMode = false }: { count?: number; darkMode?: boolean }) {
+  return null;
+  // decorative background removed
+
   const dots = useMemo(() => {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
@@ -128,6 +135,8 @@ export function GradientOrb({
   y = "50%",
   darkMode = false,
 }: { color1?: string; color2?: string; size?: number; x?: string; y?: string; darkMode?: boolean }) {
+  return null;
+
   const alpha = darkMode ? "06" : "10";
   return (
     <motion.div
@@ -149,7 +158,7 @@ export function GradientOrb({
   );
 }
 
-/** Floating glass card — a decorative translucent panel */
+/** Flat card */
 export function GlassPanel({
   children,
   className = "",
@@ -163,39 +172,28 @@ export function GlassPanel({
   color?: string;
   style?: React.CSSProperties;
 }) {
-  const accent = color || "#8DB596";
   return (
     <div
-      className={`relative overflow-hidden ${className}`}
+      className={`relative ${className}`}
       style={{
-        background: darkMode
-          ? `linear-gradient(135deg, rgba(36,34,32,0.8), rgba(36,34,32,0.5))`
-          : `linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3))`,
-        backdropFilter: "blur(20px) saturate(1.2)",
-        WebkitBackdropFilter: "blur(20px) saturate(1.2)",
-        border: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.5)"}`,
-        boxShadow: darkMode
-          ? `0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)`
-          : `0 8px 32px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.8)`,
+        background: darkMode ? "#242220" : "#FFFFFF",
+        border: `1px solid ${darkMode ? "#3A3734" : "#E8E3DC"}`,
+        borderRadius: 12,
         ...style,
       }}
     >
-      {/* Subtle accent glow in corner */}
-      <div
-        className="absolute -top-8 -right-8 w-24 h-24 rounded-full pointer-events-none"
-        style={{
-          background: `radial-gradient(circle, ${accent}${darkMode ? "0A" : "15"} 0%, transparent 70%)`,
-        }}
-      />
-      <div className="relative z-[1]">{children}</div>
+      {children}
     </div>
   );
 }
 
 /** Floating leaf / petal particles — nature theme */
 export function FloatingPetals({ darkMode = false }: { darkMode?: boolean }) {
+  return null;
+  // decorative background removed
+
   const petals = useMemo(() => {
-    const shapes = ["🍃", "🌿", "✨", "·", "·", "·"];
+    const shapes = ["", "", "", "·", "·", "·"];
     return Array.from({ length: 8 }, (_, i) => ({
       id: i,
       char: shapes[i % shapes.length],
@@ -242,6 +240,8 @@ export function FloatingPetals({ darkMode = false }: { darkMode?: boolean }) {
 
 /** Wavy gradient divider */
 export function WaveDivider({ color = "#8DB596", darkMode = false }: { color?: string; darkMode?: boolean }) {
+  return null;
+
   const alpha = darkMode ? "08" : "12";
   return (
     <div className="relative w-full h-8 overflow-hidden pointer-events-none my-2">
@@ -271,6 +271,8 @@ export function AuroraHeader({
   height = 180,
   darkMode = false,
 }: { colors?: string[]; height?: number; darkMode?: boolean }) {
+  return null;
+
   const alpha = darkMode ? "0A" : "15";
   return (
     <div
@@ -286,7 +288,7 @@ export function AuroraHeader({
             height: 200 + i * 60,
             left: `${15 + i * 28}%`,
             top: -60 - i * 20,
-            background: `radial-gradient(circle, ${c}${alpha} 0%, transparent 70%)`,
+            background: `${c}${alpha}`,
             filter: "blur(35px)",
             transform: "translate(-50%, 0)",
           }}
@@ -306,7 +308,7 @@ export function AuroraHeader({
       <div
         className="absolute bottom-0 left-0 right-0 h-16"
         style={{
-          background: `linear-gradient(to top, ${darkMode ? "#1A1918" : "#FAF8F5"}, transparent)`,
+          background: `${darkMode ? "#1A1918" : "#FAF8F5"}`,
         }}
       />
     </div>
@@ -331,27 +333,15 @@ export function GlassBubble({
 }) {
   return (
     <motion.button
-      className="relative overflow-hidden rounded-2xl px-3 py-3 flex flex-col items-center gap-1 flex-1"
+      className="relative overflow-hidden rounded-xl px-3 py-3 flex flex-col items-center gap-1 flex-1"
       style={{
-        background: darkMode
-          ? `linear-gradient(145deg, rgba(36,34,32,0.7), rgba(36,34,32,0.4))`
-          : `linear-gradient(145deg, rgba(255,255,255,0.75), rgba(255,255,255,0.35))`,
-        backdropFilter: "blur(16px)",
-        WebkitBackdropFilter: "blur(16px)",
-        border: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.6)"}`,
-        boxShadow: darkMode
-          ? `0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)`
-          : `0 4px 20px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.8)`,
+        background: darkMode ? "#242220" : "#FFFFFF",
+        border: `1px solid ${darkMode ? "#3A3734" : "#E8E3DC"}`,
       }}
-      whileTap={onClick ? { scale: 0.95 } : undefined}
+      whileTap={onClick ? { scale: 0.97 } : undefined}
       onClick={onClick}
     >
-      {/* Accent dot glow */}
-      <div
-        className="absolute -top-4 -right-4 w-12 h-12 rounded-full pointer-events-none"
-        style={{ background: `radial-gradient(circle, ${color}${darkMode ? "12" : "20"} 0%, transparent 70%)` }}
-      />
-      <span style={{ fontSize: "1.15rem" }}>{emoji}</span>
+      <AppIcon icon={emoji} size={18} color={color} />
       <span style={{ fontSize: "1rem", fontWeight: 700, color: darkMode ? "#E8E3DC" : "#4A4540" }}>{value}</span>
       <span style={{ fontSize: "0.58rem", fontWeight: 500, color: darkMode ? "#9B9489" : "#9B9489", lineHeight: 1.2, textAlign: "center" }}>{label}</span>
     </motion.button>
@@ -364,6 +354,8 @@ export function PulsingRing({
   color = "#8DB596",
   darkMode = false,
 }: { size?: number; color?: string; darkMode?: boolean }) {
+  return null;
+
   const alpha = darkMode ? "0C" : "18";
   return (
     <motion.div
@@ -396,6 +388,9 @@ export function PulsingRing({
 
 /** Animated mesh gradient background — the main bg layer for the whole app */
 export function MeshGradientBg({ darkMode = false, variant = "default" }: { darkMode?: boolean; variant?: "default" | "calm" | "warm" | "night" }) {
+  return null;
+  // decorative background removed
+
   const configs = {
     default: {
       light: [
@@ -462,8 +457,8 @@ export function MeshGradientBg({ darkMode = false, variant = "default" }: { dark
         className="absolute inset-0"
         style={{
           background: darkMode
-            ? "linear-gradient(160deg, #1E1D1B 0%, #1A1918 30%, #1C1B1A 60%, #1A1918 100%)"
-            : "linear-gradient(160deg, #FBF9F6 0%, #FAF8F5 25%, #F8F5F0 50%, #FAF7F2 75%, #FBF9F6 100%)",
+            ? "#1E1D1B"
+            : "#FBF9F6",
         }}
       />
       {/* Soft radial spots */}
@@ -476,7 +471,7 @@ export function MeshGradientBg({ darkMode = false, variant = "default" }: { dark
             height: spot.size,
             left: spot.x,
             top: spot.y,
-            background: `radial-gradient(circle, ${spot.color} 0%, transparent 70%)`,
+            background: `${spot.color}`,
             filter: "blur(60px)",
             transform: "translate(-50%, -50%)",
           }}
@@ -502,8 +497,8 @@ export function MeshGradientBg({ darkMode = false, variant = "default" }: { dark
           top: -80,
           left: -60,
           background: darkMode
-            ? "radial-gradient(circle, rgba(141,181,150,0.02) 0%, transparent 70%)"
-            : "radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%)",
+            ? "rgba(141,181,150,0.02)"
+            : "rgba(255,255,255,0.6)",
           filter: "blur(40px)",
         }}
       />
@@ -516,8 +511,8 @@ export function MeshGradientBg({ darkMode = false, variant = "default" }: { dark
           bottom: -60,
           right: -40,
           background: darkMode
-            ? "radial-gradient(circle, rgba(196,135,108,0.015) 0%, transparent 70%)"
-            : "radial-gradient(circle, rgba(196,168,108,0.06) 0%, transparent 70%)",
+            ? "rgba(196,135,108,0.015)"
+            : "rgba(196,168,108,0.06)",
           filter: "blur(50px)",
         }}
       />

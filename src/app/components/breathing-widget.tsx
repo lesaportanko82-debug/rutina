@@ -124,8 +124,7 @@ export function BreathingWidget() {
           <motion.div
             className="fixed inset-0 z-50 flex flex-col items-center justify-center"
             style={{
-              background: `linear-gradient(180deg, ${th.bg}F0, ${th.bgSecondary}F8)`,
-              backdropFilter: "blur(20px)",
+              background: `${th.bg}F0`,
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -151,7 +150,7 @@ export function BreathingWidget() {
                 <div className="text-center mb-8">
                   <motion.div
                     className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
-                    style={{ background: "linear-gradient(135deg, #7EA8BE30, #9B8EC430)" }}
+                    style={{ background: "#7EA8BE30" }}
                     animate={{ scale: [1, 1.08, 1] }}
                     transition={{ repeat: Infinity, duration: 3 }}
                   >
@@ -169,7 +168,7 @@ export function BreathingWidget() {
                   {patterns.map((p) => (
                     <motion.button
                       key={p.name}
-                      className="w-full rounded-2xl p-4 border text-left"
+                      className="w-full rounded-xl p-4 border text-left"
                       style={{
                         backgroundColor: selectedPattern.name === p.name ? phaseColor + "12" : th.card,
                         borderColor: selectedPattern.name === p.name ? phaseColor + "40" : th.border,
@@ -213,12 +212,12 @@ export function BreathingWidget() {
                 </div>
 
                 <motion.button
-                  className="w-full text-white rounded-2xl py-4 mt-6 shadow-md"
+                  className="w-full text-white rounded-xl py-4 mt-6 shadow-sm"
                   style={{
                     fontSize: "0.95rem",
                     fontWeight: 600,
-                    background: "linear-gradient(135deg, #7EA8BE, #9B8EC4)",
-                    boxShadow: "0 4px 20px rgba(126, 168, 190, 0.35)",
+                    background: "#7EA8BE",
+                    boxShadow: "none",
                   }}
                   onClick={startSession}
                   whileTap={{ scale: 0.98 }}
@@ -263,7 +262,7 @@ export function BreathingWidget() {
                   <motion.div
                     className="rounded-full flex items-center justify-center"
                     style={{
-                      background: `radial-gradient(circle, ${phaseColor}30, ${phaseColor}15)`,
+                      background: `${phaseColor}30`,
                       border: `2px solid ${phaseColor}50`,
                     }}
                     animate={{
@@ -277,7 +276,7 @@ export function BreathingWidget() {
                       style={{
                         width: "40%",
                         height: "40%",
-                        background: `radial-gradient(circle, ${phaseColor}60, ${phaseColor}25)`,
+                        background: `${phaseColor}60`,
                       }}
                       animate={{
                         scale: isRunning ? [0.9, 1.1, 0.9] : 1,
@@ -323,7 +322,7 @@ export function BreathingWidget() {
 
                 {/* Stop button */}
                 <motion.button
-                  className="mt-10 px-8 py-3 rounded-2xl border"
+                  className="mt-10 px-8 py-3 rounded-xl border"
                   style={{
                     fontSize: "0.85rem",
                     fontWeight: 600,

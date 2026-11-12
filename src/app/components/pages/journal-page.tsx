@@ -6,7 +6,7 @@ import { Plus, X, Trash2, Brain } from "lucide-react";
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
 
-const moodTags = ["😊 Хорошо", "😌 Спокойно", "🤔 Задумчиво", "😔 Грустно", "✨ Вдохновлённо", "😴 Устало"];
+const moodTags = [" Хорошо", " Спокойно", " Задумчиво", " Грустно", " Вдохновлённо", " Устало"];
 
 const distortionOptions = [
   { id: "catastrophizing", name: "Катастрофизация", icon: "🌪️" },
@@ -69,7 +69,7 @@ export function JournalPage() {
         </motion.button>
       </div>
       <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 16 }}>
-        Запишите мысли, чувства, всё что хочется сохранить
+        
       </p>
 
       <AnimatePresence>
@@ -79,7 +79,7 @@ export function JournalPage() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
           >
-            <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-4 mb-5">
+            <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-4 mb-5">
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
@@ -155,7 +155,7 @@ export function JournalPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.04 }}
           >
-            <GlassPanel darkMode={darkMode} color={entry.mood ? t.lavender : t.dustyBlue} className="rounded-2xl p-4">
+            <GlassPanel darkMode={darkMode} color={entry.mood ? t.lavender : t.dustyBlue} className="rounded-xl p-4">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-2">
                   <span style={{ fontSize: "0.7rem", color: t.textFaint }}>
@@ -203,7 +203,7 @@ export function JournalPage() {
                     return (
                       <span key={tag.id} className="px-2 py-0.5 rounded-full"
                         style={{ fontSize: "0.6rem", fontWeight: 500, backgroundColor: t.lavender + "12", color: t.lavender }}>
-                        {def?.icon || "🧠"} {def?.name || tag.distortion}
+                        {def?.icon || ""} {def?.name || tag.distortion}
                       </span>
                     );
                   })}
@@ -216,12 +216,12 @@ export function JournalPage() {
 
       {journalEntries.length === 0 && !showForm && (
         <div className="text-center py-12">
-          <span style={{ fontSize: "2.5rem" }}>📓</span>
+          <span style={{ fontSize: "2.5rem" }}><AppIcon icon="📓" size={20} /></span>
           <p style={{ fontSize: "0.9rem", color: t.textMuted, marginTop: 8 }}>
-            Ваш дневник пока пуст
+            Записей пока нет
           </p>
           <p style={{ fontSize: "0.78rem", color: t.textFaint, marginTop: 4 }}>
-            Запишите первую мысль — она может стать началом чего-то важного
+            Нажмите +, чтобы добавить запись
           </p>
         </div>
       )}

@@ -129,9 +129,9 @@ export interface PlantState {
   growthPoints: number;
   lastVisitDate: string;
   lastWateredDate: string;
-  health: number;          // 0-100
-  waterLevel: number;      // 0-100
-  happiness: number;       // 0-100
+  health: number; // 0-100
+  waterLevel: number; // 0-100
+  happiness: number; // 0-100
   totalInteractions: number;
   createdAt: string;
   name: string;
@@ -145,9 +145,9 @@ export interface WorryEntry {
   worry: string;
   probability: number; // 1-10
   category: string;
-  reviewDate?: string;   // when to come back
+  reviewDate?: string; // when to come back
   reviewed: boolean;
-  happened?: boolean;    // did it happen?
+  happened?: boolean; // did it happen?
   reviewNote?: string;
 }
 
@@ -208,7 +208,7 @@ export interface LifeWheelEntry {
 export interface TimeCapsule {
   id: string;
   createdAt: string;
-  openDate: string;       // when to reveal
+  openDate: string; // when to reveal
   message: string;
   opened: boolean;
   openedAt?: string;
@@ -232,11 +232,11 @@ export interface FocusHabitState {
 export interface SleepEntry {
   id: string;
   date: string;
-  quality: number;    // 1-5
-  hours: number;      // hours slept
-  bedtime: string;    // "23:00"
-  wakeTime: string;   // "07:00"
-  factors: string[];  // what affected sleep
+  quality: number; // 1-5
+  hours: number; // hours slept
+  bedtime: string; // "23:00"
+  wakeTime: string; // "07:00"
+  factors: string[]; // what affected sleep
   note?: string;
 }
 

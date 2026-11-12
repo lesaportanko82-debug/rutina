@@ -143,7 +143,7 @@ function MoodMapCard({
   const energyLabels = ["", "Очень низкая", "Низкая", "Средняя", "Высокая", "Очень высокая"];
 
   return (
-    <GlassPanel darkMode={darkMode} color={entry.color} className="rounded-2xl p-5 mb-5">
+    <GlassPanel darkMode={darkMode} color={entry.color} className="rounded-xl p-5 mb-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
           <motion.span
@@ -312,10 +312,10 @@ export function MoodPage() {
       {/* Header */}
       <div className="mb-5">
         <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: th.text }} className="mb-0.5">
-          Ваше настроение
+          Настроение
         </h1>
         <p style={{ fontSize: "0.82rem", color: th.textMuted }}>
-          Все чувства важны — прислушайтесь к себе
+          
         </p>
       </div>
 
@@ -336,13 +336,11 @@ export function MoodPage() {
                 style={{
                   background: day.entry
                     ? (darkMode
-                        ? `linear-gradient(135deg, ${day.entry.color}15, rgba(36,34,32,0.5))`
-                        : `linear-gradient(135deg, ${day.entry.color}15, rgba(255,255,255,0.4))`)
+                        ? `${day.entry.color}15`
+                        : `${day.entry.color}15`)
                     : (darkMode
-                        ? "linear-gradient(135deg, rgba(36,34,32,0.6), rgba(36,34,32,0.3))"
-                        : "linear-gradient(135deg, rgba(255,255,255,0.6), rgba(255,255,255,0.3))"),
-                  backdropFilter: "blur(8px)",
-                  WebkitBackdropFilter: "blur(8px)",
+                        ? "rgba(36,34,32,0.6)"
+                        : "rgba(255,255,255,0.6)"),
                   borderColor: day.isToday ? (day.entry?.color || th.sage) + "50" : day.entry ? day.entry.color + "25" : (darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.5)"),
                   borderWidth: day.isToday ? 2 : 1,
                 }}
@@ -399,7 +397,7 @@ export function MoodPage() {
           </div>
 
           {/* Energy slider */}
-          <GlassPanel darkMode={darkMode} color={accentColor} className="rounded-2xl p-4 mb-4">
+          <GlassPanel darkMode={darkMode} color={accentColor} className="rounded-xl p-4 mb-4">
             <div className="flex items-center justify-between mb-2">
               <span className="flex items-center gap-1.5" style={{ fontSize: "0.82rem", fontWeight: 600, color: th.text }}>
                 <Zap className="w-4 h-4" style={{ color: accentColor }} /> Уровень энергии
@@ -432,7 +430,7 @@ export function MoodPage() {
           </GlassPanel>
 
           {/* Note */}
-          <GlassPanel darkMode={darkMode} color={accentColor} className="rounded-2xl p-4 mb-5">
+          <GlassPanel darkMode={darkMode} color={accentColor} className="rounded-xl p-4 mb-5">
             <p style={{ fontSize: "0.8rem", fontWeight: 500, color: th.text, marginBottom: 8 }}>
               Заметка (необязательно)
             </p>
@@ -447,14 +445,13 @@ export function MoodPage() {
                 backgroundColor: darkMode ? "rgba(36,34,32,0.6)" : "rgba(255,255,255,0.5)",
                 borderColor: darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.4)",
                 color: th.text,
-                backdropFilter: "blur(8px)",
               }}
             />
           </GlassPanel>
 
           {/* Save button */}
           <motion.button
-            className="w-full text-white rounded-2xl py-3.5 mb-5"
+            className="w-full text-white rounded-xl py-3.5 mb-5"
             style={{
               fontSize: "0.95rem",
               fontWeight: 600,
@@ -471,7 +468,7 @@ export function MoodPage() {
       ) : null}
 
       {/* ─── Monthly Calendar ─── */}
-      <GlassPanel darkMode={darkMode} color={th.lavender} className="rounded-2xl p-4 mb-5">
+      <GlassPanel darkMode={darkMode} color={th.lavender} className="rounded-xl p-4 mb-5">
         <button
           className="flex items-center justify-between w-full mb-3"
           onClick={() => setShowCalendar(!showCalendar)}
@@ -532,7 +529,7 @@ export function MoodPage() {
 
       {/* ─── Mood Distribution ─── */}
       {moodDistribution.length > 0 && (
-        <GlassPanel darkMode={darkMode} color={th.dustyBlue} className="rounded-2xl p-4 mb-5">
+        <GlassPanel darkMode={darkMode} color={th.dustyBlue} className="rounded-xl p-4 mb-5">
           <h3 className="flex items-center gap-2 mb-3" style={{ fontSize: "0.9rem", fontWeight: 600, color: th.text }}>
             <BarChart3 className="w-4 h-4" style={{ color: th.dustyBlue }} />
             Распределение настроений

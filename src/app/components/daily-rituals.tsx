@@ -34,9 +34,9 @@ export function MorningIntention({ todayIntention, onSave }: MorningIntentionPro
   if (todayIntention && !isEditing) {
     return (
       <motion.div
-        className="rounded-2xl p-4 border"
+        className="rounded-xl p-4 border"
         style={{
-          background: `linear-gradient(135deg, ${th.gold}08, ${th.warm}08)`,
+          background: `${th.gold}08`,
           borderColor: th.gold + "25",
         }}
         initial={{ opacity: 0, y: 15 }}
@@ -66,9 +66,9 @@ export function MorningIntention({ todayIntention, onSave }: MorningIntentionPro
 
   return (
     <motion.div
-      className="rounded-2xl p-4 border"
+      className="rounded-xl p-4 border"
       style={{
-        background: `linear-gradient(135deg, ${th.gold}08, ${th.warm}08)`,
+        background: `${th.gold}08`,
         borderColor: th.gold + "25",
       }}
       initial={{ opacity: 0, y: 15 }}
@@ -174,9 +174,9 @@ export function EveningCheckin({ todayCheckin, onSave }: EveningCheckinProps) {
   if (todayCheckin) {
     return (
       <motion.div
-        className="rounded-2xl p-4 border"
+        className="rounded-xl p-4 border"
         style={{
-          background: `linear-gradient(135deg, ${th.lavender}08, ${th.dustyBlue}08)`,
+          background: `${th.lavender}08`,
           borderColor: th.lavender + "20",
         }}
         initial={{ opacity: 0, y: 15 }}
@@ -224,9 +224,9 @@ export function EveningCheckin({ todayCheckin, onSave }: EveningCheckinProps) {
   return (
     <>
       <motion.button
-        className="w-full rounded-2xl p-4 border flex items-center gap-3 text-left"
+        className="w-full rounded-xl p-4 border flex items-center gap-3 text-left"
         style={{
-          background: `linear-gradient(135deg, ${th.lavender}06, ${th.dustyBlue}06)`,
+          background: `${th.lavender}06`,
           borderColor: th.lavender + "20",
         }}
         onClick={() => setIsOpen(true)}
@@ -262,7 +262,7 @@ export function EveningCheckin({ todayCheckin, onSave }: EveningCheckinProps) {
             onClick={() => setIsOpen(false)}
           >
             <motion.div
-              className="w-full max-w-[430px] rounded-t-3xl p-6 shadow-xl"
+              className="w-full max-w-[430px] rounded-t-3xl p-6 shadow-sm"
               style={{ backgroundColor: th.bg }}
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -293,7 +293,7 @@ export function EveningCheckin({ todayCheckin, onSave }: EveningCheckinProps) {
               {/* Good */}
               <div className="mb-4">
                 <label style={{ fontSize: "0.78rem", fontWeight: 600, color: th.text, display: "block", marginBottom: 6 }}>
-                  Что было хорошо сегодня? 🌸
+                  Что было хорошо сегодня? 
                 </label>
                 <textarea
                   value={good}
@@ -308,7 +308,7 @@ export function EveningCheckin({ todayCheckin, onSave }: EveningCheckinProps) {
               {/* Hard */}
               <div className="mb-4">
                 <label style={{ fontSize: "0.78rem", fontWeight: 600, color: th.text, display: "block", marginBottom: 6 }}>
-                  Что было сложно? 🌧️
+                  Что было сложно? 
                 </label>
                 <textarea
                   value={hard}
@@ -355,11 +355,11 @@ export function EveningCheckin({ todayCheckin, onSave }: EveningCheckinProps) {
 
               {/* Save */}
               <motion.button
-                className="w-full text-white rounded-2xl py-3.5 shadow-md"
+                className="w-full text-white rounded-xl py-3.5 shadow-sm"
                 style={{
                   fontSize: "0.9rem",
                   fontWeight: 600,
-                  background: `linear-gradient(135deg, ${th.lavender}, ${th.dustyBlue})`,
+                  background: `${th.lavender}`,
                   opacity: (good.trim() || hard.trim() || word.trim()) ? 1 : 0.5,
                 }}
                 onClick={handleSave}

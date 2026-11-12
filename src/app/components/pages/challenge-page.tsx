@@ -115,7 +115,7 @@ export function ChallengePage() {
         </button>
         <div className="flex-1">
           <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Челлендж</h1>
-          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>30 дней мягкости к себе</p>
+          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Одно маленькое задание в день</p>
         </div>
         {activeChallenge && (
           <div className="px-3 py-1.5 rounded-full" style={{ backgroundColor: t.sage + "18" }}>
@@ -128,9 +128,9 @@ export function ChallengePage() {
 
       {!activeChallenge ? (
         /* No active challenge */
-        <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-6 text-center">
+        <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span style={{ fontSize: "3rem" }}>🌸</span>
+          <span style={{ fontSize: "3rem" }}><AppIcon icon="🌸" size={20} /></span>
           <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 12 }}>
             30 дней мягкости
           </h2>
@@ -140,7 +140,7 @@ export function ChallengePage() {
           </p>
           <motion.button
             className="mt-6 px-8 py-3 rounded-xl font-semibold flex items-center gap-2 mx-auto"
-            style={{ backgroundColor: t.sage, color: "#fff", fontSize: "0.9rem" }}
+            style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.9rem" }}
             whileTap={{ scale: 0.95 }}
             onClick={startChallenge}
           >
@@ -151,7 +151,7 @@ export function ChallengePage() {
       ) : (
         <>
           {/* Progress bar */}
-          <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-2xl p-4 mb-4">
+          <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-xl p-4 mb-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             <div className="flex items-center justify-between mb-2">
               <span style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text }}>
@@ -163,7 +163,7 @@ export function ChallengePage() {
             </div>
             <div className="w-full rounded-full h-2.5" style={{ backgroundColor: t.border }}>
               <motion.div className="h-2.5 rounded-full"
-                style={{ background: "linear-gradient(90deg, #9B8EC4, #8DB596)" }}
+                style={{ background: "#9B8EC4" }}
                 animate={{ width: `${(completedCount / 30) * 100}%` }}
                 transition={{ duration: 0.8 }}
               />
@@ -173,7 +173,7 @@ export function ChallengePage() {
 
           {/* Today's task highlight */}
           {currentDay <= 30 && !activeChallenge.days[currentDay - 1]?.completed && (
-            <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-2xl p-5 mb-4">
+            <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-xl p-5 mb-4">
               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
               <p style={{ fontSize: "0.68rem", fontWeight: 600, color: t.lavender, textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 8 }}>
                 Задание на сегодня
@@ -186,7 +186,7 @@ export function ChallengePage() {
               </div>
               <motion.button
                 className="mt-4 w-full rounded-xl py-2.5 font-semibold"
-                style={{ backgroundColor: t.sage, color: "#fff", fontSize: "0.85rem" }}
+                style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.85rem" }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => toggleDay(currentDay)}
               >
@@ -241,8 +241,8 @@ export function ChallengePage() {
 
           {/* Completion celebration */}
           {completedCount === 30 && (
-            <motion.div className="rounded-2xl p-5 text-center border mb-4"
-              style={{ background: `linear-gradient(135deg, ${t.gold}10, ${t.sage}10)`, borderColor: t.gold + "30" }}
+            <motion.div className="rounded-xl p-5 text-center border mb-4"
+              style={{ background: `${t.gold}10`, borderColor: t.gold + "30" }}
               initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
               <Trophy className="w-10 h-10 mx-auto mb-3" style={{ color: t.gold }} />
               <p style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text }}>

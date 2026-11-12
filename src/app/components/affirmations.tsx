@@ -22,7 +22,7 @@ const affirmationSets: Record<string, string[]> = {
   midEnergy: [
     "Вы на верном пути. Шаг за шагом.",
     "Сегодня — хороший день для маленькой победы.",
-    "Ваши усилия накапливаются, даже когда вы этого не видите.",
+    "Серия считается по дням с хотя бы одной отмеченной привычкой.",
     "Доверьтесь своему ритму — он мудрее, чем кажется.",
     "Каждое осознанное действие — это инвестиция в себя.",
     "Прогресс не всегда линейный, и это нормально.",
@@ -61,7 +61,7 @@ const affirmationSets: Record<string, string[]> = {
     "Сегодня — чистый лист. Наполните его тем, что важно.",
     "Просто быть — уже значит многое.",
     "Каждый новый день — это возможность.",
-    "Ваше присутствие здесь — уже победа.",
+    "Сегодня: отметьте одну привычку.",
     "Заметьте одну хорошую вещь сегодня.",
     "Дышите глубоко. Всё в порядке.",
   ],
@@ -108,9 +108,9 @@ export function AffirmationCard({ energy, anxietyLevel, mood }: AffirmationProps
 
   return (
     <motion.div
-      className="rounded-2xl p-4 border relative overflow-hidden"
+      className="rounded-xl p-4 border relative overflow-hidden"
       style={{
-        background: `linear-gradient(135deg, ${accentColor}06, ${accentColor}03)`,
+        background: `${accentColor}06`,
         borderColor: accentColor + "18",
       }}
       initial={{ opacity: 0, y: 15 }}

@@ -88,10 +88,10 @@ export function CapsulePage() {
           </h2>
           <div className="space-y-3 mb-5">
             {readyToOpen.map((cap) => (
-              <GlassPanel key={cap.id} darkMode={darkMode} color={t.gold} className="rounded-2xl p-4 text-center">
+              <GlassPanel key={cap.id} darkMode={darkMode} color={t.gold} className="rounded-xl p-4 text-center">
                 <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
                 <motion.div animate={{ rotate: [0, -5, 5, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
-                  <span style={{ fontSize: "2.5rem" }}>📦</span>
+                  <span style={{ fontSize: "2.5rem" }}><AppIcon icon="📦" size={20} /></span>
                 </motion.div>
                 <p style={{ fontSize: "0.78rem", color: t.textMuted, marginTop: 8 }}>
                   Капсула от {new Date(cap.createdAt).toLocaleDateString("ru")}
@@ -160,7 +160,7 @@ export function CapsulePage() {
               <GlassPanel key={cap.id} darkMode={darkMode} color={t.dustyBlue} className="rounded-xl p-4">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <div className="flex items-center gap-2 mb-2">
-                  <span style={{ fontSize: "0.8rem" }}>💌</span>
+                  <span style={{ fontSize: "0.8rem" }}><AppIcon icon="💌" size={20} /></span>
                   <span style={{ fontSize: "0.65rem", color: t.textFaint }}>
                     Написано {new Date(cap.createdAt).toLocaleDateString("ru")} · Открыто {cap.openedAt ? new Date(cap.openedAt).toLocaleDateString("ru") : ""}
                   </span>
@@ -177,9 +177,9 @@ export function CapsulePage() {
 
       {/* Empty state */}
       {capsules.length === 0 && (
-        <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-2xl p-6 text-center">
+        <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-xl p-6 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span style={{ fontSize: "3rem" }}>📦</span>
+          <span style={{ fontSize: "3rem" }}><AppIcon icon="📦" size={20} /></span>
           <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 12 }}>Капсула времени</h2>
           <p style={{ fontSize: "0.8rem", color: t.textMuted, marginTop: 8, lineHeight: 1.6 }}>
             Напишите письмо будущему себе. Через неделю, месяц или 3 месяца оно откроется — как сюрприз от прошлого.
@@ -255,15 +255,13 @@ export function CapsulePage() {
             <motion.div className="fixed inset-0 z-50 flex items-center justify-center" style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setRevealedId(null)}>
-              <motion.div className="rounded-3xl p-8 text-center mx-6"
+              <motion.div className="rounded-xl p-8 text-center mx-6"
                 style={{ backgroundColor: t.card, maxWidth: 360 }}
                 initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: 0 }} exit={{ scale: 0 }}
                 onClick={(e) => e.stopPropagation()}>
                 <motion.span style={{ fontSize: "3rem", display: "block" }}
                   initial={{ y: -20 }} animate={{ y: 0 }}
-                  transition={{ type: "spring", stiffness: 200 }}>
-                  💌
-                </motion.span>
+                  transition={{ type: "spring", stiffness: 200 }}><AppIcon icon="💌" size={20} /></motion.span>
                 <p style={{ fontSize: "0.7rem", color: t.textFaint, marginTop: 8 }}>
                   Написано {new Date(cap.createdAt).toLocaleDateString("ru")}
                 </p>

@@ -1,3 +1,4 @@
+import { AppIcon } from "../app-icon";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useApp } from "../app-context";
@@ -31,11 +32,11 @@ function getLevelLabel(level: number): string {
 }
 
 function getLevelEmoji(level: number): string {
-  if (level <= 2) return "🌿";
-  if (level <= 4) return "🌤️";
-  if (level <= 6) return "🌥️";
-  if (level <= 8) return "🌧️";
-  return "⛈️";
+  if (level <= 2) return "";
+  if (level <= 4) return "";
+  if (level <= 6) return "";
+  if (level <= 8) return "";
+  return "";
 }
 
 export function AnxietyPage() {
@@ -142,18 +143,16 @@ export function AnxietyPage() {
             Трекер тревоги
           </h1>
           <p style={{ fontSize: "0.72rem", color: t.textMuted }}>
-            Отслеживайте тревогу — это первый шаг к управлению ей
+            Уровень тревоги и что её вызвало
           </p>
         </div>
       </motion.div>
 
       {/* New entry button */}
       <motion.button
-        className="w-full rounded-2xl p-4 mb-5 flex items-center gap-3"
+        className="w-full rounded-xl p-4 mb-5 flex items-center gap-3"
         style={{
           backgroundColor: darkMode ? "rgba(36,34,32,0.5)" : "rgba(255,255,255,0.5)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
           border: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.6)"}`,
           boxShadow: darkMode ? "0 2px 8px rgba(0,0,0,0.12)" : "0 2px 8px rgba(0,0,0,0.02)",
         }}
@@ -186,10 +185,10 @@ export function AnxietyPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-2xl p-4 mb-5">
+          <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-xl p-4 mb-5">
             <div className="flex items-center gap-2 mb-4">
-              <span style={{ fontSize: "1rem" }}>🔍</span>
-              <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Ваши паттерны</span>
+              <span style={{ fontSize: "1rem" }}><AppIcon icon="🔍" size={20} /></span>
+              <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Паттерны</span>
             </div>
 
             {/* Avg level */}
@@ -253,7 +252,7 @@ export function AnxietyPage() {
                   <p style={{ fontSize: "0.68rem", color: t.textMuted, marginTop: 6 }}>
                     Тревога обычно выше по {dayNames[patterns.worstDay.day]}м ({patterns.worstDay.avg.toFixed(1)}/10)
                     {patterns.bestDay && patterns.bestDay.day !== patterns.worstDay.day &&
-                      `, спокойнее — по ${dayNames[patterns.bestDay.day]}м (${patterns.bestDay.avg.toFixed(1)}/10)`}
+`, спокойнее — по ${dayNames[patterns.bestDay.day]}м (${patterns.bestDay.avg.toFixed(1)}/10)`}
                   </p>
                 )}
               </div>
@@ -302,8 +301,6 @@ export function AnxietyPage() {
           className="rounded-xl p-3.5 flex items-center gap-2.5"
           style={{
             backgroundColor: darkMode ? "rgba(36,34,32,0.5)" : "rgba(255,255,255,0.5)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
             border: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.6)"}`,
           }}
           onClick={() => navigate("/app/anxiety/grounding")}
@@ -318,8 +315,6 @@ export function AnxietyPage() {
           className="rounded-xl p-3.5 flex items-center gap-2.5"
           style={{
             backgroundColor: darkMode ? "rgba(36,34,32,0.5)" : "rgba(255,255,255,0.5)",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
             border: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.6)"}`,
           }}
           onClick={() => {
@@ -345,13 +340,13 @@ export function AnxietyPage() {
           История
         </h3>
         {anxietyEntries.length === 0 && (
-          <div className="rounded-2xl p-8 text-center" style={{ backgroundColor: t.bgSecondary }}>
-            <span style={{ fontSize: "1.5rem", display: "block", marginBottom: 8 }}>🫧</span>
+          <div className="rounded-xl p-8 text-center" style={{ backgroundColor: t.bgSecondary }}>
+            <span style={{ fontSize: "1.5rem", display: "block", marginBottom: 8 }}><AppIcon icon="🫧" size={20} /></span>
             <p style={{ fontSize: "0.82rem", color: t.textMuted }}>
-              Здесь будут ваши записи
+              Записей пока нет
             </p>
             <p style={{ fontSize: "0.7rem", color: t.textFaint, marginTop: 4 }}>
-              Отслеживание тревоги помогает лучше понять себя
+              Добавьте первую запись сверху
             </p>
           </div>
         )}
@@ -398,10 +393,10 @@ export function AnxietyPage() {
               {(entry.usedBreathing || entry.usedGrounding) && (
                 <div className="flex gap-2 mt-1.5">
                   {entry.usedBreathing && (
-                    <span style={{ fontSize: "0.62rem", color: t.sage }}>🌬️ Дыхание</span>
+                    <span style={{ fontSize: "0.62rem", color: t.sage }}> Дыхание</span>
                   )}
                   {entry.usedGrounding && (
-                    <span style={{ fontSize: "0.62rem", color: t.teal }}>🖐️ Заземление</span>
+                    <span style={{ fontSize: "0.62rem", color: t.teal }}> Заземление</span>
                   )}
                 </div>
               )}
@@ -422,7 +417,7 @@ export function AnxietyPage() {
             onClick={() => setShowForm(false)}
           >
             <motion.div
-              className="w-full max-w-[430px] rounded-t-3xl p-6 shadow-xl max-h-[85vh] overflow-y-auto"
+              className="w-full max-w-[430px] rounded-t-3xl p-6 shadow-sm max-h-[85vh] overflow-y-auto"
               style={{ backgroundColor: t.bg }}
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -470,7 +465,7 @@ export function AnxietyPage() {
                     onChange={(e) => handleLevelChange(parseInt(e.target.value))}
                     className="w-full h-2 rounded-full appearance-none outline-none"
                     style={{
-                      background: `linear-gradient(to right, #8DB596 0%, #C4A86C 30%, #C4876C 60%, #9B5A5E 100%)`,
+                      background: `#8DB596`,
                       accentColor: getLevelColor(level),
                     }}
                   />
@@ -492,7 +487,7 @@ export function AnxietyPage() {
                     exit={{ opacity: 0, height: 0 }}
                   >
                     <p style={{ fontSize: "0.78rem", color: t.text, fontWeight: 500, marginBottom: 6 }}>
-                      💙 Тревога высокая. Может, попробуем дыхание?
+                       Тревога высокая. Может, попробуем дыхание?
                     </p>
                     <p style={{ fontSize: "0.7rem", color: t.textMuted, marginBottom: 8 }}>
                       Даже 1 минута глубокого дыхания активирует парасимпатическую нервную систему
@@ -606,11 +601,11 @@ export function AnxietyPage() {
 
               {/* Save */}
               <motion.button
-                className="w-full text-white rounded-2xl py-3.5 shadow-md"
+                className="w-full text-white rounded-xl py-3.5 shadow-sm"
                 style={{
                   fontSize: "0.9rem",
                   fontWeight: 600,
-                  background: `linear-gradient(135deg, ${t.lavender}, ${t.dustyBlue})`,
+                  background: `${t.lavender}`,
                 }}
                 onClick={handleSave}
                 whileTap={{ scale: 0.98 }}

@@ -122,16 +122,16 @@ export function PMRPage() {
         </button>
         <div className="flex-1">
           <h1 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>Мышечная релаксация</h1>
-          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Прогрессивная техника Джейкобсона</p>
+          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Техника Джейкобсона, 4 минуты</p>
         </div>
       </div>
 
       {phase === "idle" ? (
         /* Start screen */
-        <GlassPanel darkMode={darkMode} color="#8DB596" className="rounded-2xl">
+        <GlassPanel darkMode={darkMode} color="#8DB596" className="rounded-xl">
         <motion.div className="p-6 text-center"
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <span style={{ fontSize: "3rem" }}>🧘‍♀️</span>
+          <span style={{ fontSize: "3rem" }}><AppIcon icon="🧘‍♀️" size={20} /></span>
           <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 12 }}>
             Прогрессивная релаксация
           </h2>
@@ -152,7 +152,7 @@ export function PMRPage() {
 
           <motion.button
             className="mt-6 px-8 py-3 rounded-xl font-semibold flex items-center gap-2 mx-auto"
-            style={{ backgroundColor: t.sage, color: "#fff", fontSize: "0.9rem" }}
+            style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.9rem" }}
             whileTap={{ scale: 0.95 }}
             onClick={start}
           >
@@ -162,10 +162,10 @@ export function PMRPage() {
         </GlassPanel>
       ) : phase === "complete" ? (
         /* Complete screen */
-        <GlassPanel darkMode={darkMode} color="#9B8EC4" className="rounded-2xl">
+        <GlassPanel darkMode={darkMode} color="#9B8EC4" className="rounded-xl">
         <motion.div className="p-6 text-center"
           initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
-          <span style={{ fontSize: "3rem" }}>✨</span>
+          <span style={{ fontSize: "3rem" }}><AppIcon icon="✨" size={20} /></span>
           <h2 style={{ fontSize: "1.1rem", fontWeight: 700, color: t.text, marginTop: 12 }}>
             Сессия завершена!
           </h2>
@@ -202,7 +202,7 @@ export function PMRPage() {
             </div>
             <div className="w-full rounded-full h-2" style={{ backgroundColor: t.border }}>
               <motion.div className="h-2 rounded-full"
-                style={{ background: `linear-gradient(90deg, ${phaseColor}, ${phaseColor}80)` }}
+                style={{ background: `${phaseColor}` }}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.5 }}
               />
@@ -213,7 +213,7 @@ export function PMRPage() {
           <AnimatePresence mode="wait">
             <motion.div
               key={`${stepIdx}-${phase}`}
-              className="rounded-2xl p-6 text-center border mb-4"
+              className="rounded-xl p-6 text-center border mb-4"
               style={{
                 backgroundColor: t.card,
                 borderColor: phaseColor + "30",

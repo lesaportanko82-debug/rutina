@@ -509,7 +509,7 @@ export function SoundscapesPage() {
 
       {/* Now playing */}
       {activeDef && (
-        <GlassPanel darkMode={darkMode} color={activeDef.color} className="rounded-2xl p-5 mb-5 text-center">
+        <GlassPanel darkMode={darkMode} color={activeDef.color} className="rounded-xl p-5 mb-5 text-center">
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
           <motion.span style={{ fontSize: "2.5rem", display: "block" }}
             animate={{ scale: [1, 1.1, 1] }}
@@ -551,7 +551,7 @@ export function SoundscapesPage() {
               key={sound.id}
               darkMode={darkMode}
               color={isActive ? sound.color : undefined}
-              className="rounded-2xl"
+              className="rounded-xl"
             >
               <motion.button
                 className="w-full p-4 text-left relative overflow-hidden"
@@ -582,7 +582,7 @@ export function SoundscapesPage() {
       </div>
 
       {/* Controls */}
-      <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-4 space-y-4">
+      <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-4 space-y-4">
         {/* Volume */}
         <div>
           <div className="flex items-center justify-between mb-2">

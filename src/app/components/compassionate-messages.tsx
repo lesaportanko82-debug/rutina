@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Heart, X } from "lucide-react";
@@ -37,7 +38,7 @@ const consistentMessages = [
 ];
 
 const gentleStartMessages = [
-  { text: "Не нужно быть идеальным. Просто будьте собой", emoji: "🌱" },
+  { text: "Отметьте одну привычку сегодня", emoji: "🌱" },
   { text: "Начните с одной маленькой вещи. Этого достаточно", emoji: "🪴" },
   { text: "Вы уже здесь. Это самое важное", emoji: "🌿" },
 ];
@@ -160,7 +161,7 @@ export function CompassionateCard({ habits, moods, dismissKey, dismissed, onDism
   return (
     <AnimatePresence>
       <motion.div
-        className="rounded-2xl p-4 border relative overflow-hidden"
+        className="rounded-xl p-4 border relative overflow-hidden"
         style={{
           backgroundColor: bgMap[message.type],
           borderColor: borderMap[message.type],
@@ -193,7 +194,7 @@ export function CompassionateCard({ habits, moods, dismissKey, dismissed, onDism
           </div>
           <div className="flex-1 min-w-0 pr-4">
             <p style={{ fontSize: "0.85rem", fontWeight: 500, color: th.text, lineHeight: 1.4 }}>
-              <span style={{ marginRight: 6 }}>{message.emoji}</span>
+              <span style={{ marginRight: 6 }}><AppIcon icon={message.emoji} size={18} /></span>
               {message.text}
             </p>
             <p style={{ fontSize: "0.68rem", color: th.textMuted, marginTop: 4 }}>
@@ -201,7 +202,7 @@ export function CompassionateCard({ habits, moods, dismissKey, dismissed, onDism
               {message.type === "streak-loss" && "Стрики вернутся. Вы уже знаете как"}
               {message.type === "low-energy" && "Забота о себе — тоже продуктивность"}
               {message.type === "consistent" && "Продолжайте в своём темпе"}
-              {message.type === "gentle-start" && "Попробуйте отметить хотя бы одну привычку"}
+              {message.type === "gentle-start" && "Серия начинается с первого дня"}
             </p>
           </div>
         </div>

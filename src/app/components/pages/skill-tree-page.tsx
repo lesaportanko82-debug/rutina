@@ -207,7 +207,7 @@ function computeSkillTree(habits: any[], moods: any[], journalEntries: any[], an
 }
 
 const levelNames = ["Новичок", "Ученик", "Практик", "Мастер", "Эксперт", "Легенда"];
-const levelStars = ["", "⭐", "⭐⭐", "⭐⭐⭐", "🌟🌟", "👑"];
+const levelStars = ["", "", "", "", "", ""];
 
 export function SkillTreePage() {
   const { habits, moods, journalEntries, anxietyEntries, pomodoroStats, tasks } = useApp();
@@ -233,7 +233,7 @@ export function SkillTreePage() {
         </button>
         <div className="flex-1">
           <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Древо навыков</h1>
-          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Прокачивай ветки через привычки и действия</p>
+          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Уровни растут от выполненных привычек</p>
         </div>
         <div className="px-3 py-1.5 rounded-full" style={{ backgroundColor: t.gold + "18" }}>
           <span style={{ fontSize: "0.72rem", fontWeight: 700, color: t.gold }}>LVL {totalLevel}</span>
@@ -245,7 +245,7 @@ export function SkillTreePage() {
         {branches.map((branch, bIdx) => (
           <motion.div
             key={branch.id}
-            className="rounded-2xl border overflow-hidden"
+            className="rounded-xl border overflow-hidden"
             style={{ backgroundColor: t.card, borderColor: t.border }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -306,7 +306,7 @@ export function SkillTreePage() {
                           {node.name}
                         </p>
                         <span style={{ fontSize: "0.6rem", color: node.color, fontWeight: 600 }}>
-                          {node.unlocked ? levelNames[node.level] : "🔒"}
+                          {node.unlocked ? levelNames[node.level] : ""}
                         </span>
                       </div>
                       <p style={{ fontSize: "0.62rem", color: t.textFaint }}>{node.description}</p>
@@ -341,7 +341,7 @@ export function SkillTreePage() {
       </div>
 
       {/* Legend */}
-      <motion.div className="rounded-2xl p-4 mt-4 border" style={{ backgroundColor: t.card, borderColor: t.border }}
+      <motion.div className="rounded-xl p-4 mt-4 border" style={{ backgroundColor: t.card, borderColor: t.border }}
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
         <p style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text, marginBottom: 8 }}>Как прокачивать</p>
         <div className="space-y-2">

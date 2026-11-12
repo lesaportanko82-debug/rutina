@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useRouteError, useNavigate } from "react-router";
 
 /** Shown while a lazy route chunk is being fetched (hydration fallback). */
@@ -49,7 +50,7 @@ export function RouteErrorBoundary() {
         textAlign: "center",
       }}
     >
-      <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🌿</div>
+      <div style={{ fontSize: "3rem", marginBottom: "1rem" }}><AppIcon icon="🌿" size={20} /></div>
 
       <p
         style={{
@@ -73,7 +74,7 @@ export function RouteErrorBoundary() {
       >
         {isChunkError
           ? "Проверьте соединение и попробуйте ещё раз."
-          : "Листик столкнулся с неожиданной ошибкой. Обновите страницу 🌱"}
+          : "Листик столкнулся с неожиданной ошибкой. Обновите страницу"}
       </p>
 
       {import.meta.env.DEV && error && (
@@ -114,12 +115,12 @@ export function RouteErrorBoundary() {
           padding: "0.7rem 2rem",
           borderRadius: 999,
           border: "none",
-          background: "linear-gradient(135deg, #8DB596, #7BAFB0)",
+          background: "#5B8A64",
           color: "#fff",
           fontSize: "0.9rem",
           fontWeight: 600,
           cursor: "pointer",
-          boxShadow: "0 4px 16px rgba(141,181,150,0.3)",
+          boxShadow: "none",
         }}
       >
         На главный экран

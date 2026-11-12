@@ -71,7 +71,7 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
         {/* Backdrop */}
         <motion.div
           className="absolute inset-0"
-          style={{ backgroundColor: "rgba(0,0,0,0.45)", backdropFilter: "blur(6px)" }}
+          style={{ backgroundColor: "rgba(0,0,0,0.45)", }}
           onClick={onClose}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -79,7 +79,7 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
 
         {/* Modal */}
         <motion.div
-          className="relative w-full max-w-[400px] mx-4 mb-[env(safe-area-inset-bottom,8px)] sm:mb-0 rounded-3xl overflow-hidden shadow-2xl max-h-[85vh] overflow-y-auto"
+          className="relative w-full max-w-[400px] mx-4 mb-[env(safe-area-inset-bottom,8px)] sm:mb-0 rounded-xl overflow-hidden shadow-sm max-h-[85vh] overflow-y-auto"
           style={{ backgroundColor: t.card, border: `1px solid ${t.border}` }}
           initial={{ y: 100, opacity: 0, scale: 0.95 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -90,7 +90,7 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
           <div className="px-5 pt-5 pb-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ background: `linear-gradient(135deg, ${t.sage}20, ${t.teal}20)` }}>
+                style={{ background: `${t.sage}20` }}>
                 <FileText className="w-5 h-5" style={{ color: t.sage }} />
               </div>
               <div>
@@ -117,7 +117,7 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
               return (
                 <motion.button
                   key={p.id}
-                  className="w-full p-3.5 rounded-2xl flex items-center gap-3 text-left transition-all"
+                  className="w-full p-3.5 rounded-xl flex items-center gap-3 text-left transition-all"
                   style={{
                     backgroundColor: isSelected ? t.sage + "12" : t.bgSecondary,
                     border: `1.5px solid ${isSelected ? t.sage + "50" : "transparent"}`,
@@ -148,7 +148,7 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
 
           {/* Content preview */}
           <div className="px-5 pb-3">
-            <div className="rounded-2xl p-3" style={{ backgroundColor: t.bgSecondary, border: `1px solid ${t.border}` }}>
+            <div className="rounded-xl p-3" style={{ backgroundColor: t.bgSecondary, border: `1px solid ${t.border}` }}>
               <div className="flex items-center gap-2 mb-2">
                 <BarChart3 className="w-3.5 h-3.5" style={{ color: t.textMuted }} />
                 <span style={{ fontSize: "0.72rem", fontWeight: 600, color: t.textMuted }}>Содержимое отчёта</span>
@@ -186,11 +186,11 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
           {/* Generate button */}
           <div className="px-5 pb-5">
             <motion.button
-              className="w-full py-3.5 rounded-2xl flex items-center justify-center gap-2 text-white"
+              className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 text-white"
               style={{
                 background: done
-                  ? `linear-gradient(135deg, ${t.sage}, ${t.teal})`
-                  : `linear-gradient(135deg, ${t.sage}, ${t.teal})`,
+                  ? `${t.sage}`
+                  : `${t.sage}`,
                 opacity: generating && !done ? 0.85 : 1,
               }}
               onClick={handleGenerate}

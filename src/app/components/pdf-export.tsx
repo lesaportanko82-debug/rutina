@@ -183,7 +183,7 @@ class PDFRenderer {
     this.ctx.font = "500 10px Inter, system-ui, sans-serif";
     this.ctx.fillStyle = C.textMuted;
     this.ctx.fillText(key + ":", this.M + ind, this.y + 10);
-    const kw = this.ctx.measureText(key + ": ").width;
+    const kw = this.ctx.measureText(key + ":").width;
     this.ctx.fillStyle = C.text;
     this.ctx.fillText(value, this.M + ind + kw, this.y + 10);
     this.y += 16;
@@ -237,7 +237,7 @@ class PDFRenderer {
   }
 
   private wrap(text: string, maxW: number): string[] {
-    const words = text.split(" ");
+    const words = text.split("");
     const lines: string[] = [];
     let cur = "";
     for (const w of words) {
@@ -250,7 +250,7 @@ class PDFRenderer {
   }
 
   // ═══════════════════════════════════════════════════
-  //  CHART DRAWING METHODS
+  // CHART DRAWING METHODS
   // ═══════════════════════════════════════════════════
 
   /**
@@ -473,7 +473,7 @@ class PDFRenderer {
       this.ctx.fill();
       this.ctx.font = "500 9px Inter, system-ui, sans-serif";
       this.ctx.fillStyle = C.text;
-      this.ctx.fillText(`${slice.label}  ${slice.value} (${pct}%)`, legendX + 10, legendY + 7);
+      this.ctx.fillText(`${slice.label} ${slice.value} (${pct}%)`, legendX + 10, legendY + 7);
       legendY += 16;
     }
 
@@ -499,7 +499,7 @@ class PDFRenderer {
   }
 
   // ═══════════════════════════════════════════════════
-  //  PAGE BUILDERS
+  // PAGE BUILDERS
   // ═══════════════════════════════════════════════════
 
   private buildCover(data: ExportData) {
@@ -585,7 +585,7 @@ class PDFRenderer {
   private buildMoodCharts(data: ExportData) {
     if (data.moods.length < 2) return;
     this.sp(8);
-    this.subtitle("Аналитика настроения");
+    this.subtitle("Статистика настроения");
 
     // Sort by date
     const sorted = [...data.moods].sort((a, b) => a.date.localeCompare(b.date));
@@ -631,7 +631,7 @@ class PDFRenderer {
     const active = data.habits.filter(h => h.completedDates.length > 0);
     if (active.length === 0) return;
     this.sp(8);
-    this.subtitle("Аналитика привычек");
+    this.subtitle("Статистика привычек");
 
     // Bar chart — total completions per habit
     const bars = active.map(h => ({
@@ -689,7 +689,7 @@ class PDFRenderer {
   private buildAnxietyChart(data: ExportData) {
     if (data.anxietyEntries.length < 2) return;
     this.sp(8);
-    this.subtitle("Аналитика тревоги");
+    this.subtitle("Статистика тревоги");
 
     const sorted = [...data.anxietyEntries].sort((a, b) => a.date.localeCompare(b.date));
     const points = sorted.map(e => ({
@@ -723,7 +723,7 @@ class PDFRenderer {
   private buildSleepChart(data: ExportData) {
     if (!data.sleepEntries || data.sleepEntries.length < 2) return;
     this.sp(8);
-    this.subtitle("Аналитика сна");
+    this.subtitle("Статистика сна");
 
     const sorted = [...data.sleepEntries].sort((a, b) => a.date.localeCompare(b.date));
 
@@ -793,7 +793,7 @@ class PDFRenderer {
     const recent = [...data.tasks].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 15);
     for (const task of recent) {
       this.card(() => {
-        const check = task.completed ? "✓" : "○";
+        const check = task.completed ? "" : "○";
         const color = task.completed ? C.sage : C.textMuted;
         this.ctx.font = "500 11px Inter, system-ui, sans-serif";
         this.ctx.fillStyle = color;
@@ -801,7 +801,7 @@ class PDFRenderer {
         this.ctx.fillStyle = task.completed ? C.textMuted : C.text;
         this.ctx.fillText(task.title, this.M + 24, this.y + 12);
         this.y += 18;
-        const meta = [catLabels[task.category] || task.category, priLabels[task.priority] || task.priority, formatDateFull(task.createdAt)].join(" · ");
+        const meta = [catLabels[task.category] || task.category, priLabels[task.priority] || task.priority, formatDateFull(task.createdAt)].join(" ·");
         this.ctx.font = "400 8px Inter, system-ui, sans-serif";
         this.ctx.fillStyle = C.textFaint;
         this.ctx.fillText(meta, this.M + 24, this.y + 4);
@@ -821,7 +821,7 @@ class PDFRenderer {
       this.card(() => {
         this.ctx.font = "500 11px Inter, system-ui, sans-serif";
         this.ctx.fillStyle = C.text;
-        this.ctx.fillText(`${h.icon}  ${h.title}`, this.M + 8, this.y + 12);
+        this.ctx.fillText(`${h.icon} ${h.title}`, this.M + 8, this.y + 12);
         this.y += 20;
         this.kv("Текущая серия", `${h.streak} дн.`, 8);
         this.kv("Лучшая серия", `${h.bestStreak} дн.`, 8);
@@ -961,7 +961,7 @@ class PDFRenderer {
       this.ensure(28);
       this.ctx.font = "500 10px Inter, system-ui, sans-serif";
       this.ctx.fillStyle = C.text;
-      this.ctx.fillText(`${ach.icon}  ${ach.title}`, this.M + 8, this.y + 10);
+      this.ctx.fillText(`${ach.icon} ${ach.title}`, this.M + 8, this.y + 10);
       this.ctx.font = "400 8px Inter, system-ui, sans-serif";
       this.ctx.fillStyle = catC[ach.category] || C.textFaint;
       this.ctx.fillText(catL[ach.category] || ach.category, this.M + 320, this.y + 10);
@@ -977,7 +977,7 @@ class PDFRenderer {
     const locked = data.softAchievements.filter(a => !a.unlocked);
     if (locked.length > 0) {
       this.sp(4);
-      this.text(`Ещё не открыто: ${locked.map(a => a.title).join(", ")}`, { size: 9, color: C.textFaint, indent: 8 });
+      this.text(`Ещё не открыто: ${locked.map(a => a.title).join(",")}`, { size: 9, color: C.textFaint, indent: 8 });
     }
   }
 

@@ -170,7 +170,7 @@ export function StatsPage() {
     if (!active || !payload?.[0]) return null;
     const d = payload[0].payload;
     return (
-      <div className="rounded-lg px-3 py-2 shadow-lg" style={{ backgroundColor: t.bg, border: `1px solid ${t.border}` }}>
+      <div className="rounded-lg px-3 py-2 shadow-sm" style={{ backgroundColor: t.bg, border: `1px solid ${t.border}` }}>
         <p style={{ fontSize: "0.72rem", fontWeight: 600, color: t.text }}>{d.date}</p>
         <p style={{ fontSize: "0.68rem", color: getLevelColor(d.level) }}>Тревога: {d.level}/10</p>
         {d.trigger && <p style={{ fontSize: "0.65rem", color: t.textMuted }}>{d.trigger}</p>}
@@ -182,7 +182,7 @@ export function StatsPage() {
     if (!active || !payload?.[0]) return null;
     const d = payload[0].payload;
     return (
-      <div className="rounded-lg px-3 py-2 shadow-lg" style={{ backgroundColor: t.bg, border: `1px solid ${t.border}` }}>
+      <div className="rounded-lg px-3 py-2 shadow-sm" style={{ backgroundColor: t.bg, border: `1px solid ${t.border}` }}>
         <p style={{ fontSize: "0.72rem", fontWeight: 600, color: t.text }}>{d.date}</p>
         <p style={{ fontSize: "0.68rem", color: t.lavender }}>Тревога: {d.anxiety}</p>
         <p style={{ fontSize: "0.68rem", color: t.sage }}>Энергия: {d.energy}</p>
@@ -199,9 +199,9 @@ export function StatsPage() {
 
   return (
     <div className="px-5 pt-12 pb-8">
-      <h1 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }} className="mb-1">Аналитика</h1>
+      <h1 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }} className="mb-1">Статистика</h1>
       <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 14 }}>
-        Без осуждения, с теплом
+        
       </p>
 
       {/* ─── Tab bar ─── */}
@@ -229,12 +229,12 @@ export function StatsPage() {
         <motion.div key="overview" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
           {/* Summary cards */}
           <div className="grid grid-cols-2 gap-3 mb-5">
-            <div className="rounded-2xl p-3.5 border" style={{ backgroundColor: t.lavender + "0D", borderColor: t.lavender + "20" }}>
+            <div className="rounded-xl p-3.5 border" style={{ backgroundColor: t.lavender + "0D", borderColor: t.lavender + "20" }}>
               <TrendingUp className="w-4 h-4 mb-1.5" style={{ color: t.lavender }} />
               <span className="block" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>{completedTasks}</span>
               <span style={{ fontSize: "0.68rem", color: t.textMuted }}>Задач выполнено</span>
             </div>
-            <div className="rounded-2xl p-3.5 border" style={{ backgroundColor: t.sage + "0D", borderColor: t.sage + "20" }}>
+            <div className="rounded-xl p-3.5 border" style={{ backgroundColor: t.sage + "0D", borderColor: t.sage + "20" }}>
               <Brain className="w-4 h-4 mb-1.5" style={{ color: t.sage }} />
               <span className="block" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>{avgEnergy.toFixed(1)}</span>
               <span style={{ fontSize: "0.68rem", color: t.textMuted }}>Средняя энергия</span>
@@ -243,7 +243,7 @@ export function StatsPage() {
 
           {/* Week comparison */}
           {weekComparison.hasPrevData && (
-            <div className="rounded-2xl p-3.5 mb-5 border" style={{ backgroundColor: t.card, borderColor: t.border }}>
+            <div className="rounded-xl p-3.5 mb-5 border" style={{ backgroundColor: t.card, borderColor: t.border }}>
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text, marginBottom: 8, display: "block" }}>Эта неделя vs прошлая</span>
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl p-2.5" style={{ backgroundColor: t.bgSecondary }}>
@@ -275,9 +275,9 @@ export function StatsPage() {
           )}
 
           {/* Pomodoro */}
-          <div className="rounded-2xl p-3.5 mb-5 text-white" style={{ background: "linear-gradient(135deg, #A3907A, #8D7F6B)" }}>
+          <div className="rounded-xl p-3.5 mb-5 text-white" style={{ background: "#A3907A" }}>
             <div className="flex items-center gap-2 mb-2">
-              <span style={{ fontSize: "0.95rem" }}>🍅</span>
+              <span style={{ fontSize: "0.95rem" }}><AppIcon icon="🍅" size={20} /></span>
               <span style={{ fontSize: "0.82rem", fontWeight: 600 }}>Время фокуса</span>
             </div>
             <div className="flex gap-2">
@@ -298,7 +298,7 @@ export function StatsPage() {
 
           {/* Category & habit streaks */}
           {categoryData.length > 0 && (
-            <div className="rounded-2xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
+            <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>Задачи по категориям</span>
               <div className="flex items-center mt-2.5">
                 <div className="w-24 h-24">
@@ -322,7 +322,7 @@ export function StatsPage() {
           )}
 
           {habitData.length > 0 && (
-            <div className="rounded-2xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
+            <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>Стрики привычек</span>
               <div className="mt-2 h-32">
                 <ResponsiveContainer width="100%" height="100%">
@@ -365,7 +365,7 @@ export function StatsPage() {
       {activeTab === "mood" && (
         <motion.div key="mood" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
           {moodDistribution.length > 0 && (
-            <div className="rounded-2xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
+            <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>Распределение настроений</span>
               <div className="flex items-center mt-2.5">
                 <div className="w-24 h-24">
@@ -378,7 +378,7 @@ export function StatsPage() {
                 <div className="flex-1 space-y-1 pl-3">
                   {moodDistribution.map((dd) => (
                     <div key={dd.name} className="flex items-center gap-2">
-                      <span style={{ fontSize: "0.72rem" }}>{moodOptionsMap[dd.name]?.emoji || "😊"}</span>
+                      <span style={{ fontSize: "0.72rem" }}>{moodOptionsMap[dd.name]?.emoji || ""}</span>
                       <span style={{ fontSize: "0.72rem", color: t.textSecondary }}>{dd.name}</span>
                       <span className="ml-auto" style={{ fontSize: "0.68rem", fontWeight: 600, color: t.textMuted }}>{dd.value}</span>
                     </div>
@@ -389,7 +389,7 @@ export function StatsPage() {
           )}
 
           {moodEnergyData.length > 1 && (
-            <div className="rounded-2xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
+            <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>Тренд энергии</span>
               <div className="mt-2 h-32">
                 <ResponsiveContainer width="100%" height="100%">
@@ -405,7 +405,7 @@ export function StatsPage() {
 
           {/* Correlation */}
           {correlation && (
-            <div className="rounded-2xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
+            <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text, marginBottom: 8, display: "block" }}>Тревога ↔ Энергия</span>
               <div className="h-32">
                 <ResponsiveContainer width="100%" height="100%">
@@ -441,7 +441,7 @@ export function StatsPage() {
 
           {moods.length === 0 && (
             <div className="text-center py-10">
-              <span style={{ fontSize: "2rem" }}>😊</span>
+              <span style={{ fontSize: "2rem" }}><AppIcon icon="😊" size={20} /></span>
               <p style={{ fontSize: "0.82rem", color: t.textMuted, marginTop: 8 }}>Отмечайте настроение — здесь появится аналитика</p>
             </div>
           )}
@@ -473,7 +473,7 @@ export function StatsPage() {
 
           {/* Trend chart */}
           {anxietyStats.trendData.length > 1 && (
-            <div className="rounded-2xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
+            <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text, display: "block", marginBottom: 8 }}>Тренд</span>
               <div className="h-32">
                 <ResponsiveContainer width="100%" height="100%">
@@ -496,7 +496,7 @@ export function StatsPage() {
 
           {/* Day pattern */}
           {anxietyStats.dayData.some((d) => d.count > 0) && (
-            <div className="rounded-2xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
+            <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>По дням недели</span>
               <div className="mt-2 h-24">
                 <ResponsiveContainer width="100%" height="100%">
@@ -516,7 +516,7 @@ export function StatsPage() {
 
           {/* Top triggers */}
           {anxietyStats.topTriggers.length > 0 && (
-            <div className="rounded-2xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
+            <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text, display: "block", marginBottom: 8 }}>Триггеры</span>
               <div className="space-y-2">
                 {anxietyStats.topTriggers.map(([trigger, count], i) => {
@@ -573,7 +573,7 @@ export function StatsPage() {
           </div>
 
           {/* 7 day heatmap */}
-          <div className="rounded-2xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
+          <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
             <span style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text, display: "block", marginBottom: 8 }}>Последние 7 дней</span>
             <div className="flex gap-1.5">
               {Array.from({ length: 7 }).map((_, i) => {
@@ -590,13 +590,13 @@ export function StatsPage() {
                         backgroundColor: hasI ? "#C4A86C20" : t.bgSecondary,
                         border: `1px solid ${hasI ? "#C4A86C35" : t.border}`,
                       }}>
-                        {hasI && <span style={{ fontSize: "0.5rem" }}>☀️</span>}
+                        {hasI && <span style={{ fontSize: "0.5rem" }}><AppIcon icon="☀️" size={20} /></span>}
                       </div>
                       <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{
                         backgroundColor: hasC ? "#9B8EC420" : t.bgSecondary,
                         border: `1px solid ${hasC ? "#9B8EC435" : t.border}`,
                       }}>
-                        {hasC && <span style={{ fontSize: "0.5rem" }}>🌙</span>}
+                        {hasC && <span style={{ fontSize: "0.5rem" }}><AppIcon icon="🌙" size={20} /></span>}
                       </div>
                     </div>
                   </div>
@@ -605,11 +605,11 @@ export function StatsPage() {
             </div>
             <div className="flex items-center gap-3 mt-2 justify-center">
               <div className="flex items-center gap-1">
-                <span style={{ fontSize: "0.5rem" }}>☀️</span>
+                <span style={{ fontSize: "0.5rem" }}><AppIcon icon="☀️" size={20} /></span>
                 <span style={{ fontSize: "0.55rem", color: t.textFaint }}>Намерение</span>
               </div>
               <div className="flex items-center gap-1">
-                <span style={{ fontSize: "0.5rem" }}>🌙</span>
+                <span style={{ fontSize: "0.5rem" }}><AppIcon icon="🌙" size={20} /></span>
                 <span style={{ fontSize: "0.55rem", color: t.textFaint }}>Чекин</span>
               </div>
             </div>
@@ -630,7 +630,7 @@ export function StatsPage() {
                         {c.word}
                       </span>
                     </div>
-                    {c.good && <p style={{ fontSize: "0.68rem", color: t.sage, lineHeight: 1.4, marginBottom: 2 }}>✦ {c.good}</p>}
+                    {c.good && <p style={{ fontSize: "0.68rem", color: t.sage, lineHeight: 1.4, marginBottom: 2 }}> {c.good}</p>}
                     {c.hard && <p style={{ fontSize: "0.68rem", color: t.terracotta, lineHeight: 1.4 }}>◇ {c.hard}</p>}
                   </div>
                 ))}

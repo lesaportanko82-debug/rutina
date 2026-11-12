@@ -1,3 +1,4 @@
+import { AppIcon } from "../app-icon";
 import { useState, useRef } from "react";
 import { useApp } from "../app-context";
 import { useTheme } from "../theme";
@@ -91,7 +92,7 @@ export function TasksPage() {
     <div className="px-5 pt-14 pb-8">
       <div className="flex items-center justify-between mb-2">
         <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>
-          Ваши дела
+          Задачи
         </h1>
         <motion.button
           className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm"
@@ -103,13 +104,13 @@ export function TasksPage() {
         </motion.button>
       </div>
       <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 12 }}>
-        Свайп → для выполнения, ← для удаления
+        Свайп вправо: выполнить, влево: удалить
       </p>
 
       {/* Inline tip */}
       <InlineTip
         tipKey="tip-tasks-priority"
-        text="Цветная полоска слева — приоритет: красная = важно, жёлтая = средне, зелёная = спокойно. Нажмите ▼ чтобы изменить."
+        text="Цвет точки: приоритет задачи. Нажмите ▼, чтобы изменить."
         emoji="🎨"
         seenTips={seenTips}
         onDismiss={dismissTip}
@@ -124,7 +125,7 @@ export function TasksPage() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
           >
-            <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-4 mb-5">
+            <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-4 mb-5">
               <input
                 value={newTitle}
                 onChange={(e) => setNewTitle(e.target.value)}
@@ -170,9 +171,9 @@ export function TasksPage() {
               <div className="flex flex-wrap gap-2 mb-3">
                 {[
                   { val: "", label: "Однократно" },
-                  { val: "daily", label: "🔄 Ежедневно" },
-                  { val: "weekly", label: "🔄 Еженедельно" },
-                  { val: "monthly", label: "🔄 Ежемесячно" },
+                  { val: "daily", label: " Ежедневно" },
+                  { val: "weekly", label: " Еженедельно" },
+                  { val: "monthly", label: " Ежемесячно" },
                 ].map((r) => (
                   <button
                     key={r.val}
@@ -239,13 +240,11 @@ export function TasksPage() {
             return (
               <motion.div
                 key={task.id}
-                className="rounded-2xl overflow-hidden relative"
+                className="rounded-xl overflow-hidden relative"
                 style={{
                   background: darkMode
-                    ? "linear-gradient(135deg, rgba(36,34,32,0.7), rgba(36,34,32,0.4))"
-                    : "linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.35))",
-                  backdropFilter: "blur(16px)",
-                  WebkitBackdropFilter: "blur(16px)",
+                    ? "rgba(36,34,32,0.7)"
+                    : "rgba(255,255,255,0.7)",
                   border: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.55)"}`,
                   boxShadow: darkMode
                     ? "0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)"
@@ -311,9 +310,7 @@ export function TasksPage() {
                             className="px-3 py-1 rounded-lg text-white"
                             style={{ fontSize: "0.75rem", backgroundColor: t.sage }}
                             onClick={() => handleSaveEdit(task.id)}
-                          >
-                            ✓
-                          </button>
+                          ><AppIcon icon="✓" size={20} /></button>
                         </div>
                       ) : (
                         <div className="flex items-center gap-2 mb-1">
@@ -433,9 +430,7 @@ export function TasksPage() {
                               className="px-2 py-1 rounded-lg"
                               style={{ fontSize: "0.7rem", backgroundColor: t.bgSecondary, color: t.textMuted }}
                               onClick={() => { setAddingSubtaskFor(null); setNewSubtaskText(""); }}
-                            >
-                              ✕
-                            </button>
+                            ><AppIcon icon="✕" size={20} /></button>
                           </div>
                         ) : (
                           <button
@@ -490,7 +485,7 @@ export function TasksPage() {
 
       {filtered.length === 0 && (
         <div className="text-center py-12">
-          <span style={{ fontSize: "2.5rem" }}>🌿</span>
+          <span style={{ fontSize: "2.5rem" }}><AppIcon icon="🌿" size={20} /></span>
           <p style={{ fontSize: "0.9rem", color: t.textMuted, marginTop: 8 }}>
             Здесь пока тихо и спокойно
           </p>

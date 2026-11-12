@@ -172,13 +172,13 @@ export function AvatarCropper({ file, onCrop, onCancel }: AvatarCropperProps) {
     <AnimatePresence>
       <motion.div
         className="fixed inset-0 z-[70] flex items-center justify-center"
-        style={{ backgroundColor: "rgba(0,0,0,0.6)", backdropFilter: "blur(8px)" }}
+        style={{ backgroundColor: "rgba(0,0,0,0.6)", }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="rounded-3xl p-5 mx-4 w-full max-w-[340px] shadow-2xl"
+          className="rounded-xl p-5 mx-4 w-full max-w-[340px] shadow-sm"
           style={{ backgroundColor: t.card, border: `1px solid ${t.border}` }}
           initial={{ scale: 0.85, opacity: 0, y: 20 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -210,7 +210,7 @@ export function AvatarCropper({ file, onCrop, onCancel }: AvatarCropperProps) {
           {/* Canvas area */}
           <div className="flex justify-center mb-4">
             <div
-              className="relative rounded-2xl overflow-hidden"
+              className="relative rounded-xl overflow-hidden"
               style={{
                 width: CANVAS_SIZE,
                 height: CANVAS_SIZE,
@@ -261,7 +261,7 @@ export function AvatarCropper({ file, onCrop, onCancel }: AvatarCropperProps) {
               onChange={(e) => setScale(parseFloat(e.target.value))}
               className="flex-1 h-1.5 rounded-full appearance-none cursor-pointer"
               style={{
-                background: `linear-gradient(90deg, ${t.sage} ${((scale - 0.2) / 4.8) * 100}%, ${t.bgSecondary} ${((scale - 0.2) / 4.8) * 100}%)`,
+                background: `${t.sage} ${((scale - 0.2) / 4.8) * 100}%`,
                 accentColor: t.sage,
               }}
             />
@@ -297,7 +297,7 @@ export function AvatarCropper({ file, onCrop, onCancel }: AvatarCropperProps) {
             </motion.button>
             <motion.button
               className="flex-1 h-10 rounded-xl flex items-center justify-center gap-2 text-white"
-              style={{ background: "linear-gradient(135deg, #8DB596, #7BAFB0)" }}
+              style={{ background: "#8DB596" }}
               onClick={handleCrop}
               whileTap={{ scale: 0.95 }}
             >

@@ -90,7 +90,7 @@ export function WorryPage() {
     return "#B8696C";
   };
 
-  const catIcon = (id: string) => categories.find((c) => c.id === id)?.icon || "📌";
+  const catIcon = (id: string) => categories.find((c) => c.id === id)?.icon || "";
 
   return (
     <div className="px-5 pt-14 pb-8">
@@ -101,7 +101,7 @@ export function WorryPage() {
         </button>
         <div className="flex-1">
           <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Дневник тревог</h1>
-          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Запишите беспокойство — вернитесь и проверьте</p>
+          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Записать тревогу и проверить позже, сбылась ли</p>
         </div>
         <button onClick={() => setShowForm(true)} className="p-2 rounded-xl" style={{ backgroundColor: t.sage + "18" }}>
           <Plus className="w-5 h-5" style={{ color: t.sage }} />
@@ -110,7 +110,7 @@ export function WorryPage() {
 
       {/* Stats card */}
       {stats && (
-        <GlassPanel darkMode={darkMode} color="#8DB596" className="rounded-2xl p-4 mb-4">
+        <GlassPanel darkMode={darkMode} color="#8DB596" className="rounded-xl p-4 mb-4">
           <motion.div
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex items-center gap-3 mb-3">
@@ -148,7 +148,7 @@ export function WorryPage() {
       )}
 
       {/* Tabs */}
-      <div className="flex gap-1 mb-4 rounded-xl p-1" style={{ backgroundColor: darkMode ? "rgba(36,34,32,0.6)" : "rgba(255,255,255,0.4)", backdropFilter: "blur(12px)" }}>
+      <div className="flex gap-1 mb-4 rounded-xl p-1" style={{ backgroundColor: darkMode ? "rgba(36,34,32,0.6)" : "rgba(255,255,255,0.4)", }}>
         {([
           { id: "active" as const, label: "Активные", count: activeWorries.length },
           { id: "review" as const, label: "Проверить", count: readyForReview.length },
@@ -183,10 +183,10 @@ export function WorryPage() {
       {tab === "active" && (
         <div className="space-y-2">
           {activeWorries.length === 0 ? (
-            <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-6 text-center">
-              <p style={{ fontSize: "1.5rem", marginBottom: 8 }}>🌿</p>
-              <p style={{ fontSize: "0.82rem", color: t.textMuted }}>Нет активных тревог</p>
-              <p style={{ fontSize: "0.72rem", color: t.textFaint }}>Запишите беспокойство — мы напомним проверить</p>
+            <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-6 text-center">
+              <p style={{ fontSize: "1.5rem", marginBottom: 8 }}><AppIcon icon="🌿" size={20} /></p>
+              <p style={{ fontSize: "0.82rem", color: t.textMuted }}>Активных записей нет</p>
+              <p style={{ fontSize: "0.72rem", color: t.textFaint }}>Нажмите +, чтобы записать</p>
             </GlassPanel>
           ) : (
             activeWorries.map((w, i) => (
@@ -216,8 +216,8 @@ export function WorryPage() {
       {tab === "review" && (
         <div className="space-y-2">
           {readyForReview.length === 0 ? (
-            <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-2xl p-6 text-center">
-              <p style={{ fontSize: "1.5rem", marginBottom: 8 }}>⏳</p>
+            <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-xl p-6 text-center">
+              <p style={{ fontSize: "1.5rem", marginBottom: 8 }}><AppIcon icon="⏳" size={20} /></p>
               <p style={{ fontSize: "0.82rem", color: t.textMuted }}>Нет тревог для проверки</p>
               <p style={{ fontSize: "0.72rem", color: t.textFaint }}>Когда срок придёт — они появятся здесь</p>
             </GlassPanel>
@@ -278,8 +278,8 @@ export function WorryPage() {
       {tab === "done" && (
         <div className="space-y-2">
           {reviewed.length === 0 ? (
-            <GlassPanel darkMode={darkMode} color={t.dustyBlue} className="rounded-2xl p-6 text-center">
-              <p style={{ fontSize: "1.5rem", marginBottom: 8 }}>📋</p>
+            <GlassPanel darkMode={darkMode} color={t.dustyBlue} className="rounded-xl p-6 text-center">
+              <p style={{ fontSize: "1.5rem", marginBottom: 8 }}><AppIcon icon="📋" size={20} /></p>
               <p style={{ fontSize: "0.82rem", color: t.textMuted }}>Пока нет проверенных записей</p>
             </GlassPanel>
           ) : (
@@ -389,7 +389,7 @@ export function WorryPage() {
               </div>
 
               <button className="w-full rounded-xl py-3 font-semibold"
-                style={{ backgroundColor: t.sage, color: "#fff", fontSize: "0.9rem", opacity: worry.trim() ? 1 : 0.5 }}
+                style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.9rem", opacity: worry.trim() ? 1 : 0.5 }}
                 onClick={handleAdd} disabled={!worry.trim()}>
                 Записать
               </button>

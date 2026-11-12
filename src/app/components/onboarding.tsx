@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from "motion/react";
 import { useApp } from "./app-context";
@@ -31,11 +32,11 @@ function WelcomeSlide({ active }: { active: boolean }) {
     <div className="text-center flex flex-col items-center justify-center px-2">
       <motion.div
         className="relative w-32 h-32 rounded-full flex items-center justify-center mb-8"
-        style={{ background: `linear-gradient(135deg, ${C.sage}20, ${C.teal}20)` }}
+        style={{ background: `${C.sage}20` }}
         animate={active ? { scale: [0.85, 1.05, 1] } : {}}
         transition={{ duration: 1.2, ease: "easeOut" }}
       >
-        <span style={{ fontSize: "4rem" }}>🌿</span>
+        <span style={{ fontSize: "4rem" }}><AppIcon icon="🌿" size={20} /></span>
         {active && [0, 1, 2, 3, 4].map((i) => (
           <motion.div
             key={i}
@@ -56,10 +57,10 @@ function WelcomeSlide({ active }: { active: boolean }) {
         Добро пожаловать!
       </h1>
       <p style={{ fontSize: "0.95rem", color: C.textMuted, lineHeight: 1.65, maxWidth: 300 }}>
-        Ваше пространство для заботы о себе — привычки, задачи, настроение и рост. Без давления, в вашем ритме.
+        Привычки, задачи, настроение — привычки, задачи, настроение и рост. Без давления, в вашем ритме.
       </p>
       <motion.div
-        className="flex items-center gap-2 mt-8 px-5 py-3 rounded-2xl"
+        className="flex items-center gap-2 mt-8 px-5 py-3 rounded-xl"
         style={{ backgroundColor: C.sage + "12", border: `1px solid ${C.sage}25` }}
         initial={{ opacity: 0, y: 15 }}
         animate={active ? { opacity: 1, y: 0 } : {}}
@@ -67,7 +68,7 @@ function WelcomeSlide({ active }: { active: boolean }) {
       >
         <Sparkles className="w-4 h-4" style={{ color: C.sage }} />
         <span style={{ fontSize: "0.78rem", color: C.sage, fontWeight: 500 }}>
-          Давайте познакомимся с приложением
+          О вас с приложением
         </span>
       </motion.div>
     </div>
@@ -91,7 +92,7 @@ function DashboardSlide({ active }: { active: boolean }) {
   return (
     <div className="text-center px-2">
       <motion.div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 mx-auto"
+        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 mx-auto"
         style={{ backgroundColor: C.sage + "18" }}
         animate={active ? { rotate: [0, -5, 5, 0] } : {}}
         transition={{ duration: 0.8 }}
@@ -107,7 +108,7 @@ function DashboardSlide({ active }: { active: boolean }) {
 
       {/* Demo XP card */}
       <motion.div
-        className="rounded-2xl p-4 mb-3 text-left border"
+        className="rounded-xl p-4 mb-3 text-left border"
         style={{ backgroundColor: C.card, borderColor: C.border }}
         initial={{ opacity: 0, y: 15 }}
         animate={active ? { opacity: 1, y: 0 } : {}}
@@ -115,7 +116,7 @@ function DashboardSlide({ active }: { active: boolean }) {
       >
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <span style={{ fontSize: "1.2rem" }}>🌰</span>
+            <span style={{ fontSize: "1.2rem" }}><AppIcon icon="🌰" size={20} /></span>
             <div>
               <span style={{ fontSize: "0.72rem", fontWeight: 600, color: C.text }}>Семечко</span>
               <span className="ml-1.5" style={{ fontSize: "0.62rem", color: C.textFaint }}>Уровень 0</span>
@@ -129,7 +130,7 @@ function DashboardSlide({ active }: { active: boolean }) {
         <div className="w-full h-2 rounded-full" style={{ backgroundColor: C.border }}>
           <motion.div
             className="h-2 rounded-full"
-            style={{ width: xpPercent, background: `linear-gradient(90deg, ${C.sage}, ${C.teal})` }}
+            style={{ width: xpPercent, background: `${C.sage}` }}
           />
         </div>
         <p className="mt-2" style={{ fontSize: "0.62rem", color: C.textFaint }}>
@@ -152,7 +153,7 @@ function DashboardSlide({ active }: { active: boolean }) {
             animate={active ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: item.delay }}
           >
-            <span style={{ fontSize: "1.2rem" }}>{item.icon}</span>
+            <span style={{ fontSize: "1.2rem" }}><AppIcon icon={item.icon} size={18} /></span>
             <p style={{ fontSize: "0.58rem", color: C.textMuted, marginTop: 4 }}>{item.label}</p>
           </motion.div>
         ))}
@@ -183,13 +184,13 @@ function TasksSlide({ active }: { active: boolean }) {
     health: C.sage, work: C.dustyBlue, study: C.lavender,
   };
   const priLabels: Record<string, string> = {
-    high: "🔴", medium: "🟡", low: "🟢",
+    high: "", medium: "", low: "",
   };
 
   return (
     <div className="text-center px-2">
       <motion.div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 mx-auto"
+        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 mx-auto"
         style={{ backgroundColor: C.dustyBlue + "18" }}
         animate={active ? { y: [0, -5, 0] } : {}}
         transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
@@ -244,7 +245,7 @@ function TasksSlide({ active }: { active: boolean }) {
         transition={{ duration: 0.8 }}
       >
         <span style={{ fontSize: "0.75rem", color: C.textMuted }}>
-          {swiped ? "✅ Свайп вправо — выполнено!" : "👉 Свайпните для быстрого действия"}
+          {swiped ? " Свайп вправо — выполнено!" : " Свайпните для быстрого действия"}
         </span>
       </motion.div>
 
@@ -294,7 +295,7 @@ function HabitsSlide({ active }: { active: boolean }) {
   return (
     <div className="text-center px-2">
       <motion.div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 mx-auto"
+        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 mx-auto"
         style={{ backgroundColor: C.sage + "18" }}
         animate={active ? { rotate: [0, 10, -10, 0] } : {}}
         transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
@@ -320,7 +321,7 @@ function HabitsSlide({ active }: { active: boolean }) {
             transition={{ delay: 0.2 + i * 0.1 }}
           >
             <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: h.color + "18" }}>
-              <span style={{ fontSize: "1.1rem" }}>{h.icon}</span>
+              <span style={{ fontSize: "1.1rem" }}><AppIcon icon={h.icon} size={18} /></span>
             </div>
             <div className="flex-1">
               <span style={{ fontSize: "0.8rem", fontWeight: 600, color: C.text }}>{h.title}</span>
@@ -356,7 +357,7 @@ function HabitsSlide({ active }: { active: boolean }) {
                 className="w-6 h-6 rounded-md flex items-center justify-center"
                 style={{ backgroundColor: i < streakAnim ? C.sage + "25" : C.border }}
               >
-                {i < streakAnim && <span style={{ fontSize: "0.6rem" }}>✓</span>}
+                {i < streakAnim && <span style={{ fontSize: "0.6rem" }}><AppIcon icon="✓" size={20} /></span>}
               </div>
               <span style={{ fontSize: "0.5rem", color: C.textFaint }}>{day}</span>
             </motion.div>
@@ -391,7 +392,7 @@ function MoodSlide({ active }: { active: boolean }) {
   return (
     <div className="text-center px-2">
       <motion.div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 mx-auto"
+        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 mx-auto"
         style={{ backgroundColor: C.lavender + "18" }}
         animate={active ? { scale: [1, 1.1, 1] } : {}}
         transition={{ duration: 2, repeat: Infinity }}
@@ -435,9 +436,7 @@ function MoodSlide({ active }: { active: boolean }) {
                   strokeWidth={isSelected ? 2 : 0.5}
                   style={{ transition: "all 0.3s" }}
                 />
-                <text x={lx} y={ly} textAnchor="middle" dominantBaseline="central" style={{ fontSize: isSelected ? "1.1rem" : "0.9rem", transition: "font-size 0.3s" }}>
-                  {mood.emoji}
-                </text>
+                <text x={lx} y={ly} textAnchor="middle" dominantBaseline="central" style={{ fontSize: isSelected ? "1.1rem" : "0.9rem", transition: "font-size 0.3s" }}><AppIcon icon={mood.emoji} size={18} /></text>
               </g>
             );
           })}
@@ -448,7 +447,7 @@ function MoodSlide({ active }: { active: boolean }) {
             <motion.div
               className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full flex flex-col items-center justify-center"
               style={{
-                background: `radial-gradient(circle, ${moods[selectedMood].color}25, ${moods[selectedMood].color}08)`,
+                background: `${moods[selectedMood].color}25`,
                 border: `2px solid ${moods[selectedMood].color}40`,
               }}
               initial={{ scale: 0 }}
@@ -493,7 +492,7 @@ function ExtrasSlide({ active }: { active: boolean }) {
   const tools = [
     {
       icon: BarChart3,
-      title: "Аналитика",
+      title: "Статистика",
       desc: "Графики продуктивности, сравнение недель, тренды настроения и энергии",
       color: C.terracotta,
       emoji: "📊",
@@ -524,7 +523,7 @@ function ExtrasSlide({ active }: { active: boolean }) {
   return (
     <div className="text-center px-2">
       <motion.div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 mx-auto"
+        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 mx-auto"
         style={{ backgroundColor: C.terracotta + "18" }}
         animate={active ? { rotate: [0, 5, -5, 0] } : {}}
         transition={{ duration: 1, repeat: Infinity, repeatDelay: 3 }}
@@ -549,7 +548,7 @@ function ExtrasSlide({ active }: { active: boolean }) {
             transition={{ delay: 0.15 + i * 0.12 }}
           >
             <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: tool.color + "15" }}>
-              <span style={{ fontSize: "1.2rem" }}>{tool.emoji}</span>
+              <span style={{ fontSize: "1.2rem" }}><AppIcon icon={tool.emoji} size={18} /></span>
             </div>
             <div>
               <span style={{ fontSize: "0.85rem", fontWeight: 600, color: C.text }}>{tool.title}</span>
@@ -577,7 +576,7 @@ function GamificationSlide({ active }: { active: boolean }) {
   return (
     <div className="text-center px-2">
       <motion.div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 mx-auto"
+        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 mx-auto"
         style={{ backgroundColor: C.gold + "18" }}
         animate={active ? { y: [0, -6, 0] } : {}}
         transition={{ duration: 1.5, repeat: Infinity }}
@@ -609,7 +608,7 @@ function GamificationSlide({ active }: { active: boolean }) {
               className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 relative z-10"
               style={{ backgroundColor: i === 0 ? C.sage + "20" : C.card, border: `1px solid ${C.border}` }}
             >
-              <span style={{ fontSize: "1.15rem" }}>{tier.icon}</span>
+              <span style={{ fontSize: "1.15rem" }}><AppIcon icon={tier.icon} size={18} /></span>
             </div>
             <div className="text-left flex-1">
               <span style={{ fontSize: "0.8rem", fontWeight: 600, color: C.text }}>{tier.name}</span>
@@ -641,7 +640,7 @@ function GamificationSlide({ active }: { active: boolean }) {
             { text: "Настроение = +10 XP", icon: "😊" },
           ].map((item) => (
             <div key={item.text} className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg" style={{ backgroundColor: C.sage + "08" }}>
-              <span style={{ fontSize: "0.7rem" }}>{item.icon}</span>
+              <span style={{ fontSize: "0.7rem" }}><AppIcon icon={item.icon} size={18} /></span>
               <span style={{ fontSize: "0.6rem", color: C.textMuted }}>{item.text}</span>
             </div>
           ))}
@@ -656,7 +655,7 @@ function ProfileSlide({ active }: { active: boolean }) {
   return (
     <div className="text-center flex flex-col items-center justify-center px-2">
       <motion.div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 mx-auto"
+        className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 mx-auto"
         style={{ backgroundColor: C.teal + "18" }}
         animate={active ? { scale: [1, 1.1, 1] } : {}}
         transition={{ duration: 1.5, repeat: Infinity }}
@@ -672,7 +671,7 @@ function ProfileSlide({ active }: { active: boolean }) {
 
       {/* Questionnaire preview */}
       <motion.div
-        className="rounded-2xl p-4 border mb-4 text-left w-full"
+        className="rounded-xl p-4 border mb-4 text-left w-full"
         style={{ backgroundColor: C.card, borderColor: C.border }}
         initial={{ opacity: 0, y: 15 }}
         animate={active ? { opacity: 1, y: 0 } : {}}
@@ -684,7 +683,7 @@ function ProfileSlide({ active }: { active: boolean }) {
         </div>
         <div className="space-y-2">
           {[
-            "Ваши цели и приоритеты",
+            "Цели и приоритеты",
             "Уровень стресса и сон",
             "Желаемые привычки",
             "Пик продуктивности",
@@ -722,7 +721,7 @@ function ProfileSlide({ active }: { active: boolean }) {
             animate={active ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.7 + i * 0.1 }}
           >
-            <span style={{ fontSize: "1.1rem" }}>{item.icon}</span>
+            <span style={{ fontSize: "1.1rem" }}><AppIcon icon={item.icon} size={18} /></span>
             <p style={{ fontSize: "0.55rem", color: C.textMuted, marginTop: 3 }}>{item.label}</p>
           </motion.div>
         ))}
@@ -735,7 +734,7 @@ function ProfileSlide({ active }: { active: boolean }) {
         animate={active ? { opacity: 1 } : {}}
         transition={{ delay: 1 }}
       >
-        💡 На каждой странице вас ждут контекстные подсказки — они помогут быстрее освоиться
+         На каждой странице вас ждут контекстные подсказки — они помогут быстрее освоиться
       </motion.p>
     </div>
   );
@@ -747,11 +746,11 @@ function ReadySlide({ active }: { active: boolean }) {
     <div className="text-center flex flex-col items-center justify-center px-2">
       <motion.div
         className="relative w-36 h-36 rounded-full flex items-center justify-center mb-8"
-        style={{ background: `linear-gradient(135deg, ${C.sage}15, ${C.lavender}15, ${C.terracotta}15)` }}
+        style={{ background: `${C.sage}15` }}
         animate={active ? { scale: [0.9, 1.05, 1], rotate: [0, 3, -3, 0] } : {}}
         transition={{ duration: 1.5 }}
       >
-        <span style={{ fontSize: "4.5rem" }}>🚀</span>
+        <span style={{ fontSize: "4.5rem" }}><AppIcon icon="🚀" size={20} /></span>
         {active && [C.sage, C.lavender, C.terracotta, C.dustyBlue, C.gold, C.teal].map((color, i) => (
           <motion.div
             key={i}
@@ -772,12 +771,12 @@ function ReadySlide({ active }: { active: boolean }) {
         Всё готово!
       </h1>
       <p style={{ fontSize: "0.92rem", color: C.textMuted, lineHeight: 1.6, maxWidth: 300, marginBottom: 16 }}>
-        Вы начинаете как <strong style={{ color: C.sage }}>Семечко 🌰</strong> — каждое действие поможет вам расти
+        Вы начинаете как <strong style={{ color: C.sage }}>Семечко </strong> — каждое действие поможет вам расти
       </p>
 
       {/* Bottom nav preview */}
       <motion.div
-        className="rounded-2xl p-3 border w-full"
+        className="rounded-xl p-3 border w-full"
         style={{ backgroundColor: C.card, borderColor: C.border }}
         initial={{ opacity: 0, y: 15 }}
         animate={active ? { opacity: 1, y: 0 } : {}}
@@ -880,7 +879,7 @@ export function Onboarding() {
           <div className="flex-1 h-1.5 rounded-full" style={{ backgroundColor: C.border }}>
             <motion.div
               className="h-1.5 rounded-full"
-              style={{ background: `linear-gradient(90deg, ${C.sage}, ${C.teal})` }}
+              style={{ background: `${C.sage}` }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.4 }}
             />
@@ -927,8 +926,8 @@ export function Onboarding() {
         {/* Buttons */}
         <div className="space-y-2.5">
           <motion.button
-            className="w-full text-white rounded-2xl py-4 flex items-center justify-center gap-2"
-            style={{ fontSize: "1rem", fontWeight: 600, background: `linear-gradient(135deg, ${C.sage}, ${C.teal})` }}
+            className="w-full text-white rounded-xl py-4 flex items-center justify-center gap-2"
+            style={{ fontSize: "1rem", fontWeight: 600, background: `${C.sage}` }}
             onClick={handleNext}
             whileTap={{ scale: 0.98 }}
           >

@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useApp } from "./app-context";
 import { useTheme } from "./theme";
@@ -62,7 +63,7 @@ export function PomodoroTimer() {
       const newCount = sessionCount + 1;
       setSessionCount(newCount);
       completePomodoroSession();
-      toast.success(`Сессия #${newCount} завершена! +25 XP 🌿`, { duration: 3000 });
+      toast.success(`Сессия #${newCount} завершена! +25 XP`, { duration: 3000 });
 
       if (newCount % pomodoroSettings.sessionsBeforeLong === 0) {
         setPhase("longBreak");
@@ -148,7 +149,7 @@ export function PomodoroTimer() {
           >
             <div className="absolute inset-0 bg-black/30" onClick={() => setIsOpen(false)} />
             <motion.div
-              className="relative w-full max-w-[430px] rounded-t-3xl md:rounded-3xl p-6 pb-10 md:pb-6"
+              className="relative w-full max-w-[430px] rounded-t-3xl md:rounded-xl p-6 pb-10 md:pb-6"
               style={{ backgroundColor: "#FAF8F5" }}
               initial={{ y: 300 }}
               animate={{ y: 0 }}
@@ -157,7 +158,7 @@ export function PomodoroTimer() {
             >
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
-                  <span style={{ fontSize: "1.3rem" }}>🍅</span>
+                  <span style={{ fontSize: "1.3rem" }}><AppIcon icon="🍅" size={20} /></span>
                   <span style={{ fontSize: "1.1rem", fontWeight: 700, color: "#4A4540" }}>Помодоро</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -181,7 +182,7 @@ export function PomodoroTimer() {
               <AnimatePresence>
                 {showSettings && (
                   <motion.div
-                    className="rounded-2xl p-4 mb-5 border"
+                    className="rounded-xl p-4 mb-5 border"
                     style={{ backgroundColor: "#F5F0E8", borderColor: "#E8E3DC" }}
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
@@ -323,7 +324,7 @@ export function PomodoroTimer() {
                   <RotateCcw className="w-5 h-5" style={{ color: "#9B9489" }} />
                 </motion.button>
                 <motion.button
-                  className="w-16 h-16 rounded-full flex items-center justify-center shadow-md"
+                  className="w-16 h-16 rounded-full flex items-center justify-center shadow-sm"
                   style={{ backgroundColor: currentPhase.color }}
                   onClick={() => setIsRunning(!isRunning)}
                   whileTap={{ scale: 0.9 }}

@@ -17,7 +17,7 @@ const typeOptions = [
   { value: "custom", label: "Другое", icon: "✨" },
 ] as const;
 
-const iconOptions = ["🧘", "📚", "💪", "💧", "📋", "😊", "🍽️", "🛏️", "🏃", "🎯", "☀️", "🌙", "⏰", "🔔", "✨", "🧠"];
+const iconOptions = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
 
 export function NotificationsPage() {
   const { reminders, toggleReminder, addReminder, deleteReminder, updateReminder, darkMode } = useApp();
@@ -32,7 +32,7 @@ export function NotificationsPage() {
   const [newTime, setNewTime] = useState("09:00");
   const [newDays, setNewDays] = useState<number[]>([1, 2, 3, 4, 5]);
   const [newType, setNewType] = useState<"habit" | "task" | "mood" | "water" | "custom">("custom");
-  const [newIcon, setNewIcon] = useState("🔔");
+  const [newIcon, setNewIcon] = useState("");
 
   const requestPermission = async () => {
     if ("Notification" in window) {
@@ -60,7 +60,7 @@ export function NotificationsPage() {
 
   const resetForm = () => {
     setNewTitle(""); setNewTime("09:00"); setNewDays([1, 2, 3, 4, 5]);
-    setNewType("custom"); setNewIcon("🔔"); setShowForm(false); setEditingId(null);
+    setNewType("custom"); setNewIcon(""); setShowForm(false); setEditingId(null);
   };
 
   const startEdit = (id: string) => {
@@ -92,12 +92,12 @@ export function NotificationsPage() {
         </motion.button>
       </div>
       <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 16 }}>
-        Мягкие напоминания, чтобы не забывать о важном
+        
       </p>
 
       {permissionStatus !== "granted" && permissionStatus !== "unsupported" && (
         <motion.div
-          className="rounded-2xl p-4 mb-5 flex items-center gap-3 border"
+          className="rounded-xl p-4 mb-5 flex items-center gap-3 border"
           style={{ backgroundColor: t.bgSecondary, borderColor: t.border }}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -123,21 +123,21 @@ export function NotificationsPage() {
 
       {/* Stats */}
       <div className="flex gap-3 mb-5">
-        <GlassPanel darkMode={darkMode} color="#9B8EC4" className="flex-1 rounded-2xl">
+        <GlassPanel darkMode={darkMode} color="#9B8EC4" className="flex-1 rounded-xl">
           <div className="p-3 text-center">
           <Bell className="w-5 h-5 mx-auto mb-1" style={{ color: t.lavender }} />
           <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>{reminders.length}</span>
           <span style={{ fontSize: "0.65rem", color: t.textMuted }}>Всего</span>
           </div>
         </GlassPanel>
-        <GlassPanel darkMode={darkMode} color="#8DB596" className="flex-1 rounded-2xl">
+        <GlassPanel darkMode={darkMode} color="#8DB596" className="flex-1 rounded-xl">
           <div className="p-3 text-center">
           <BellRing className="w-5 h-5 mx-auto mb-1" style={{ color: t.sage }} />
           <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>{activeReminders}</span>
           <span style={{ fontSize: "0.65rem", color: t.textMuted }}>Активных</span>
           </div>
         </GlassPanel>
-        <GlassPanel darkMode={darkMode} color="#7EA8BE" className="flex-1 rounded-2xl">
+        <GlassPanel darkMode={darkMode} color="#7EA8BE" className="flex-1 rounded-xl">
           <div className="p-3 text-center">
           <Clock className="w-5 h-5 mx-auto mb-1" style={{ color: t.dustyBlue }} />
           <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>
@@ -152,7 +152,7 @@ export function NotificationsPage() {
       <AnimatePresence>
         {showForm && (
           <motion.div
-            className="rounded-2xl p-4 mb-5 border"
+            className="rounded-xl p-4 mb-5 border"
             style={{ backgroundColor: t.bgSecondary, borderColor: t.border }}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -262,7 +262,7 @@ export function NotificationsPage() {
         {reminders.map((reminder, i) => (
           <motion.div
             key={reminder.id}
-            className="rounded-2xl p-4 border transition-all"
+            className="rounded-xl p-4 border transition-all"
             style={{
               backgroundColor: reminder.enabled ? t.card : t.bgSecondary,
               borderColor: t.border,
@@ -292,7 +292,7 @@ export function NotificationsPage() {
                   <span style={{ fontSize: "0.65rem", color: t.textFaint }}>
                     {reminder.days.length === 7 ? "Каждый день"
                       : reminder.days.length === 5 && !reminder.days.includes(0) && !reminder.days.includes(6) ? "Будни"
-                      : reminder.days.map((d) => dayLabels[d]).join(", ")}
+                      : reminder.days.map((d) => dayLabels[d]).join(",")}
                   </span>
                 </div>
               </div>
@@ -319,15 +319,15 @@ export function NotificationsPage() {
 
       {reminders.length === 0 && (
         <div className="text-center py-12">
-          <span style={{ fontSize: "2.5rem" }}>🔔</span>
+          <span style={{ fontSize: "2.5rem" }}><AppIcon icon="🔔" size={20} /></span>
           <p style={{ fontSize: "0.9rem", color: t.textMuted, marginTop: 8 }}>Нет напоминаний</p>
           <p style={{ fontSize: "0.78rem", color: t.textFaint, marginTop: 4 }}>Добавьте первое, нажав +</p>
         </div>
       )}
 
       <motion.div
-        className="rounded-2xl p-5 mt-6 text-white"
-        style={{ background: "linear-gradient(135deg, #7B8F71, #6B917B)" }}
+        className="rounded-xl p-5 mt-6 text-white"
+        style={{ background: "#7B8F71" }}
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}

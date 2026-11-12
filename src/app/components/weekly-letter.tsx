@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Mail, X, ChevronRight } from "lucide-react";
@@ -126,7 +127,7 @@ function generateLetter(props: WeeklyLetterProps): { greeting: string; paragraph
     if (weekCheckins.length > 0) parts.push(`${weekCheckins.length} вечерних рефлексий`);
     if (weekJournals.length > 0) parts.push(`${weekJournals.length} записей в дневнике`);
     paragraphs.push(
-      `Вы уделили время осознанности: ${parts.join(", ")}. Каждый такой момент — инвестиция в себя.`
+      `Вы уделили время осознанности: ${parts.join(",")}. Каждый такой момент — инвестиция в себя.`
     );
   }
 
@@ -169,9 +170,9 @@ export function WeeklyLetterCard(props: WeeklyLetterProps) {
     <>
       {/* Teaser card */}
       <motion.button
-        className="w-full rounded-2xl p-4 border flex items-center gap-3 text-left"
+        className="w-full rounded-xl p-4 border flex items-center gap-3 text-left"
         style={{
-          background: `linear-gradient(135deg, ${th.lavender}08, ${th.dustyBlue}08)`,
+          background: `${th.lavender}08`,
           borderColor: th.lavender + "25",
         }}
         onClick={() => setIsOpen(true)}
@@ -181,7 +182,7 @@ export function WeeklyLetterCard(props: WeeklyLetterProps) {
       >
         <div
           className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-          style={{ background: `linear-gradient(135deg, ${th.lavender}20, ${th.dustyBlue}20)` }}
+          style={{ background: `${th.lavender}20` }}
         >
           <Mail className="w-5 h-5" style={{ color: th.lavender }} />
         </div>
@@ -208,7 +209,7 @@ export function WeeklyLetterCard(props: WeeklyLetterProps) {
             onClick={() => setIsOpen(false)}
           >
             <motion.div
-              className="w-full max-w-[380px] max-h-[80vh] overflow-y-auto rounded-3xl p-6 shadow-xl"
+              className="w-full max-w-[380px] max-h-[80vh] overflow-y-auto rounded-xl p-6 shadow-sm"
               style={{ backgroundColor: th.bg }}
               initial={{ opacity: 0, y: 40, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -240,7 +241,7 @@ export function WeeklyLetterCard(props: WeeklyLetterProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  {letter.greeting} 💌
+                  {letter.greeting} 
                 </motion.h2>
 
                 {letter.paragraphs.map((p, i) => (
@@ -268,7 +269,7 @@ export function WeeklyLetterCard(props: WeeklyLetterProps) {
                   transition={{ delay: 0.4 }}
                 >
                   <div className="flex-1 h-px" style={{ backgroundColor: th.border }} />
-                  <span style={{ fontSize: "0.9rem" }}>🌿</span>
+                  <span style={{ fontSize: "0.9rem" }}><AppIcon icon="🌿" size={20} /></span>
                   <div className="flex-1 h-px" style={{ backgroundColor: th.border }} />
                 </motion.div>
 
@@ -298,7 +299,7 @@ export function WeeklyLetterCard(props: WeeklyLetterProps) {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6 }}
                 >
-                  С теплом, ваше приложение 🌱
+                  С теплом, ваше приложение 
                 </motion.p>
               </div>
             </motion.div>

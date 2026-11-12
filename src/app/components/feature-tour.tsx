@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useState, useEffect, useCallback, type ReactNode } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, ChevronRight, ChevronLeft } from "lucide-react";
@@ -79,7 +80,7 @@ export function FeatureTour({ steps, tourKey, seenTours, onComplete, delay = 800
         {step.highlight === "bottom-nav" && (
           <div
             className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] h-16"
-            style={{ backgroundColor: "transparent", boxShadow: "0 0 0 4000px rgba(0,0,0,0.45)" }}
+            style={{ backgroundColor: "transparent", boxShadow: "none" }}
           />
         )}
 
@@ -93,7 +94,7 @@ export function FeatureTour({ steps, tourKey, seenTours, onComplete, delay = 800
           key={step.id}
         >
           <div
-            className="rounded-2xl p-5 shadow-2xl relative"
+            className="rounded-xl p-5 shadow-sm relative"
             style={{ backgroundColor: "#FAF8F5" }}
           >
             {/* Close button */}
@@ -108,12 +109,12 @@ export function FeatureTour({ steps, tourKey, seenTours, onComplete, delay = 800
             {/* Content */}
             <div className="flex items-start gap-3 mb-4 pr-6">
               <motion.div
-                className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0"
+                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
                 style={{ backgroundColor: "#8DB59618" }}
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
-                <span style={{ fontSize: "1.4rem" }}>{step.emoji}</span>
+                <span style={{ fontSize: "1.4rem" }}><AppIcon icon={step.emoji} size={18} /></span>
               </motion.div>
               <div>
                 <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: "#4A4540", marginBottom: 4 }}>
@@ -155,7 +156,7 @@ export function FeatureTour({ steps, tourKey, seenTours, onComplete, delay = 800
                   style={{
                     fontSize: "0.8rem",
                     fontWeight: 600,
-                    background: "linear-gradient(135deg, #8DB596, #7BAFB0)",
+                    background: "#8DB596",
                   }}
                   onClick={handleNext}
                   whileTap={{ scale: 0.95 }}
@@ -247,7 +248,7 @@ export function PulseHighlight({ children, active, color = "#8DB596" }: PulseHig
   return (
     <div className="relative">
       <motion.div
-        className="absolute -inset-1 rounded-2xl pointer-events-none"
+        className="absolute -inset-1 rounded-xl pointer-events-none"
         style={{ border: `2px solid ${color}40` }}
         animate={{ opacity: [0.4, 1, 0.4], scale: [1, 1.02, 1] }}
         transition={{ duration: 2, repeat: 3 }}
@@ -367,7 +368,7 @@ export const profileTour: TourStep[] = [
   {
     id: "profile-intro",
     emoji: "👤",
-    title: "Ваш профиль",
+    title: "Профиль",
     description: "Здесь анкета, настройки, достижения и экспорт данных. Заполните анкету — получите персональные советы!",
     position: "top",
   },

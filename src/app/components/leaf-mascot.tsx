@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Send, Volume2, VolumeX, Trash2, ArrowRight } from "lucide-react";
@@ -87,7 +88,7 @@ function ParticleLayer({ particles }: { particles: Particle[] }) {
             exit={{ opacity: 0 }}
             transition={{ duration: p.duration, delay: p.delay, ease: "easeOut" }}
           >
-            {p.type === "leaf" ? "🍃" : p.type === "sparkle" ? "✨" : p.type === "heart" ? "💚" : "🌟"}
+            {p.type === "leaf" ? "" : p.type === "sparkle" ? "" : p.type === "heart" ? "" : ""}
           </motion.div>
         ))}
       </AnimatePresence>
@@ -318,46 +319,46 @@ function useContextualGreeting() {
     const todayCheckin = eveningCheckins.find((c) => c.date === todayStr);
 
     // Priority: urgent signals first
-    if (todayAnxiety && todayAnxiety.level >= 7) return { text: "Вижу, тревога сегодня высокая... Я рядом 💚", mood: "worried" as LeafMood };
-    if (lastSleep && lastSleep.quality <= 2) return { text: "Плохой сон? Давай поговорим 🌙", mood: "worried" as LeafMood };
+    if (todayAnxiety && todayAnxiety.level >= 7) return { text: "Вижу, тревога сегодня высокая... Я рядом", mood: "worried" as LeafMood };
+    if (lastSleep && lastSleep.quality <= 2) return { text: "Плохой сон? Давай поговорим", mood: "worried" as LeafMood };
 
     // Time-of-day contextual tips
     if (h >= 5 && h < 9) {
       // Morning rituals
-      if (!todayIntention) return { text: "Доброе утро! Запиши намерение на день 🌅", mood: "waving" as LeafMood };
-      if (!todayMood) return { text: "Утро! Как настроение? Отметь его 🌞", mood: "happy" as LeafMood };
+      if (!todayIntention) return { text: "Доброе утро! Запиши намерение на день", mood: "waving" as LeafMood };
+      if (!todayMood) return { text: "Утро! Как настроение? Отметь его", mood: "happy" as LeafMood };
       const uncheckedHabits = habits.filter((hb) => !hb.completedDates.includes(todayStr));
-      if (uncheckedHabits.length > 0) return { text: "Утренние привычки ждут тебя 🌿", mood: "waving" as LeafMood };
-      return { text: "Отличное утро! Ты уже всё отметил 🌱", mood: "proud" as LeafMood };
+      if (uncheckedHabits.length > 0) return { text: "Утренние привычки ждут тебя", mood: "waving" as LeafMood };
+      return { text: "Отличное утро! Ты уже всё отметил", mood: "proud" as LeafMood };
     }
     if (h >= 9 && h < 12) {
-      if (!todayMood) return { text: "Как проходит утро? Отметь настроение 😊", mood: "listening" as LeafMood };
-      if (todayIntention) return { text: `Помни своё намерение на сегодня 💫`, mood: "happy" as LeafMood };
+      if (!todayMood) return { text: "Как проходит утро? Отметь настроение", mood: "listening" as LeafMood };
+      if (todayIntention) return { text: `Помни своё намерение на сегодня`, mood: "happy" as LeafMood };
     }
     if (h >= 12 && h < 15) {
       const completedToday = habits.filter((hb) => hb.completedDates.includes(todayStr)).length;
-      if (completedToday > 0) return { text: `Уже ${completedToday} привычек сегодня! Так держать 🌿`, mood: "proud" as LeafMood };
-      return { text: "Середина дня. Может, подышать? 🌬️", mood: "listening" as LeafMood };
+      if (completedToday > 0) return { text: `Уже ${completedToday} привычек сегодня! Так держать`, mood: "proud" as LeafMood };
+      return { text: "Середина дня. Может, подышать?", mood: "listening" as LeafMood };
     }
     if (h >= 15 && h < 18) {
-      return { text: "Как день? Впереди тихий вечер 🍃", mood: "listening" as LeafMood };
+      return { text: "Как день? Впереди тихий вечер", mood: "listening" as LeafMood };
     }
     if (h >= 18 && h < 21) {
       // Evening rituals
-      if (!todayCheckin) return { text: "Вечер. Время для рефлексии 🌇", mood: "listening" as LeafMood };
-      return { text: "Рефлексия записана. Ты молодец 💚", mood: "happy" as LeafMood };
+      if (!todayCheckin) return { text: "Вечер. Время для рефлексии", mood: "listening" as LeafMood };
+      return { text: "Рефлексия записана. Ты молодец", mood: "happy" as LeafMood };
     }
     if (h >= 21 || h < 1) {
-      if (!todayCheckin) return { text: "Перед сном запиши вечерний чекин 🌙", mood: "sleeping" as LeafMood };
-      return { text: "Спокойной ночи. Ты сделал достаточно 🌙", mood: "sleeping" as LeafMood };
+      if (!todayCheckin) return { text: "Перед сном запиши вечерний чекин", mood: "sleeping" as LeafMood };
+      return { text: "Спокойной ночи. Ты сделал достаточно", mood: "sleeping" as LeafMood };
     }
     if (h >= 1 && h < 5) {
-      return { text: "Не спится? Попробуй подышать 🌬️", mood: "worried" as LeafMood };
+      return { text: "Не спится? Попробуй подышать", mood: "worried" as LeafMood };
     }
 
     // Fallback data-driven
-    if (todayMood && ["Радость", "Энергия"].includes(todayMood.mood)) return { text: "Классное настроение сегодня! 🌟", mood: "happy" as LeafMood };
-    if (totalStreak > 20) return { text: "Ты так стабильно держишься! Горжусь 🌿", mood: "proud" as LeafMood };
+    if (todayMood && ["Радость", "Энергия"].includes(todayMood.mood)) return { text: "Классное настроение сегодня!", mood: "happy" as LeafMood };
+    if (totalStreak > 20) return { text: "Ты так стабильно держишься! Горжусь", mood: "proud" as LeafMood };
     return null;
   }, [moods, habits, anxietyEntries, sleepEntries, dailyIntentions, eveningCheckins]);
 }
@@ -383,9 +384,7 @@ function AmbientLeaves({ darkMode }: { darkMode: boolean }) {
             rotate: [0, 15, -10, 5, 0],
           }}
           transition={{ duration: 5 + i * 1.5, repeat: Infinity, ease: "easeInOut", delay: i * 1.2 }}
-        >
-          🍃
-        </motion.div>
+        ><AppIcon icon="🍃" size={20} /></motion.div>
       ))}
     </>
   );
@@ -407,7 +406,7 @@ function ChatBubble({ msg, t, isLast, onNavigate }: { msg: ChatMessage; t: Retur
         {!isUser && (
           <motion.div
             className="w-7 h-7 rounded-full flex items-center justify-center mr-2 mt-1 shrink-0"
-            style={{ background: "radial-gradient(circle at 35% 35%, #D4F0DA, #8DB596)" }}
+            style={{ background: "#D4F0DA" }}
             initial={isLast ? { scale: 0 } : false}
             animate={{ scale: 1 }}
             transition={{ delay: 0.1, type: "spring" }}
@@ -416,7 +415,7 @@ function ChatBubble({ msg, t, isLast, onNavigate }: { msg: ChatMessage; t: Retur
           </motion.div>
         )}
         <div
-          className="rounded-2xl px-3.5 py-2.5 max-w-[82%] shadow-sm"
+          className="rounded-xl px-3.5 py-2.5 max-w-[82%] shadow-sm"
           style={{
             backgroundColor: isUser ? "#8DB596" : t.bgSecondary,
             color: isUser ? "#fff" : t.text,
@@ -457,7 +456,7 @@ function ChatBubble({ msg, t, isLast, onNavigate }: { msg: ChatMessage; t: Retur
               whileTap={{ scale: 0.93 }}
               onClick={() => onNavigate(link.path)}
             >
-              <span style={{ fontSize: "0.75rem" }}>{link.emoji}</span>
+              <span style={{ fontSize: "0.75rem" }}><AppIcon icon={link.emoji} size={18} /></span>
               <span style={{ fontSize: "0.68rem", fontWeight: 600, color: link.color }}>{link.label}</span>
               <ArrowRight className="w-3 h-3" style={{ color: link.color, opacity: 0.7 }} />
             </motion.button>
@@ -532,19 +531,19 @@ export function LeafMascot() {
   // ─── Time greeting ───
   const getTimeGreeting = useCallback(() => {
     const h = new Date().getHours();
-    if (h < 6) return "Не спится? Я рядом 🌙";
-    if (h < 12) return "Доброе утро! Как начинается день? ☀️";
-    if (h < 18) return "Привет! Как проходит день? 🍃";
-    if (h < 22) return "Добрый вечер! Время замедлиться 🌿";
-    return "Уже поздно... Как ты? 🌙";
+    if (h < 6) return "Не спится? Я рядом ";
+    if (h < 12) return "Доброе утро! Как начинается день? ";
+    if (h < 18) return "Привет! Как проходит день? ";
+    if (h < 22) return "Добрый вечер! Время замедлиться ";
+    return "Уже поздно... Как ты? ";
   }, []);
 
   // ─── Random idle bubbles with contextual awareness ───
   useEffect(() => {
     if (isOpen) return;
     const idlePhrases = [
-      "Привет! 🌿", "Как ты?", "Поболтаем? 💚", "Я тут!", "🍃",
-      "Подышим?", "Всё ок?", "Обними себя 🤗", "Ты молодец 🌱", "Потянись! 🌸",
+      "Привет!", "Как ты?", "Поболтаем?", "Я тут!", "",
+      "Подышим?", "Всё ок?", "Обними себя", "Ты молодец", "Потянись!",
     ];
     const showRandomBubble = () => {
       if (Math.random() > 0.35) return;
@@ -608,20 +607,20 @@ export function LeafMascot() {
     
     if (count >= 7) {
       setMascotMood("love");
-      setBubbleText("Я тебя обожаю!! 💚✨🌿");
+      setBubbleText("Я тебя обожаю!!");
       burst("heart", 8);
       sounds.love();
     } else if (count >= 5) {
       setMascotMood("love");
-      setBubbleText("Мне так хорошо с тобой! 💚");
+      setBubbleText("Мне так хорошо с тобой!");
       burst("heart", 5);
     } else if (count >= 3) {
       setMascotMood("happy");
-      setBubbleText("Ещё-ещё! 🥰");
+      setBubbleText("Ещё-ещё!");
       burst("sparkle", 4);
     } else {
       setMascotMood("happy");
-      setBubbleText(count === 1 ? "Хи-хи! 🌱" : "Щекотно! 😄");
+      setBubbleText(count === 1 ? "Хи-хи! " : "Щекотно!");
       burst("leaf", 3);
     }
     setShowBubble(true);
@@ -676,21 +675,21 @@ export function LeafMascot() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const data = await res.json();
-      const rawReply = data.reply || "Прости, я задумался... Попробуй ещё раз 🍃";
+      const rawReply = data.reply || "Прости, я задумался... Попробуй ещё раз ";
 
       // Clean up any markdown/formatting artifacts the model might still produce
       const reply = rawReply
-        .replace(/\*\*(.+?)\*\*/g, "$1")   // **bold**
-        .replace(/\*(.+?)\*/g, "$1")       // *italic*
-        .replace(/__(.+?)__/g, "$1")       // __underline__
-        .replace(/_(.+?)_/g, "$1")         // _italic_
-        .replace(/^#{1,6}\s+/gm, "")       // # headings
-        .replace(/^[-•]\s+/gm, "")         // - bullet lists
-        .replace(/^\d+\.\s+/gm, "")        // 1. numbered lists
-        .replace(/```[\s\S]*?```/g, "")    // ```code blocks```
-        .replace(/`(.+?)`/g, "$1")         // `inline code`
-        .replace(/[«»""'']/g, "")          // all types of quotes
-        .replace(/\n{3,}/g, "\n\n")        // collapse excessive newlines
+        .replace(/\*\*(.+?)\*\*/g, "$1") // **bold**
+        .replace(/\*(.+?)\*/g, "$1") // *italic*
+        .replace(/__(.+?)__/g, "$1") // __underline__
+        .replace(/_(.+?)_/g, "$1") // _italic_
+        .replace(/^#{1,6}\s+/gm, "") // # headings
+        .replace(/^[-•]\s+/gm, "") // - bullet lists
+        .replace(/^\d+\.\s+/gm, "") // 1. numbered lists
+        .replace(/```[\s\S]*?```/g, "") // ```code blocks```
+        .replace(/`(.+?)`/g, "$1") // `inline code`
+        .replace(/[«»""'']/g, "") // all types of quotes
+        .replace(/\n{3,}/g, "\n\n") // collapse excessive newlines
         .trim();
 
       // Determine emotion from reply content
@@ -711,7 +710,7 @@ export function LeafMascot() {
       console.error("Chat error:", err);
       setMessages((prev) => [
         ...prev,
-        { id: "e" + Date.now(), role: "assistant", content: "Ой, что-то пошло не так... Но я всё равно рядом! Попробуй ещё раз 🌿", timestamp: Date.now(), emotion: "worried" },
+        { id: "e" + Date.now(), role: "assistant", content: "Ой, что-то пошло не так... Но я всё равно рядом! Попробуй ещё раз", timestamp: Date.now(), emotion: "worried" },
       ]);
       setMascotMood("idle");
     } finally {
@@ -742,8 +741,8 @@ export function LeafMascot() {
       setTimeout(() => {
         const ctx = getContextualGreeting();
         const greeting = ctx
-          ? `${ctx.text}\n\nЯ Листик — твой маленький компаньон. Могу поддержать, выслушать или просто побыть рядом. О чём хочешь поговорить? 🌿`
-          : `${getTimeGreeting()}\n\nЯ Листик — твой маленький компаньон. Могу поддержать, выслушать или просто побыть рядом. О чём хочешь поговорить? 🌿`;
+          ? `${ctx.text}\n\nЯ Листик — твой маленький компаньон. Могу поддержать, выслушать или просто побыть рядом. О чём хочешь поговорить?`
+          : `${getTimeGreeting()}\n\nЯ Листик — твой маленький компаньон. Могу поддержать, выслушать или просто побыть рядом. О чём хочешь поговорить? `;
         setMessages([{
           id: "welcome",
           role: "assistant",
@@ -793,7 +792,7 @@ export function LeafMascot() {
             />
             <motion.div
               className="absolute bottom-0 left-0 right-0 z-50 flex flex-col rounded-t-3xl"
-              style={{ backgroundColor: t.bg, maxHeight: "65vh", boxShadow: "0 -8px 30px rgba(0,0,0,0.15)" }}
+              style={{ backgroundColor: t.bg, maxHeight: "65vh", boxShadow: "none" }}
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
@@ -818,8 +817,8 @@ export function LeafMascot() {
                 className="w-9 h-9 rounded-full flex items-center justify-center shadow-sm"
                 style={{
                   background: darkMode
-                    ? "radial-gradient(circle at 35% 35%, #3A6B45, #2D5038)"
-                    : "radial-gradient(circle at 35% 35%, #D4F0DA, #8DB596)",
+                    ? "#3A6B45"
+                    : "#D4F0DA",
                 }}
                 animate={{ rotate: [0, 3, -3, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -884,13 +883,13 @@ export function LeafMascot() {
                 <motion.div className="flex items-center gap-2" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
                   <motion.div
                     className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
-                    style={{ background: "radial-gradient(circle, #D4F0DA, #8DB596)" }}
+                    style={{ background: "#D4F0DA" }}
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
                   >
                     <LeafCharacter mood="thinking" size={20} darkMode={darkMode} />
                   </motion.div>
-                  <div className="rounded-2xl" style={{ backgroundColor: t.bgSecondary, borderBottomLeftRadius: 4, border: `1px solid ${t.border}` }}>
+                  <div className="rounded-xl" style={{ backgroundColor: t.bgSecondary, borderBottomLeftRadius: 4, border: `1px solid ${t.border}` }}>
                     <TypingDots />
                   </div>
                 </motion.div>
@@ -915,7 +914,7 @@ export function LeafMascot() {
                         transition={{ delay: 0.5 + i * 0.06 }}
                         whileTap={{ scale: 0.93 }}
                         onClick={() => handleQuickAction(action.id)}>
-                        <span style={{ fontSize: "0.75rem" }}>{action.emoji}</span>
+                        <span style={{ fontSize: "0.75rem" }}><AppIcon icon={action.emoji} size={18} /></span>
                         <span style={{ fontSize: "0.68rem", fontWeight: 500, color: t.textSecondary }}>{action.label}</span>
                       </motion.button>
                     ))}

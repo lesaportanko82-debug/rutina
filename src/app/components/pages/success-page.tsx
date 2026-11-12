@@ -77,8 +77,8 @@ export function SuccessPage() {
           <div
             className="w-28 h-28 rounded-full flex items-center justify-center relative"
             style={{
-              background: "linear-gradient(135deg, rgba(141,181,150,0.25), rgba(123,175,176,0.2))",
-              boxShadow: "0 0 60px rgba(141,181,150,0.35)",
+              background: "rgba(141,181,150,0.25)",
+              boxShadow: "none",
             }}
           >
             {/* Pulse rings */}
@@ -118,7 +118,7 @@ export function SuccessPage() {
           transition={{ delay: 0.45 }}
           className="w-full mb-8"
         >
-          <GlassPanel darkMode={darkMode} className="p-6 rounded-2xl" color="#8DB596">
+          <GlassPanel darkMode={darkMode} className="p-6 rounded-xl" color="#8DB596">
             <div className="flex items-center gap-2 mb-4">
               <Sparkles className="w-5 h-5" style={{ color: "#8DB596" }} />
               <span className="font-semibold" style={{ color: t.text, fontSize: "0.95rem" }}>
@@ -150,9 +150,9 @@ export function SuccessPage() {
           className="w-full"
         >
           <motion.button
-            className="w-full py-4 rounded-xl font-semibold text-lg shadow-lg flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-xl font-semibold text-lg shadow-sm flex items-center justify-center gap-2"
             style={{
-              background: "linear-gradient(135deg, #8DB596, #7EA8BE)",
+              background: "#5B8A64",
               color: "white",
             }}
             whileHover={{ scale: 1.02 }}

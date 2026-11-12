@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { Component, ErrorInfo, ReactNode } from "react";
 
 interface Props {
@@ -58,9 +59,7 @@ export class ErrorBoundary extends Component<Props, State> {
               marginBottom: "1.25rem",
               filter: "grayscale(0.2)",
             }}
-          >
-            🌿
-          </div>
+          ><AppIcon icon="🌿" size={20} /></div>
 
           {/* Title */}
           <h1
@@ -87,7 +86,7 @@ export class ErrorBoundary extends Component<Props, State> {
             }}
           >
             Листик столкнулся с неожиданной ошибкой. Попробуйте вернуться на
-            главный экран — всё должно быть хорошо 🌱
+            главный экран — всё должно быть хорошо 
           </p>
 
           {/* Error details (dev only) */}
@@ -135,14 +134,14 @@ export class ErrorBoundary extends Component<Props, State> {
             onClick={this.handleReset}
             style={{
               padding: "0.75rem 2rem",
-              borderRadius: "999px",
+              borderRadius: 12,
               border: "none",
-              background: "linear-gradient(135deg, #8DB596, #7BAFB0)",
+              background: "#5B8A64",
               color: "#fff",
               fontSize: "0.9rem",
               fontWeight: 600,
               cursor: "pointer",
-              boxShadow: "0 4px 16px rgba(141,181,150,0.3)",
+              boxShadow: "none",
             }}
           >
             На главный экран

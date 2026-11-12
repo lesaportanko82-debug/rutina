@@ -18,7 +18,7 @@ const quickTools = [
 
 const affirmations = [
   "Это пройдёт. Всё проходит.",
-  "Ты в безопасности прямо сейчас.",
+  "Вы в безопасности прямо сейчас.",
   "Ты справлялся раньше — справишься и сейчас.",
   "Дыши. Ты живой. Этого достаточно.",
   "Тревога — это не ты. Она гость, и она уйдёт.",
@@ -63,7 +63,7 @@ function BreathingExercise({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <motion.div
-        className="rounded-3xl p-8 text-center"
+        className="rounded-xl p-8 text-center"
         style={{ backgroundColor: t.card, width: 300 }}
         onClick={(e) => e.stopPropagation()}
         initial={{ scale: 0.8 }} animate={{ scale: 1 }}
@@ -148,21 +148,21 @@ export function SOSPage() {
         </button>
         <div>
           <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>SOS</h1>
-          <p style={{ fontSize: "0.72rem", color: t.textMuted }}>Мгновенная помощь при тревоге</p>
+          <p style={{ fontSize: "0.72rem", color: t.textMuted }}>Быстрые инструменты на случай паники</p>
         </div>
       </div>
 
       {/* Calming message */}
-      <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-5 mb-5 text-center">
+      <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-5 mb-5 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
         >
-        <span style={{ fontSize: "2rem" }}>🫂</span>
+        <span style={{ fontSize: "2rem" }}><AppIcon icon="🫂" size={20} /></span>
         <p style={{ fontSize: "0.95rem", fontWeight: 600, color: t.text, marginTop: 8 }}>
-          Ты в безопасности
+          Вы в безопасности
         </p>
         <p style={{ fontSize: "0.78rem", color: t.textMuted, marginTop: 4, lineHeight: 1.5 }}>
-          Прямо сейчас всё в порядке. Давай вместе успокоимся.
+          Выберите инструмент. Любой займёт 2–3 минуты.
         </p>
         </motion.div>
       </GlassPanel>
@@ -173,7 +173,7 @@ export function SOSPage() {
       </h2>
       <div className="grid grid-cols-2 gap-3 mb-5">
         {quickTools.map((tool, i) => (
-          <GlassPanel key={tool.id} darkMode={darkMode} color={tool.color} className="rounded-2xl">
+          <GlassPanel key={tool.id} darkMode={darkMode} color={tool.color} className="rounded-xl">
             <motion.button
               className="w-full p-4 text-left"
               whileTap={{ scale: 0.95 }}
@@ -201,7 +201,7 @@ export function SOSPage() {
       </div>
 
       {sosSettings.contacts.length === 0 ? (
-        <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-4 text-center mb-5">
+        <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-4 text-center mb-5">
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
           >
@@ -222,7 +222,7 @@ export function SOSPage() {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: "#8DB59618" }}>
-                    <span style={{ fontSize: "1rem" }}>💚</span>
+                    <span style={{ fontSize: "1rem" }}><AppIcon icon="💚" size={20} /></span>
                   </div>
                   <div>
                     <p style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>{contact.name}</p>
@@ -244,7 +244,7 @@ export function SOSPage() {
       )}
 
       {/* Safety reminder */}
-      <GlassPanel darkMode={darkMode} color="#C4876C" className="rounded-2xl p-4">
+      <GlassPanel darkMode={darkMode} color="#C4876C" className="rounded-xl p-4">
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
         >
@@ -279,7 +279,7 @@ export function SOSPage() {
                 style={{ backgroundColor: t.bgSecondary, color: t.text, border: `1px solid ${t.border}`, fontSize: "0.85rem" }}
                 value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} type="tel" />
               <button className="w-full rounded-xl py-3 font-semibold"
-                style={{ backgroundColor: t.sage, color: "#fff", fontSize: "0.9rem" }}
+                style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.9rem" }}
                 onClick={addContact}>
                 Сохранить
               </button>
@@ -300,11 +300,11 @@ export function SOSPage() {
             style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             onClick={() => setShowAffirmation(false)}>
-            <motion.div className="rounded-3xl p-8 text-center mx-4"
+            <motion.div className="rounded-xl p-8 text-center mx-4"
               style={{ backgroundColor: t.card, maxWidth: 340 }}
               initial={{ scale: 0.7, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.7, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}>
-              <span style={{ fontSize: "2.5rem" }}>💜</span>
+              <span style={{ fontSize: "2.5rem" }}><AppIcon icon="💜" size={20} /></span>
               <p style={{ fontSize: "1.1rem", fontWeight: 600, color: t.text, marginTop: 16, lineHeight: 1.6 }}>
                 {currentAffirmation}
               </p>

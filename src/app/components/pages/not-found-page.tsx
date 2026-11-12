@@ -1,3 +1,4 @@
+import { AppIcon } from "../app-icon";
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import { Home, ArrowLeft } from "lucide-react";
@@ -22,9 +23,7 @@ export function NotFoundPage() {
         style={{ fontSize: "4rem", marginBottom: "1.5rem" }}
         animate={{ rotate: [-5, 5, -5], y: [0, -8, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-      >
-        🍃
-      </motion.div>
+      ><AppIcon icon="🍃" size={20} /></motion.div>
 
       {/* 404 number */}
       <motion.div
@@ -71,7 +70,7 @@ export function NotFoundPage() {
           marginBottom: "2rem",
         }}
       >
-        Кажется, этот листик улетел. Вернёмся туда, где тепло и уютно? 🌱
+        Кажется, этот листик улетел. Вернёмся туда, где тепло и уютно? 
       </motion.p>
 
       {/* Buttons */}
@@ -88,7 +87,7 @@ export function NotFoundPage() {
             alignItems: "center",
             gap: "0.4rem",
             padding: "0.65rem 1.25rem",
-            borderRadius: "999px",
+            borderRadius: 12,
             border: "1.5px solid #E8E3DC",
             background: "transparent",
             color: "#9B9489",
@@ -108,14 +107,14 @@ export function NotFoundPage() {
             alignItems: "center",
             gap: "0.4rem",
             padding: "0.65rem 1.5rem",
-            borderRadius: "999px",
+            borderRadius: 12,
             border: "none",
-            background: "linear-gradient(135deg, #8DB596, #7BAFB0)",
+            background: "#5B8A64",
             color: "#fff",
             fontSize: "0.875rem",
             fontWeight: 600,
             cursor: "pointer",
-            boxShadow: "0 4px 16px rgba(141,181,150,0.3)",
+            boxShadow: "none",
           }}
         >
           <Home size={15} />

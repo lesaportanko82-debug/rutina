@@ -155,7 +155,7 @@ export function CognitiveDistortionsPage() {
         </button>
         <div className="flex-1">
           <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Ловушки мышления</h1>
-          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Замечайте искажения — освобождайтесь</p>
+          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Справочник, журнал, паттерны</p>
         </div>
         <button onClick={() => setShowLogForm(true)} className="p-2 rounded-xl" style={{ backgroundColor: t.lavender + "18" }}>
           <Plus className="w-5 h-5" style={{ color: t.lavender }} />
@@ -177,7 +177,7 @@ export function CognitiveDistortionsPage() {
               color: tab === tb.id ? t.text : t.textMuted,
             }}
             onClick={() => setTab(tb.id)}>
-            <span style={{ fontSize: "0.7rem" }}>{tb.icon}</span> {tb.label}
+            <span style={{ fontSize: "0.7rem" }}><AppIcon icon={tb.icon} size={18} /></span> {tb.label}
           </button>
         ))}
       </div>
@@ -249,7 +249,7 @@ export function CognitiveDistortionsPage() {
       {tab === "log" && (
         <div className="space-y-2">
           {cogDistortionTags.length === 0 ? (
-            <GlassPanel darkMode={darkMode} className="rounded-2xl p-6 text-center">
+            <GlassPanel darkMode={darkMode} className="rounded-xl p-6 text-center">
               <BookOpen className="w-8 h-8 mx-auto mb-3" style={{ color: t.textFaint }} />
               <p style={{ fontSize: "0.82rem", color: t.textMuted }}>Пока пусто</p>
               <p style={{ fontSize: "0.72rem", color: t.textFaint }}>
@@ -294,7 +294,7 @@ export function CognitiveDistortionsPage() {
       {tab === "patterns" && (
         <div>
           {patterns.length === 0 ? (
-            <GlassPanel darkMode={darkMode} className="rounded-2xl p-6 text-center">
+            <GlassPanel darkMode={darkMode} className="rounded-xl p-6 text-center">
               <TrendingUp className="w-8 h-8 mx-auto mb-3" style={{ color: t.textFaint }} />
               <p style={{ fontSize: "0.82rem", color: t.textMuted }}>Недостаточно данных</p>
               <p style={{ fontSize: "0.72rem", color: t.textFaint }}>
@@ -337,7 +337,7 @@ export function CognitiveDistortionsPage() {
 
               {/* Weekly trend */}
               {weeklyTrend.length >= 2 && (
-                <GlassPanel darkMode={darkMode} className="rounded-2xl p-4">
+                <GlassPanel darkMode={darkMode} className="rounded-xl p-4">
                   <h3 style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text, marginBottom: 12 }}>
                     Тренд по неделям
                   </h3>
@@ -365,12 +365,11 @@ export function CognitiveDistortionsPage() {
               )}
 
               {/* Insight */}
-              <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl mt-4">
+              <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl mt-4">
               <motion.div className="p-4"
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
-                <p style={{ fontSize: "0.75rem", color: t.text, lineHeight: 1.6 }}>
-                  💡 <strong>Инсайт:</strong> Ваша главная ловушка — <strong style={{ color: patterns[0].distortion!.color }}>{patterns[0].distortion!.name}</strong>.
-                  {" "}{patterns[0].distortion!.antidote}
+                <p style={{ fontSize: "0.75rem", color: t.text, lineHeight: 1.6 }}><AppIcon icon="💡" size={20} /><strong>Инсайт:</strong> Ваша главная ловушка — <strong style={{ color: patterns[0].distortion!.color }}>{patterns[0].distortion!.name}</strong>.
+                  {""}{patterns[0].distortion!.antidote}
                 </p>
               </motion.div>
               </GlassPanel>

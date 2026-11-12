@@ -130,7 +130,7 @@ export function CelebrationOverlay() {
         >
           <ConfettiCanvas />
           <motion.div
-            className="relative z-10 text-center px-8 py-6 rounded-3xl shadow-2xl"
+            className="relative z-10 text-center px-8 py-6 rounded-xl shadow-sm"
             style={{ backgroundColor: "rgba(250, 248, 245, 0.95)", maxWidth: 300 }}
             initial={{ scale: 0, y: 50 }}
             animate={{ scale: 1, y: 0 }}

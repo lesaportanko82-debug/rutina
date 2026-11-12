@@ -103,7 +103,7 @@ export function LifeWheelPage() {
         </button>
         <div className="flex-1">
           <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Колесо жизни</h1>
-          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Оцените баланс 8 сфер</p>
+          <p style={{ fontSize: "0.7rem", color: t.textMuted }}>8 сфер, оценка от 1 до 10</p>
         </div>
         {editing && (
           <motion.button onClick={handleSave} className="p-2 rounded-xl" style={{ backgroundColor: t.sage + "18" }}
@@ -114,7 +114,7 @@ export function LifeWheelPage() {
       </div>
 
       {/* Radar chart */}
-      <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-4 mb-4">
+      <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-4 mb-4">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <ResponsiveContainer width="100%" height={250}>
             <RadarChart data={chartData} cx="50%" cy="50%" outerRadius="75%">
@@ -145,7 +145,7 @@ export function LifeWheelPage() {
       {/* Edit / View sliders */}
       <div className="flex items-center justify-between mb-3">
         <h2 style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>
-          {editing ? "Оцените каждую сферу" : "Ваши оценки"}
+          {editing ? "Оцените каждую сферу" : "Оценки"}
         </h2>
         {!editing && (
           <button className="px-3 py-1.5 rounded-lg" style={{ backgroundColor: t.lavender + "18", fontSize: "0.72rem", fontWeight: 600, color: t.lavender }}
@@ -188,7 +188,7 @@ export function LifeWheelPage() {
 
       {editing && (
         <motion.button className="w-full rounded-xl py-3 font-semibold mb-5"
-          style={{ backgroundColor: t.sage, color: "#fff", fontSize: "0.9rem" }}
+          style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.9rem" }}
           whileTap={{ scale: 0.95 }} onClick={handleSave}>
           Сохранить оценку
         </motion.button>
@@ -196,19 +196,17 @@ export function LifeWheelPage() {
 
       {/* Insights */}
       {!editing && (
-        <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-2xl p-4 mb-4">
+        <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-xl p-4 mb-4">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
             <p style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text, marginBottom: 8 }}>Инсайты</p>
             <div className="space-y-2">
-              <p style={{ fontSize: "0.72rem", color: t.textMuted }}>
-                🌟 <strong style={{ color: sorted[sorted.length - 1].color }}>Сильная сторона:</strong> {sorted[sorted.length - 1].name} ({scores[sorted[sorted.length - 1].id]}/10)
+              <p style={{ fontSize: "0.72rem", color: t.textMuted }}><AppIcon icon="🌟" size={20} /><strong style={{ color: sorted[sorted.length - 1].color }}>Сильная сторона:</strong> {sorted[sorted.length - 1].name} ({scores[sorted[sorted.length - 1].id]}/10)
               </p>
-              <p style={{ fontSize: "0.72rem", color: t.textMuted }}>
-                🌱 <strong style={{ color: sorted[0].color }}>Зона роста:</strong> {sorted[0].name} ({scores[sorted[0].id]}/10)
+              <p style={{ fontSize: "0.72rem", color: t.textMuted }}><AppIcon icon="🌱" size={20} /><strong style={{ color: sorted[0].color }}>Зона роста:</strong> {sorted[0].name} ({scores[sorted[0].id]}/10)
               </p>
               {prevEntry && (
                 <p style={{ fontSize: "0.72rem", color: t.textMuted }}>
-                  📈 Динамика: средний балл {(() => {
+                   Динамика: средний балл {(() => {
                     const prevAvg = Object.values(prevEntry.scores).reduce((s, v) => s + v, 0) / Object.values(prevEntry.scores).length;
                     const diff = Number(avgScore) - prevAvg;
                     return diff > 0 ? `+${diff.toFixed(1)} — растёте!` : diff < 0 ? `${diff.toFixed(1)} — стоит обратить внимание` : "без изменений";

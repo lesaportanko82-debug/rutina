@@ -1,3 +1,4 @@
+import { AppIcon } from "../app-icon";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Eye, EyeOff, Loader2, Sparkles, ArrowRight, User, Lock, Shield, Mail } from "lucide-react";
@@ -199,12 +200,12 @@ export function AuthPage({ onAuth }: AuthPageProps) {
       <div className="relative z-[1] flex flex-col items-center">
         <MotionDiv
           className="relative w-24 h-24 rounded-full flex items-center justify-center mb-6"
-          style={{ background: `linear-gradient(135deg, ${C.sage}25, ${C.lavender}20)` }}
+          style={{ background: `${C.sage}25` }}
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 200, damping: 15 }}
         >
-          <span style={{ fontSize: "3rem" }}>🌿</span>
+          <span style={{ fontSize: "3rem" }}><AppIcon icon="🌿" size={20} /></span>
           {[0, 1, 2].map((i) => (
             <MotionDiv
               key={i}
@@ -234,11 +235,11 @@ export function AuthPage({ onAuth }: AuthPageProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          Ваше пространство для заботы о себе
+          Привычки, задачи, настроение
         </MotionP>
 
         <MotionDiv
-          className="flex rounded-2xl p-1 mb-6 w-full max-w-sm"
+          className="flex rounded-xl p-1 mb-6 w-full max-w-sm"
           style={{ backgroundColor: C.card }}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -280,10 +281,10 @@ export function AuthPage({ onAuth }: AuthPageProps) {
                 <input
                   ref={nameRef}
                   type="text"
-                  placeholder="Ваше имя"
+                  placeholder="Имя"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3.5 rounded-2xl outline-none"
+                  className="w-full pl-10 pr-4 py-3.5 rounded-xl outline-none"
                   style={{
                     fontSize: "0.88rem",
                     backgroundColor: C.card,
@@ -304,7 +305,7 @@ export function AuthPage({ onAuth }: AuthPageProps) {
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full pl-10 pr-4 py-3.5 rounded-2xl outline-none"
+              className="w-full pl-10 pr-4 py-3.5 rounded-xl outline-none"
               style={{
                 fontSize: "0.88rem",
                 backgroundColor: C.card,
@@ -322,7 +323,7 @@ export function AuthPage({ onAuth }: AuthPageProps) {
               placeholder="Пароль (мин. 6 символов)"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full pl-10 pr-12 py-3.5 rounded-2xl outline-none"
+              className="w-full pl-10 pr-12 py-3.5 rounded-xl outline-none"
               style={{
                 fontSize: "0.88rem",
                 backgroundColor: C.card,
@@ -357,9 +358,9 @@ export function AuthPage({ onAuth }: AuthPageProps) {
           </AnimatePresence>
 
           <MotionButton
-            className="w-full py-3.5 rounded-2xl flex items-center justify-center gap-2 text-white shadow-md"
+            className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 text-white shadow-sm"
             style={{
-              background: `linear-gradient(135deg, ${C.sage}, #6B8F71)`,
+              background: `${C.sage}`,
               fontSize: "0.9rem",
               fontWeight: 700,
             }}

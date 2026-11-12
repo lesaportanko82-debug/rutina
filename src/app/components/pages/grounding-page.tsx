@@ -139,7 +139,7 @@ export function GroundingPage() {
             Заземление 5-4-3-2-1
           </h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>
-            Техника для возвращения в момент «здесь и сейчас»
+            5 вещей вижу, 4 слышу, 3 касаюсь, 2 чувствую запах, 1 вкус
           </p>
         </div>
       </motion.div>
@@ -154,7 +154,7 @@ export function GroundingPage() {
         <div className="w-full rounded-full h-2" style={{ backgroundColor: t.border }}>
           <motion.div
             className="h-2 rounded-full"
-            style={{ background: `linear-gradient(90deg, ${currentStep.color}, ${steps[Math.min(currentStepIdx + 1, 4)].color})` }}
+            style={{ background: `${currentStep.color}` }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.5 }}
           />
@@ -187,11 +187,11 @@ export function GroundingPage() {
           >
             <motion.div
               className="w-20 h-20 rounded-full mx-auto mb-5 flex items-center justify-center"
-              style={{ background: `linear-gradient(135deg, ${t.sage}20, ${t.teal}20)` }}
+              style={{ background: `${t.sage}20` }}
               animate={{ scale: [1, 1.08, 1] }}
               transition={{ repeat: Infinity, duration: 3 }}
             >
-              <span style={{ fontSize: "2rem" }}>🌿</span>
+              <span style={{ fontSize: "2rem" }}><AppIcon icon="🌿" size={20} /></span>
             </motion.div>
 
             <h2 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text, marginBottom: 8 }}>
@@ -202,7 +202,7 @@ export function GroundingPage() {
             </p>
 
             <motion.div
-              className="mt-8 p-4 rounded-2xl"
+              className="mt-8 p-4 rounded-xl"
               style={{ backgroundColor: t.bgSecondary }}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -224,7 +224,7 @@ export function GroundingPage() {
               </button>
               <button
                 className="flex-1 py-3 rounded-xl text-white flex items-center justify-center gap-2"
-                style={{ background: `linear-gradient(135deg, ${t.sage}, ${t.teal})`, fontSize: "0.82rem", fontWeight: 600 }}
+                style={{ background: `${t.sage}`, fontSize: "0.82rem", fontWeight: 600 }}
                 onClick={() => navigate(-1)}
               >
                 Готово
@@ -242,7 +242,7 @@ export function GroundingPage() {
             transition={{ duration: 0.3 }}
           >
             {/* Step card */}
-            <GlassPanel darkMode={darkMode} color={currentStep.color} className="rounded-2xl mb-5">
+            <GlassPanel darkMode={darkMode} color={currentStep.color} className="rounded-xl mb-5">
             <div
               className="p-5 text-center"
             >
@@ -346,9 +346,9 @@ export function GroundingPage() {
               </>
             ) : (
               <motion.button
-                className="w-full py-3.5 rounded-2xl text-white flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl text-white flex items-center justify-center gap-2"
                 style={{
-                  background: `linear-gradient(135deg, ${currentStep.color}, ${steps[Math.min(currentStepIdx + 1, 4)].color})`,
+                  background: `${currentStep.color}`,
                   fontSize: "0.88rem",
                   fontWeight: 600,
                 }}

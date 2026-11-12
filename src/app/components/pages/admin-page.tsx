@@ -229,7 +229,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
   return (
     <div className="min-h-screen" style={{ backgroundColor: C.bg }}>
       {/* Header */}
-      <div className="px-5 pt-12 pb-4" style={{ background: `linear-gradient(180deg, ${C.lavender}15, transparent)` }}>
+      <div className="px-5 pt-12 pb-4" style={{ background: `${C.lavender}15` }}>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center"
@@ -260,7 +260,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
           ].map((s, i) => (
             <motion.div
               key={i}
-              className="rounded-2xl p-2.5 text-center"
+              className="rounded-xl p-2.5 text-center"
               style={{ backgroundColor: s.color + "10", border: `1px solid ${s.color}15` }}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -313,7 +313,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
             {filteredUsers.map((user, i) => (
               <motion.div
                 key={user.id}
-                className="rounded-2xl overflow-hidden"
+                className="rounded-xl overflow-hidden"
                 style={{
                   backgroundColor: user.banned ? C.terracotta + "08" : C.card,
                   border: `1px solid ${user.banned ? C.terracotta + "25" : C.border}`,
@@ -331,8 +331,8 @@ export function AdminPage({ onLogout }: AdminPageProps) {
                     className="w-10 h-10 rounded-full flex items-center justify-center text-white shrink-0 relative"
                     style={{
                       background: user.banned
-                        ? `linear-gradient(135deg, ${C.terracotta}, ${C.textFaint})`
-                        : `linear-gradient(135deg, ${C.sage}, ${C.dustyBlue})`,
+                        ? `${C.terracotta}`
+                        : `${C.sage}`,
                       fontSize: "0.85rem",
                       fontWeight: 700,
                     }}
@@ -488,7 +488,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
           >
             <div className="absolute inset-0 bg-black/40" onClick={closeModal} />
             <motion.div
-              className="relative w-full max-w-[380px] rounded-2xl p-5 border shadow-xl"
+              className="relative w-full max-w-[380px] rounded-xl p-5 border shadow-sm"
               style={{ backgroundColor: C.bg, borderColor: C.border }}
               initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 30 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
@@ -620,9 +620,9 @@ export function AdminPage({ onLogout }: AdminPageProps) {
                     style={{
                       background: modal === "delete"
                         ? C.terracotta
-                        : modal === "password" ? `linear-gradient(135deg, ${C.lavender}, ${C.dustyBlue})`
-                        : modal === "email" ? `linear-gradient(135deg, ${C.dustyBlue}, ${C.teal})`
-                        : `linear-gradient(135deg, ${C.sage}, ${C.teal})`,
+                        : modal === "password" ? `${C.lavender}`
+                        : modal === "email" ? `${C.dustyBlue}`
+                        : `${C.sage}`,
                       fontSize: "0.85rem",
                       fontWeight: 600,
                       opacity: modalLoading ? 0.7 : 1,
@@ -645,7 +645,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
       <AnimatePresence>
         {toast && (
           <motion.div
-            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[250] px-5 py-3 rounded-2xl shadow-lg"
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[250] px-5 py-3 rounded-xl shadow-sm"
             style={{ backgroundColor: C.text, color: "#fff", fontSize: "0.82rem", fontWeight: 600, maxWidth: "90%" }}
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}

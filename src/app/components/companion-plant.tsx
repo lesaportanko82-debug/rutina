@@ -1,3 +1,4 @@
+import { AppIcon } from "./app-icon";
 import { useMemo, useState, useCallback, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTheme } from "./theme";
@@ -227,7 +228,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
     onWater();
     playWaterSound();
     spawnParticles("drop", 8);
-    flash("Полили! 💧 +30 воды");
+    flash("Полили! +30 воды");
   }, [onWater, spawnParticles, flash, plantState.waterLevel]);
 
   const handleTouch = useCallback(() => {
@@ -235,7 +236,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
     playTouchSound();
     setPlantWiggle((w) => w + 1);
     spawnParticles("sparkle", 4);
-    const msgs = ["Щекотно!", "Приятно! 🌿", "Люблю объятия!", "Это здорово!"];
+    const msgs = ["Щекотно!", "Приятно!", "Люблю объятия!", "Это здорово!"];
     flash(msgs[Math.floor(Math.random() * msgs.length)]);
   }, [onInteract, spawnParticles, flash]);
 
@@ -243,7 +244,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
     onInteract();
     playHeartSound();
     spawnParticles("heart", 6);
-    flash("Чувствует вашу любовь! ❤️");
+    flash("Чувствует вашу любовь!");
   }, [onInteract, spawnParticles, flash]);
 
   const handleRename = useCallback(() => {
@@ -280,7 +281,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
 
   return (
     <motion.div
-      className="rounded-2xl border overflow-hidden"
+      className="rounded-xl border overflow-hidden"
       style={{ backgroundColor: th.card, borderColor: th.border }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -303,7 +304,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
                 <motion.button whileTap={{ scale: 0.9 }} onClick={handleRename}
                   className="w-6 h-6 rounded-full flex items-center justify-center"
                   style={{ backgroundColor: th.sage + "20" }}>
-                  <span style={{ fontSize: "0.7rem" }}>✓</span>
+                  <span style={{ fontSize: "0.7rem" }}><AppIcon icon="✓" size={20} /></span>
                 </motion.button>
                 <motion.button whileTap={{ scale: 0.9 }} onClick={() => setIsEditing(false)}
                   className="w-6 h-6 rounded-full flex items-center justify-center"
@@ -356,9 +357,9 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
         {/* Background gradient */}
         <div className="absolute inset-0" style={{
           background: healthState === "thriving"
-            ? "linear-gradient(180deg, #E8F5E910, #C8E6C920)"
+            ? "#E8F5E910"
             : healthState === "dying"
-              ? "linear-gradient(180deg, #D7CCC810, #BCAAA410)"
+              ? "#D7CCC810"
               : "transparent",
         }} />
 
@@ -367,8 +368,8 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
           style={{
             height: 35,
             background: healthState === "dying"
-              ? "linear-gradient(180deg, #8D7B6A20, #7A6B5E30)"
-              : "linear-gradient(180deg, #8DB59615, #6B9F5E20)",
+              ? "#8D7B6A20"
+              : "#8DB59615",
           }}
         />
 
@@ -376,7 +377,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
         <AnimatePresence>
           {showTooltip && (
             <motion.div
-              className="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full shadow-lg"
+              className="absolute top-3 left-1/2 -translate-x-1/2 z-30 px-3 py-1.5 rounded-full shadow-sm"
               style={{ backgroundColor: th.card, border: `1px solid ${th.border}`, fontSize: "0.72rem", fontWeight: 500, color: th.text, whiteSpace: "nowrap" }}
               initial={{ opacity: 0, y: 10, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -404,10 +405,10 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
               exit={{ opacity: 0 }}
               transition={{ duration: 1.2 }}
             >
-              {p.type === "drop" && <span style={{ fontSize: "0.9rem" }}>💧</span>}
-              {p.type === "sparkle" && <span style={{ fontSize: "0.7rem" }}>✨</span>}
-              {p.type === "heart" && <span style={{ fontSize: "0.8rem" }}>❤️</span>}
-              {p.type === "leaf" && <span style={{ fontSize: "0.7rem" }}>🍃</span>}
+              {p.type === "drop" && <span style={{ fontSize: "0.9rem" }}><AppIcon icon="💧" size={20} /></span>}
+              {p.type === "sparkle" && <span style={{ fontSize: "0.7rem" }}><AppIcon icon="✨" size={20} /></span>}
+              {p.type === "heart" && <span style={{ fontSize: "0.8rem" }}><AppIcon icon="❤️" size={20} /></span>}
+              {p.type === "leaf" && <span style={{ fontSize: "0.7rem" }}><AppIcon icon="🍃" size={20} /></span>}
             </motion.div>
           ))}
         </AnimatePresence>
@@ -680,9 +681,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
                       y: [145 - stemHeight * 0.5 + i * 10, 140 - stemHeight * 0.6 + i * 8, 145 - stemHeight * 0.4 + i * 12, 145 - stemHeight * 0.5 + i * 10],
                     }}
                     transition={{ repeat: Infinity, duration: 6 + i * 2, ease: "easeInOut" }}
-                  >
-                    🦋
-                  </motion.text>
+                  ><AppIcon icon="🦋" size={20} /></motion.text>
                 </motion.g>
               ))}
             </>
@@ -694,16 +693,16 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
               {/* Fallen leaves */}
               <motion.text x={60} y={142} style={{ fontSize: "8px" }}
                 animate={{ opacity: [0.3, 0.6, 0.3] }}
-                transition={{ repeat: Infinity, duration: 2 }}>🍂</motion.text>
+                transition={{ repeat: Infinity, duration: 2 }}><AppIcon icon="🍂" size={20} /></motion.text>
               <motion.text x={130} y={140} style={{ fontSize: "7px" }}
                 animate={{ opacity: [0.4, 0.7, 0.4] }}
-                transition={{ repeat: Infinity, duration: 2.5 }}>🍂</motion.text>
+                transition={{ repeat: Infinity, duration: 2.5 }}><AppIcon icon="🍂" size={20} /></motion.text>
             </>
           )}
           {healthState === "wilting" && (
             <motion.text x={125} y={141} style={{ fontSize: "7px" }}
               animate={{ opacity: [0.2, 0.5, 0.2] }}
-              transition={{ repeat: Infinity, duration: 3 }}>🍂</motion.text>
+              transition={{ repeat: Infinity, duration: 3 }}><AppIcon icon="🍂" size={20} /></motion.text>
           )}
         </motion.svg>
       </div>
@@ -719,7 +718,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
           ]).map((bar) => (
             <div key={bar.label}>
               <div className="flex items-center gap-1 mb-0.5">
-                <span style={{ fontSize: "0.55rem" }}>{bar.icon}</span>
+                <span style={{ fontSize: "0.55rem" }}><AppIcon icon={bar.icon} size={18} /></span>
                 <span style={{ fontSize: "0.58rem", color: th.textFaint }}>{bar.label}</span>
               </div>
               <div className="w-full rounded-full h-1.5" style={{ backgroundColor: th.border }}>
@@ -751,8 +750,8 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
                 className="h-2 rounded-full"
                 style={{
                   background: healthState === "dying"
-                    ? "linear-gradient(90deg, #7A6B5E, #887A6B)"
-                    : "linear-gradient(90deg, #8DB596, #7BAFB0)",
+                    ? "#7A6B5E"
+                    : "#8DB596",
                 }}
                 initial={{ width: 0 }}
                 animate={{ width: `${progressToNext * 100}%` }}
@@ -762,7 +761,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
           </div>
         ) : (
           <p style={{ fontSize: "0.72rem", color: th.sage, fontWeight: 500, textAlign: "center" }}>
-            ✨ Максимальный расцвет! Ваш сад прекрасен
+             Максимальный расцвет! Ваш сад прекрасен
           </p>
         )}
       </div>
@@ -807,7 +806,7 @@ export function CompanionPlant({ plantState, onWater, onInteract, onRename }: Co
             onClick={() => {
               handleWater();
               handleLove();
-              flash("Экстренная помощь! 🌿");
+              flash("Экстренная помощь!");
             }}
           >
             <Sparkles className="w-4 h-4" style={{ color: "#C4876C" }} />

@@ -14,10 +14,10 @@ const today = () => new Date().toISOString().split("T")[0];
 
 const greetings = () => {
   const h = new Date().getHours();
-  if (h < 6) return "Тихой ночи";
+  if (h < 6) return "Доброй ночи";
   if (h < 12) return "Доброе утро";
   if (h < 18) return "Добрый день";
-  return "Мягкого вечера";
+  return "Добрый вечер";
 };
 
 const encouragements = [
@@ -63,7 +63,7 @@ const toolCategories: { title: string; emoji: string; items: ToolItem[] }[] = [
     title: "Рефлексия",
     emoji: "✨",
     items: [
-      { emoji: "📊", label: "Аналитика", path: "/app/stats", color: "#7EA8BE" },
+      { emoji: "📊", label: "Статистика", path: "/app/stats", color: "#7EA8BE" },
       { emoji: "🎡", label: "Колесо жизни", path: "/app/lifewheel", color: "#C4A86C" },
       { emoji: "📦", label: "Капсула времени", path: "/app/capsule", color: "#B88FA7" },
       { emoji: "🌙", label: "Сон", path: "/app/sleep", color: "#9B8EC4" },
@@ -95,7 +95,7 @@ function ToolsDrawer({ open, onClose, favoriteTools, onToggleFavorite }: { open:
           />
           <motion.div
             className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-50 rounded-t-2xl"
-            style={{ backgroundColor: t.bg, boxShadow: "0 -4px 20px rgba(0,0,0,0.1)" }}
+            style={{ backgroundColor: t.bg, boxShadow: "none" }}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
@@ -125,7 +125,7 @@ function ToolsDrawer({ open, onClose, favoriteTools, onToggleFavorite }: { open:
                         }}
                       >
                         <div
-                          className="w-11 h-11 rounded-2xl flex items-center justify-center relative"
+                          className="w-11 h-11 rounded-xl flex items-center justify-center relative"
                           style={{
                             backgroundColor: item.color + (isFav ? "18" : "0C"),
                             border: isFav ? `1.5px solid ${item.color}40` : `1px solid ${item.color}15`,
@@ -255,8 +255,8 @@ export function Dashboard() {
           onClick={() => navigate("/app/profile")}
           className="w-11 h-11 rounded-full flex items-center justify-center relative overflow-hidden"
           style={{
-            background: "linear-gradient(135deg, #8DB596, #7BAFB0)",
-            boxShadow: "0 4px 15px rgba(141,181,150,0.25)",
+            background: "#8DB596",
+            boxShadow: "none",
           }}
           whileTap={{ scale: 0.9 }}
         >
@@ -271,7 +271,7 @@ export function Dashboard() {
             <>
               {/* Glass shine overlay */}
               <div className="absolute inset-0 rounded-full" style={{
-                background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 60%)",
+                background: "rgba(255,255,255,0.3)",
               }} />
               <span className="text-white relative" style={{ fontSize: "0.95rem", fontWeight: 700 }}>
                 {profile.level}
@@ -307,7 +307,7 @@ export function Dashboard() {
           onClick={() => navigate("/app/tasks")}
         />
         <GlassBubble
-          emoji={todayMood ? "😊" : "🫧"}
+          emoji={todayMood ? "" : ""}
           value={todayMood ? todayMood.mood : "—"}
           label="Настроение"
           color="#9B8EC4"
@@ -348,7 +348,7 @@ export function Dashboard() {
               >
                 <AppIcon icon={tool.emoji} size={18} color={tool.color} />
                 <span style={{ fontSize: "0.58rem", fontWeight: 500, color: t.textMuted, lineHeight: 1.2, textAlign: "center" }}>
-                  {tool.label.split(" ")[0]}
+                  {tool.label.split("")[0]}
                 </span>
               </motion.button>
             );
@@ -359,7 +359,7 @@ export function Dashboard() {
       {/* ─── Questionnaire nudge ─── */}
       {!questionnaire.filled && (
         <motion.button
-          className="w-full rounded-2xl p-3.5 mb-4 flex items-center gap-3 border"
+          className="w-full rounded-xl p-3.5 mb-4 flex items-center gap-3 border"
           style={{ backgroundColor: t.bgSecondary, borderColor: t.border }}
           onClick={() => navigate("/app/profile")}
           initial={{ opacity: 0, y: 12 }}
@@ -367,10 +367,10 @@ export function Dashboard() {
           transition={{ delay: 0.12 }}
           whileTap={{ scale: 0.98 }}
         >
-          <span style={{ fontSize: "1.2rem" }}>📝</span>
+          <span style={{ fontSize: "1.2rem" }}><AppIcon icon="📝" size={20} /></span>
           <div className="flex-1 text-left">
             <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>Расскажите о себе</span>
-            <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Персонализируем приложение под вас</p>
+            <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Имя и стиль подсказок</p>
           </div>
           <ChevronRight className="w-4 h-4" style={{ color: t.textFaint }} />
         </motion.button>
@@ -388,12 +388,12 @@ export function Dashboard() {
         )}
         {timeContext === "morning" && todayIntention && !todayMood && (
           <motion.button
-            className="w-full rounded-2xl p-4 flex items-center gap-3 border"
+            className="w-full rounded-xl p-4 flex items-center gap-3 border"
             style={{ backgroundColor: t.bgSecondary, borderColor: t.border }}
             onClick={() => navigate("/app/mood")}
             whileTap={{ scale: 0.98 }}
           >
-            <span style={{ fontSize: "1.3rem" }}>😊</span>
+            <span style={{ fontSize: "1.3rem" }}><AppIcon icon="😊" size={20} /></span>
             <div className="flex-1 text-left">
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>Как вы себя чувствуете?</span>
               <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Отмет��те настроение — это занимает 10 секунд</p>
@@ -406,15 +406,15 @@ export function Dashboard() {
         )}
         {timeContext === "day" && !todayMood && (
           <motion.button
-            className="w-full rounded-2xl p-4 flex items-center gap-3 border"
+            className="w-full rounded-xl p-4 flex items-center gap-3 border"
             style={{ backgroundColor: t.bgSecondary, borderColor: t.border }}
             onClick={() => navigate("/app/mood")}
             whileTap={{ scale: 0.98 }}
           >
-            <span style={{ fontSize: "1.3rem" }}>😊</span>
+            <span style={{ fontSize: "1.3rem" }}><AppIcon icon="😊" size={20} /></span>
             <div className="flex-1 text-left">
               <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>Как вы себя чувствуете?</span>
-              <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Отметьте настроение — это занимает 10 секунд</p>
+              <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Один тап, 10 секунд</p>
             </div>
             <ChevronRight className="w-4 h-4" style={{ color: t.textFaint }} />
           </motion.button>
@@ -433,7 +433,7 @@ export function Dashboard() {
           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: todayMood.color, opacity: 0.6 }} />
           <span style={{ fontSize: "0.78rem", fontWeight: 500, color: t.text }}>{todayMood.mood}</span>
           <span style={{ fontSize: "0.7rem", color: t.textMuted, marginLeft: "auto" }}>
-            {"✦".repeat(todayMood.energy)}{"○".repeat(5 - todayMood.energy)}
+            {"".repeat(todayMood.energy)}{"○".repeat(5 - todayMood.energy)}
           </span>
         </motion.div>
       )}
@@ -447,7 +447,7 @@ export function Dashboard() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.18 }}
         >
-          <span style={{ fontSize: "0.75rem" }}>☀️</span>
+          <span style={{ fontSize: "0.75rem" }}><AppIcon icon="☀️" size={20} /></span>
           <span style={{ fontSize: "0.75rem", color: t.textSecondary, fontStyle: "italic" }}>
             {todayIntention.text}
           </span>
@@ -470,9 +470,7 @@ export function Dashboard() {
               <span style={{ fontSize: "0.65rem", color: t.textMuted, marginLeft: 6 }}>Стрик: {fh.streak}</span>
             </div>
             <button onClick={() => toggleHabitToday(fh.id)} className="px-2.5 py-1.5 rounded-lg"
-              style={{ backgroundColor: t.sage + "18", fontSize: "0.7rem", fontWeight: 600, color: t.sage }}>
-              ✓
-            </button>
+              style={{ backgroundColor: t.sage + "18", fontSize: "0.7rem", fontWeight: 600, color: t.sage }}><AppIcon icon="✓" size={20} /></button>
           </motion.div>
         );
       })()}
@@ -483,9 +481,7 @@ export function Dashboard() {
           style={{ backgroundColor: "#B88FA70D", borderColor: "#B88FA720" }}
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.22 }}
           onClick={() => navigate("/capsule")} whileTap={{ scale: 0.98 }}>
-          <motion.span style={{ fontSize: "1rem" }} animate={{ rotate: [0, -5, 5, 0] }} transition={{ repeat: Infinity, duration: 2.5 }}>
-            📦
-          </motion.span>
+          <motion.span style={{ fontSize: "1rem" }} animate={{ rotate: [0, -5, 5, 0] }} transition={{ repeat: Infinity, duration: 2.5 }}><AppIcon icon="📦" size={20} /></motion.span>
           <span style={{ fontSize: "0.78rem", fontWeight: 500, color: t.text }}>Капсула ждёт вас</span>
           <ChevronRight className="w-4 h-4 ml-auto" style={{ color: t.textFaint }} />
         </motion.button>
@@ -508,8 +504,6 @@ export function Dashboard() {
                   style={{
                     borderColor: doneToday ? "#8DB59640" : (darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.5)"),
                     backgroundColor: doneToday ? "#8DB59612" : (darkMode ? "rgba(36,34,32,0.5)" : "rgba(255,255,255,0.45)"),
-                    backdropFilter: "blur(12px)",
-                    WebkitBackdropFilter: "blur(12px)",
                     boxShadow: darkMode ? "0 2px 8px rgba(0,0,0,0.15)" : "0 2px 8px rgba(0,0,0,0.03)",
                   }}
                   onClick={() => toggleHabitToday(habit.id)}
@@ -544,7 +538,7 @@ export function Dashboard() {
           <div className="w-full rounded-full h-1.5 mb-3" style={{ backgroundColor: t.border }}>
             <motion.div
               className="h-1.5 rounded-full"
-              style={{ background: "linear-gradient(90deg, #8DB596, #7BAFB0)" }}
+              style={{ background: "#8DB596" }}
               initial={{ width: 0 }}
               animate={{ width: `${totalTasks > 0 ? (completedToday / totalTasks) * 100 : 0}%` }}
               transition={{ delay: 0.4, duration: 0.6 }}
@@ -555,7 +549,7 @@ export function Dashboard() {
         <div className="space-y-1.5">
           {todayTasks.length === 0 && (
             <p style={{ fontSize: "0.78rem", color: t.textFaint, textAlign: "center", padding: "12px 0" }}>
-              Всё сделано — заслуженный покой 🌿
+              Всё сделано — заслуженный покой 
             </p>
           )}
           {todayTasks.map((task) => {
@@ -566,8 +560,6 @@ export function Dashboard() {
                 className="rounded-xl px-3 py-2.5 flex items-center gap-2.5"
                 style={{
                   backgroundColor: darkMode ? "rgba(36,34,32,0.5)" : "rgba(255,255,255,0.5)",
-                  backdropFilter: "blur(12px)",
-                  WebkitBackdropFilter: "blur(12px)",
                   border: `1px solid ${darkMode ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)"}`,
                   boxShadow: darkMode ? "0 2px 8px rgba(0,0,0,0.12)" : "0 2px 8px rgba(0,0,0,0.02)",
                 }}
@@ -600,8 +592,6 @@ export function Dashboard() {
         className="rounded-xl px-3.5 py-3 mb-5 flex items-start gap-2.5"
         style={{
           backgroundColor: darkMode ? "rgba(36,34,32,0.5)" : "rgba(255,255,255,0.5)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
           border: `1px solid ${darkMode ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)"}`,
           boxShadow: darkMode ? "0 2px 8px rgba(0,0,0,0.12)" : "0 2px 8px rgba(0,0,0,0.02)",
         }}
@@ -609,17 +599,15 @@ export function Dashboard() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.38 }}
       >
-        <span style={{ fontSize: "0.85rem", lineHeight: 1 }}>💡</span>
+        <span style={{ fontSize: "0.85rem", lineHeight: 1 }}><AppIcon icon="💡" size={20} /></span>
         <p style={{ fontSize: "0.72rem", color: t.textMuted, lineHeight: 1.5 }}>{dailyTip}</p>
       </motion.div>
 
       {/* ─── "All Tools" button ─── */}
       <motion.button
-        className="w-full rounded-2xl py-3.5 flex items-center justify-center gap-2 mb-2"
+        className="w-full rounded-xl py-3.5 flex items-center justify-center gap-2 mb-2"
         style={{
           backgroundColor: darkMode ? "rgba(36,34,32,0.5)" : "rgba(255,255,255,0.45)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
           border: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.6)"}`,
           boxShadow: darkMode ? "0 2px 8px rgba(0,0,0,0.12)" : "0 2px 8px rgba(0,0,0,0.02)",
         }}

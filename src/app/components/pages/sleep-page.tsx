@@ -87,7 +87,7 @@ export function SleepPage() {
       </div>
 
       {/* Quality */}
-      <GlassPanel darkMode={darkMode} color={quality > 0 ? qualityColors[quality] : t.lavender} className="rounded-2xl p-5 mb-4 text-center">
+      <GlassPanel darkMode={darkMode} color={quality > 0 ? qualityColors[quality] : t.lavender} className="rounded-xl p-5 mb-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
         <p style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text, marginBottom: 12 }}>Качество сна</p>
@@ -114,7 +114,7 @@ export function SleepPage() {
       </GlassPanel>
 
       {/* Time */}
-      <GlassPanel darkMode={darkMode} color={t.dustyBlue} className="rounded-2xl p-4 mb-4">
+      <GlassPanel darkMode={darkMode} color={t.dustyBlue} className="rounded-xl p-4 mb-4">
         <motion.div
           initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
         <div className="grid grid-cols-3 gap-3">
@@ -151,7 +151,7 @@ export function SleepPage() {
       </GlassPanel>
 
       {/* Factors */}
-      <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-2xl p-4 mb-4">
+      <GlassPanel darkMode={darkMode} color={t.lavender} className="rounded-xl p-4 mb-4">
         <motion.div
           initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
         <p style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text, marginBottom: 10 }}>Что повлияло на сон?</p>
@@ -197,7 +197,7 @@ export function SleepPage() {
 
       {/* Stats */}
       {sleepEntries.length > 1 && (
-        <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-2xl p-4">
+        <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-4">
           <motion.div
             initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
           <p style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text, marginBottom: 10 }}>Статистика сна</p>

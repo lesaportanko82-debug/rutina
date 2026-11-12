@@ -45,7 +45,7 @@ function wrapInStyle(text: string, style: string): string {
 
 export function getDailyTip(data: AppData): string {
   const { questionnaire: q } = data;
-  if (!q.filled) return "Заполните анкету, чтобы получать персональные советы";
+  if (!q.filled) return "Заполните анкету в профиле, чтобы подсказки учитывали ваши цели";
 
   const hour = new Date().getHours();
   const tips: string[] = [];
@@ -316,11 +316,11 @@ export function getPersonalizedRecommendations(data: AppData): Recommendation[] 
     });
 
     if (q.relaxMethods.length > 0) {
-      const methods = q.relaxMethods.slice(0, 3).join(", ").toLowerCase();
+      const methods = q.relaxMethods.slice(0, 3).join(",").toLowerCase();
       recs.push({
         id: "stress-relax",
         icon: "🛁",
-        title: "Ваши способы расслабления",
+        title: "Способы расслабления",
         text: `Вы упоминали, что вам помогает: ${methods}. Запланируйте одно из них сегодня — вы заслуживаете отдых.`,
         category: "wellbeing",
         color: "#7BAFB0",
@@ -577,7 +577,7 @@ export function getPersonalizedRecommendations(data: AppData): Recommendation[] 
         id: "missing-habits",
         icon: "🌿",
         title: "Не забудьте о мечтах",
-        text: `Вы хотели развить: ${missingHabits.slice(0, 3).join(", ").toLowerCase()}. Может, сегодня — хороший день начать?`,
+        text: `Вы хотели развить: ${missingHabits.slice(0, 3).join(",").toLowerCase()}. Может, сегодня — хороший день начать?`,
         category: "habits",
         color: "#8DB596",
         priority: 5,
