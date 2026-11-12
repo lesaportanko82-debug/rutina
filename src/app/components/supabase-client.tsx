@@ -1,0 +1,9 @@
+import { createClient } from "@supabase/supabase-js";
+
+export const projectId = "oqucupnybysgiekdagzu";
+export const publicAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9xdWN1cG55YnlzZ2lla2RhZ3p1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTQ0ODIzMjUsImV4cCI6MjExMDA1ODMyNX0.1_XVqsSx3WQKJHgNc6qL8beYuMY308VdZ9wDWcvKqYc";
+
+export const supabase = createClient(
+  `https://${projectId}.supabase.co`,
+  publicAnonKey,
+);

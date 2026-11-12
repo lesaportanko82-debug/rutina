@@ -1,0 +1,35 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* ─── Stable viewport for mobile keyboard ─── */
+:root {
+  --app-height: 100vh;
+  --app-height: 100dvh;
+}
+
+/* Prevent layout shift when virtual keyboard opens */
+html, body {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overscroll-behavior: none;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Prevent iOS zoom on inputs */
+input, textarea, select {
+  font-size: 16px !important;
+  touch-action: manipulation;
+}
+
+/* Prevent scroll-into-view jumping on focus */
+input:focus, textarea:focus, select:focus {
+  scroll-margin: 0;
+}
