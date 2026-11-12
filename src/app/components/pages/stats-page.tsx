@@ -13,6 +13,7 @@ import { AppIcon } from "../app-icon";
 import { StripeMonth } from "../day-stripe";
 import { InkFace } from "../ink";
 import { consistency } from "../../lib/consistency";
+import { type as T, space as S, ACCENT } from "../../lib/design";
 
 const categoryColors: Record<string, string> = { work: "#7EA8BE", personal: "#9B8EC4", health: "#8DB596", study: "#C4A86C" };
 const categoryLabelsMap: Record<string, string> = { work: "Работа", personal: "Личное", health: "Здоровье", study: "Учёба" };
@@ -61,6 +62,20 @@ export function StatsPage() {
     }
     return out;
   }, []);
+
+  /** Доля закрытых дней-привычек за 30 дней — главное число экрана */
+  const monthPercent = useMemo(() => {
+    let done = 0, total = 0;
+    for (const h of habits) {
+      const started = h.completedDates.length ? h.completedDates.slice().sort()[0] : null;
+      for (const day of last30) {
+        if (started && day < started) continue;
+        total++;
+        if (h.completedDates.includes(day)) done++;
+      }
+    }
+    return total ? Math.round((done / total) * 100) : 0;
+  }, [habits, last30]);
 
   const completedTasks = tasks.filter((tk) => tk.completed).length;
   const avgEnergy = moods.length > 0 ? moods.reduce((s, m) => s + m.energy, 0) / moods.length : 0;
@@ -211,35 +226,46 @@ export function StatsPage() {
   });
 
   return (
-    <div className="px-5 pt-12 pb-8">
-      <h1 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }} className="display mb-3">Статистика</h1>
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
+      <h1 className="display" style={{ fontSize: T.heading, color: t.text, marginBottom: S.group }}>Статистика</h1>
 
-      {/* Месяц как текстура: 30 полос дня подряд */}
+      {/* Герой экрана: месяц, видимый одним взглядом, и одно крупное число */}
       {habits.length > 0 && (
-        <div className="p-4 mb-5" style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 12 }}>
-          <div className="flex items-baseline justify-between mb-3">
-            <span style={{ fontSize: "0.9rem", fontWeight: 700, color: t.text }}>Последние 30 дней</span>
-            <span style={{ fontSize: "0.72rem", color: t.textMuted }}>утро · день · вечер</span>
+        <div style={{ marginBottom: S.section }}>
+          <div className="flex items-end justify-between" style={{ marginBottom: S.inner }}>
+            <div>
+              <span className="display-num" style={{ fontSize: T.hero, color: t.text, display: "block" }}>
+                {monthPercent}%
+              </span>
+              <span style={{ fontSize: T.small, color: t.textMuted }}>привычек закрыто за 30 дней</span>
+            </div>
+            <span style={{ fontSize: T.micro, color: t.textFaint, paddingBottom: 4 }}>утро · день · вечер</span>
           </div>
           <StripeMonth days={last30} habits={habits} tasks={tasks} />
         </div>
       )}
 
       {/* ─── Tab bar ─── */}
-      <div className="flex gap-1 mb-5 overflow-x-auto pb-1 -mx-1 px-1">
+      <div className="flex overflow-x-auto" style={{ gap: S.group, marginBottom: S.group, borderBottom: `0.5px solid ${t.borderLight}` }}>
         {visibleTabs.map((tab) => (
           <button
             key={tab.id}
-            className="px-3.5 py-2 rounded-xl shrink-0 transition-all relative overflow-hidden"
+            className="shrink-0 relative"
             style={{
-              fontSize: "0.78rem",
-              fontWeight: activeTab === tab.id ? 600 : 400,
-              color: activeTab === tab.id ? "#fff" : t.textMuted,
-              backgroundColor: activeTab === tab.id ? "#8DB596" : t.bgSecondary,
+              fontSize: T.small,
+              fontWeight: activeTab === tab.id ? 700 : 400,
+              color: activeTab === tab.id ? t.text : t.textMuted,
+              paddingBottom: 10,
             }}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.label}
+            {activeTab === tab.id && (
+              <motion.span
+                layoutId="stats-tab"
+                style={{ position: "absolute", left: 0, right: 0, bottom: -0.5, height: 2, background: ACCENT, borderRadius: 2 }}
+              />
+            )}
           </button>
         ))}
       </div>
@@ -249,44 +275,42 @@ export function StatsPage() {
       {activeTab === "overview" && (
         <motion.div key="overview" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.25 }}>
           {/* Summary cards */}
-          <div className="grid grid-cols-2 gap-3 mb-5">
-            <div className="rounded-xl p-3.5 border" style={{ backgroundColor: t.lavender + "0D", borderColor: t.lavender + "20" }}>
-              <TrendingUp className="w-4 h-4 mb-1.5" style={{ color: t.lavender }} />
-              <span className="block display-num" style={{ fontSize: "1.45rem", color: t.text }}>{completedTasks}</span>
-              <span style={{ fontSize: "0.68rem", color: t.textMuted }}>Задач выполнено</span>
+          <div className="grid grid-cols-2" style={{ gap: S.group, marginBottom: S.section }}>
+            <div>
+              <span className="block display-num" style={{ fontSize: "1.6rem", color: t.text }}>{completedTasks}</span>
+              <span style={{ fontSize: T.micro, color: t.textMuted }}>задач выполнено</span>
             </div>
-            <div className="rounded-xl p-3.5 border" style={{ backgroundColor: t.sage + "0D", borderColor: t.sage + "20" }}>
-              <Brain className="w-4 h-4 mb-1.5" style={{ color: t.sage }} />
-              <span className="block display-num" style={{ fontSize: "1.45rem", color: t.text }}>{avgEnergy.toFixed(1)}</span>
-              <span style={{ fontSize: "0.68rem", color: t.textMuted }}>Средняя энергия</span>
+            <div>
+              <span className="block display-num" style={{ fontSize: "1.6rem", color: t.text }}>{avgEnergy.toFixed(1)}</span>
+              <span style={{ fontSize: T.micro, color: t.textMuted }}>средняя энергия</span>
             </div>
           </div>
 
           {/* Week comparison */}
           {weekComparison.hasPrevData && (
-            <div className="rounded-xl p-3.5 mb-5 border" style={{ backgroundColor: t.card, borderColor: t.border }}>
-              <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text, marginBottom: 8, display: "block" }}>Эта неделя vs прошлая</span>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-xl p-2.5" style={{ backgroundColor: t.bgSecondary }}>
+            <div style={{ marginBottom: S.section, paddingTop: S.inner, borderTop: `0.5px solid ${t.borderLight}` }}>
+              <span style={{ fontSize: T.micro, color: t.textMuted, marginBottom: S.inner, display: "block" }}>Неделя к неделе</span>
+              <div className="grid grid-cols-2" style={{ gap: S.group }}>
+                <div>
                   <div className="flex items-center gap-1 mb-0.5">
                     <span style={{ fontSize: "0.65rem", color: t.textMuted }}>Энергия</span>
                     {weekComparison.energyDiff >= 0
                       ? <ArrowUpRight className="w-3 h-3" style={{ color: t.sage }} />
                       : <ArrowDownRight className="w-3 h-3" style={{ color: t.terracotta }} />}
                   </div>
-                  <span style={{ fontSize: "0.95rem", fontWeight: 700, color: t.text }}>{weekComparison.thisEnergy}</span>
+                  <span className="display-num" style={{ fontSize: "1.15rem", color: t.text }}>{weekComparison.thisEnergy}</span>
                   <span style={{ fontSize: "0.6rem", color: weekComparison.energyDiff >= 0 ? t.sage : t.terracotta, marginLeft: 4 }}>
                     {weekComparison.energyDiff >= 0 ? "+" : ""}{weekComparison.energyDiff.toFixed(1)}
                   </span>
                 </div>
-                <div className="rounded-xl p-2.5" style={{ backgroundColor: t.bgSecondary }}>
+                <div>
                   <div className="flex items-center gap-1 mb-0.5">
                     <span style={{ fontSize: "0.65rem", color: t.textMuted }}>Привычки</span>
                     {weekComparison.habitsDiff >= 0
                       ? <ArrowUpRight className="w-3 h-3" style={{ color: t.sage }} />
                       : <ArrowDownRight className="w-3 h-3" style={{ color: t.terracotta }} />}
                   </div>
-                  <span style={{ fontSize: "0.95rem", fontWeight: 700, color: t.text }}>{weekComparison.thisHabits}</span>
+                  <span className="display-num" style={{ fontSize: "1.15rem", color: t.text }}>{weekComparison.thisHabits}</span>
                   <span style={{ fontSize: "0.6rem", color: weekComparison.habitsDiff >= 0 ? t.sage : t.terracotta, marginLeft: 4 }}>
                     {weekComparison.habitsDiff >= 0 ? "+" : ""}{weekComparison.habitsDiff}
                   </span>
@@ -296,7 +320,7 @@ export function StatsPage() {
           )}
 
           {/* Pomodoro */}
-          <div className="rounded-xl p-3.5 mb-5 text-white" style={{ background: "#A3907A" }}>
+          <div style={{ marginBottom: S.section, paddingTop: S.inner, borderTop: `0.5px solid ${t.borderLight}`, color: t.textSecondary }}>
             <div className="flex items-center gap-2 mb-2">
               <span style={{ fontSize: "0.95rem" }}><AppIcon icon="🍅" size={20} /></span>
               <span style={{ fontSize: "0.82rem", fontWeight: 600 }}>Время фокуса</span>

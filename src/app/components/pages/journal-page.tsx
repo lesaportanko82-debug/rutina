@@ -54,9 +54,9 @@ export function JournalPage() {
   };
 
   return (
-    <div className="px-5 pt-14 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>
+        <h1 className="display" style={{ fontSize: "1.35rem", color: t.text }}>
           Дневник
         </h1>
         <motion.button

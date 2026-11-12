@@ -39,7 +39,8 @@ export function DayPage() {
   const now = currentPart();
   const weekday = new Date().getDay();
 
-  const card: React.CSSProperties = { background: t.card, border: `1px solid ${t.border}`, borderRadius: 12 };
+  const hair = `0.5px solid ${t.borderLight}`;
+  const card: React.CSSProperties = { borderTop: hair, borderBottom: hair };
 
   const grouped = useMemo(() => {
     const out: Record<Part, { habits: typeof habits; reminders: typeof reminders; tasks: typeof tasks }> = {
@@ -62,31 +63,31 @@ export function DayPage() {
   }, [habits, reminders, tasks, d, weekday]);
 
   return (
-    <div className="px-5 pt-6 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 26, paddingBottom: 32 }}>
       <button onClick={() => navigate("/app")} className="flex items-center gap-1 mb-4" style={{ fontSize: "0.82rem", color: t.textMuted }}>
         <ChevronLeft size={16} /> Сегодня
       </button>
 
-      <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text, marginBottom: 4 }}>Ритм дня</h1>
+      <h1 className="display" style={{ fontSize: "1.35rem", color: t.text, marginBottom: 4 }}>Ритм дня</h1>
       <p style={{ fontSize: "0.85rem", color: t.textSecondary, marginBottom: 14 }}>
         Привычки и напоминания, разложенные по частям дня.
       </p>
 
       <div className="mb-5">
-        <DayStripe parts={buildStripe(d, habits, tasks, reminders)} highlight={now} height={12} />
+        <DayStripe parts={buildStripe(d, habits, tasks, reminders)} highlight={now} height={12} celebrate />
       </div>
 
-      <div className="space-y-4">
+      <div>
         {PARTS.map(({ key, label, hint, icon: Icon }) => {
           const g = grouped[key];
           const isNow = key === now;
           const empty = g.habits.length === 0 && g.reminders.length === 0 && g.tasks.length === 0;
           return (
-            <div key={key} className="p-4" style={{ ...card, borderColor: isNow ? "#5B8A64" : t.border }}>
-              <div className="flex items-center gap-2 mb-3">
-                <Icon size={16} color={isNow ? "#5B8A64" : t.textMuted} />
-                <span style={{ fontSize: "0.95rem", fontWeight: 700, color: t.text }}>{label}</span>
-                <span style={{ fontSize: "0.72rem", color: t.textMuted }}>{hint}</span>
+            <div key={key} style={{ marginBottom: 32 }}>
+              <div className="flex items-center gap-2" style={{ marginBottom: 10, paddingBottom: 8, borderBottom: hair }}>
+                <Icon size={15} color={isNow ? "#5B8A64" : t.textMuted} strokeWidth={1.7} />
+                <span style={{ fontSize: "0.95rem", fontWeight: 700, color: isNow ? t.text : t.textSecondary }}>{label}</span>
+                <span style={{ fontSize: "0.72rem", color: t.textFaint }}>{hint}</span>
                 {isNow && (
                   <span style={{ fontSize: "0.66rem", color: "#5B8A64", fontWeight: 600, marginLeft: "auto" }}>сейчас</span>
                 )}
@@ -112,7 +113,7 @@ export function DayPage() {
                           >
                             {done && <InkCheck size={13} />}
                           </span>
-                          <AppIcon icon={h.icon} size={16} color={h.color} />
+                          <AppIcon icon={h.icon} size={16} color={t.textSecondary} />
                           <span style={{ fontSize: "0.88rem", color: t.text, textDecoration: done ? "line-through" : "none" }}>
                             {h.title}
                           </span>

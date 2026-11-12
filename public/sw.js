@@ -1,6 +1,6 @@
 // Листик Service Worker — v2 (переезд на отдельный Supabase-проект)
-const CACHE_NAME = "listik-v6";
-const STATIC_CACHE = "listik-static-v6";
+const CACHE_NAME = "listik-v7";
+const STATIC_CACHE = "listik-static-v7";
 
 // Assets to pre-cache on install
 const PRECACHE_URLS = [

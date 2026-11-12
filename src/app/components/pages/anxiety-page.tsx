@@ -125,7 +125,7 @@ export function AnxietyPage() {
   };
 
   return (
-    <div className="px-5 pt-14 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
       {/* Header */}
       <motion.div
         className="flex items-center gap-3 mb-6"
@@ -140,7 +140,7 @@ export function AnxietyPage() {
           <ArrowLeft className="w-4.5 h-4.5" style={{ color: t.textSecondary }} />
         </button>
         <div>
-          <h1 className="display" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>
+          <h1 className="display" style={{ fontSize: "1.2rem", color: t.text }}>
             Трекер тревоги
           </h1>
           <p style={{ fontSize: "0.72rem", color: t.textMuted }}>

@@ -87,3 +87,14 @@ h1, h2, h3 { letter-spacing: -0.02em; }
   mix-blend-mode: screen;
   opacity: 0.22;
 }
+
+/* ─── Ремесло в мелочах ─── */
+/* Табличные цифры: числа не прыгают при изменении */
+[data-mobile-root] { font-variant-numeric: tabular-nums; }
+/* Волосяные линии вместо рамок в целый пиксель */
+.hair { border-width: 0.5px; }
+.hair-t { border-top-width: 0.5px; border-top-style: solid; }
+.hair-b { border-bottom-width: 0.5px; border-bottom-style: solid; }
+@media (resolution: 1x) {
+  .hair, .hair-t, .hair-b { border-width: 1px; }
+}

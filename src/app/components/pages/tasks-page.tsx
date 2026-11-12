@@ -89,9 +89,9 @@ export function TasksPage() {
   };
 
   return (
-    <div className="px-5 pt-14 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>
+        <h1 className="display" style={{ fontSize: "1.35rem", color: t.text }}>
           Задачи
         </h1>
         <motion.button
@@ -194,7 +194,7 @@ export function TasksPage() {
       </AnimatePresence>
 
       {/* Filters */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex" style={{ gap: 24, marginBottom: 20 }}>
         {([
           { key: "all", label: "Все" },
           { key: "active", label: "Активные" },
@@ -202,21 +202,28 @@ export function TasksPage() {
         ] as const).map((f) => (
           <button
             key={f.key}
-            className="px-4 py-2 rounded-full transition-all"
+            className="relative"
             style={{
-              fontSize: "0.8rem", fontWeight: 500,
-              backgroundColor: filter === f.key ? t.sage : t.bgTertiary,
-              color: filter === f.key ? "#fff" : t.textMuted,
+              fontSize: "0.82rem",
+              fontWeight: filter === f.key ? 700 : 400,
+              color: filter === f.key ? t.text : t.textMuted,
+              paddingBottom: 6,
             }}
             onClick={() => setFilter(f.key)}
           >
             {f.label}
+            {filter === f.key && (
+              <motion.span
+                layoutId="tasks-filter"
+                style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 2, background: "#5B8A64", borderRadius: 2 }}
+              />
+            )}
           </button>
         ))}
       </div>
 
       {/* Tasks list */}
-      <div className="space-y-2.5">
+      <div style={{ borderTop: `0.5px solid ${t.borderLight}` }}>
         <AnimatePresence>
           {filtered.map((task) => {
             const cat = categoryLabels[task.category];
@@ -230,16 +237,8 @@ export function TasksPage() {
             return (
               <motion.div
                 key={task.id}
-                className="rounded-xl overflow-hidden relative"
-                style={{
-                  background: darkMode
-                    ? "rgba(36,34,32,0.7)"
-                    : "rgba(255,255,255,0.7)",
-                  border: `1px solid ${darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.55)"}`,
-                  boxShadow: darkMode
-                    ? "0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)"
-                    : "0 4px 16px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.7)",
-                }}
+                className="overflow-hidden relative"
+                style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
                 layout
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -273,7 +272,7 @@ export function TasksPage() {
                 )}
 
                 <div
-                  className="p-4"
+                  style={{ paddingTop: 14, paddingBottom: 14 }}
                   onTouchStart={(e) => handleTouchStart(e, task.id)}
                   onTouchEnd={(e) => handleTouchEnd(e, task.id)}
                 >
@@ -316,12 +315,7 @@ export function TasksPage() {
                         </div>
                       )}
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span
-                          className="px-2 py-0.5 rounded-full"
-                          style={{ backgroundColor: cat.bg, color: cat.color, fontSize: "0.65rem", fontWeight: 500 }}
-                        >
-                          {cat.label}
-                        </span>
+                        <span style={{ color: t.textMuted, fontSize: "0.7rem" }}>{cat.label}</span>
                         <span
                           className="w-2 h-2 rounded-full"
                           style={{ backgroundColor: priorityLabels[task.priority].color, opacity: 0.7 }}

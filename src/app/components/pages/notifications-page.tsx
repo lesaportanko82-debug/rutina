@@ -95,9 +95,9 @@ export function NotificationsPage() {
   const activeReminders = reminders.filter((r) => r.enabled).length;
 
   return (
-    <div className="px-5 pt-14 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>
+        <h1 className="display" style={{ fontSize: "1.35rem", color: t.text }}>
           Напоминания
         </h1>
         <motion.button
@@ -131,7 +131,7 @@ export function NotificationsPage() {
           </div>
           <button
             className="px-3 py-1.5 text-white rounded-lg"
-            style={{ fontSize: "0.75rem", fontWeight: 600, backgroundColor: t.gold }}
+            style={{ fontSize: "0.78rem", fontWeight: 600, backgroundColor: "#5B8A64" }}
             onClick={requestPermission}
           >
             Включить
@@ -139,31 +139,22 @@ export function NotificationsPage() {
         </motion.div>
       )}
 
-      {/* Stats */}
-      <div className="flex gap-3 mb-5">
-        <GlassPanel darkMode={darkMode} color="#9B8EC4" className="flex-1 rounded-xl">
-          <div className="p-3 text-center">
-          <Bell className="w-5 h-5 mx-auto mb-1" style={{ color: t.lavender }} />
-          <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>{reminders.length}</span>
-          <span style={{ fontSize: "0.65rem", color: t.textMuted }}>Всего</span>
-          </div>
-        </GlassPanel>
-        <GlassPanel darkMode={darkMode} color="#8DB596" className="flex-1 rounded-xl">
-          <div className="p-3 text-center">
-          <BellRing className="w-5 h-5 mx-auto mb-1" style={{ color: t.sage }} />
-          <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>{activeReminders}</span>
-          <span style={{ fontSize: "0.65rem", color: t.textMuted }}>Активных</span>
-          </div>
-        </GlassPanel>
-        <GlassPanel darkMode={darkMode} color="#7EA8BE" className="flex-1 rounded-xl">
-          <div className="p-3 text-center">
-          <Clock className="w-5 h-5 mx-auto mb-1" style={{ color: t.dustyBlue }} />
-          <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>
+      {/* Сводка: цифры на бумаге, без плиток */}
+      <div className="flex items-baseline" style={{ gap: 36, marginBottom: 32 }}>
+        <div>
+          <span className="block display-num" style={{ fontSize: "1.6rem", color: t.text }}>{reminders.filter((r) => r.enabled).length}</span>
+          <span style={{ fontSize: "0.72rem", color: t.textMuted }}>активных</span>
+        </div>
+        <div>
+          <span className="block display-num" style={{ fontSize: "1.6rem", color: t.text }}>{reminders.length}</span>
+          <span style={{ fontSize: "0.72rem", color: t.textMuted }}>всего</span>
+        </div>
+        <div>
+          <span className="block" style={{ fontSize: "1.05rem", fontWeight: 700, color: permissionStatus === "granted" ? t.text : t.textMuted }}>
             {permissionStatus === "granted" ? "Вкл" : "Выкл"}
           </span>
-          <span style={{ fontSize: "0.65rem", color: t.textMuted }}>Статус</span>
-          </div>
-        </GlassPanel>
+          <span style={{ fontSize: "0.72rem", color: t.textMuted }}>уведомления</span>
+        </div>
       </div>
 
       {/* Form */}
@@ -276,34 +267,30 @@ export function NotificationsPage() {
       </AnimatePresence>
 
       {/* Reminders list */}
-      <div className="space-y-2.5">
+      <div style={{ borderTop: `0.5px solid ${t.borderLight}` }}>
         {reminders.map((reminder, i) => (
           <motion.div
             key={reminder.id}
-            className="rounded-xl p-4 border transition-all"
             style={{
-              backgroundColor: reminder.enabled ? t.card : t.bgSecondary,
-              borderColor: t.border,
-              opacity: reminder.enabled ? 1 : 0.6,
+              paddingTop: 14,
+              paddingBottom: 14,
+              borderBottom: `0.5px solid ${t.borderLight}`,
+              opacity: reminder.enabled ? 1 : 0.5,
             }}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: reminder.enabled ? 1 : 0.6, y: 0 }}
             transition={{ delay: i * 0.04 }}
           >
             <div className="flex items-center gap-3">
-              <button
-                className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                style={{ backgroundColor: reminder.enabled ? t.bgSecondary : t.border }}
-                onClick={() => startEdit(reminder.id)}
-              >
-                <AppIcon icon={reminder.icon} size={20} />
+              <button className="flex items-center justify-center shrink-0" style={{ width: 22, height: 22 }} onClick={() => startEdit(reminder.id)}>
+                <AppIcon icon={reminder.icon} size={19} color={t.textSecondary} />
               </button>
               <div className="flex-1 min-w-0">
                 <span style={{ fontSize: "0.85rem", fontWeight: 600, color: reminder.enabled ? t.text : t.textFaint }}>
                   {reminder.title}
                 </span>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="flex items-center gap-1" style={{ fontSize: "0.8rem", fontWeight: 600, color: t.sage }}>
+                  <span className="flex items-center gap-1" style={{ fontSize: "0.78rem", fontWeight: 400, color: t.textMuted }}>
                     <Clock className="w-3 h-3" />
                     {reminder.time}
                   </span>

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router";
+import { motion } from "motion/react";
 import { ChevronRight, Wind, Hand, LifeBuoy, PenLine, CloudRain, Brain, Moon, BarChart3, Bell, Headphones, MessageCircle, Activity, CalendarCheck, FileDown } from "lucide-react";
 import { useTheme } from "../theme";
 
@@ -50,28 +51,28 @@ export function PracticesPage() {
     else if (it.path) navigate(it.path);
   };
   return (
-    <div className="px-5 pt-6 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 26, paddingBottom: 32 }}>
       <h1 className="display mb-5" style={{ fontSize: "1.5rem", fontWeight: 700, color: t.text }}>Практики</h1>
       {groups.map((g) => (
-        <div key={g.title} className="mb-5">
-          <p className="mb-2" style={{ fontSize: "0.72rem", fontWeight: 600, color: t.textMuted, textTransform: "uppercase", letterSpacing: "0.04em" }}>
-            {g.title}
-          </p>
-          <div style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 12, overflow: "hidden" }}>
-            {g.items.map((it, i) => (
-              <button
+        <div key={g.title} style={{ marginBottom: 36 }}>
+          <p style={{ fontSize: "0.72rem", color: t.textMuted, marginBottom: 6 }}>{g.title}</p>
+          <div style={{ borderTop: `0.5px solid ${t.borderLight}` }}>
+            {g.items.map((it) => (
+              <motion.button
                 key={it.label}
                 onClick={() => open(it)}
-                className="w-full flex items-center gap-3 px-4 py-3 text-left"
-                style={{ borderTop: i ? `1px solid ${t.border}` : "none" }}
+                whileTap={{ scale: 0.99 }}
+                transition={{ type: "spring", stiffness: 240, damping: 26 }}
+                className="w-full flex items-center gap-3 text-left"
+                style={{ paddingTop: 13, paddingBottom: 13, borderBottom: `0.5px solid ${t.borderLight}` }}
               >
-                <it.icon size={18} color="#5B8A64" />
+                <it.icon size={17} color={t.textSecondary} strokeWidth={1.7} />
                 <span className="flex-1">
-                  <span style={{ display: "block", fontSize: "0.9rem", color: t.text }}>{it.label}</span>
-                  <span style={{ display: "block", fontSize: "0.72rem", color: t.textMuted }}>{it.hint}</span>
+                  <span style={{ display: "block", fontSize: "0.95rem", color: t.text }}>{it.label}</span>
+                  <span style={{ display: "block", fontSize: "0.72rem", color: t.textMuted, marginTop: 1 }}>{it.hint}</span>
                 </span>
-                <ChevronRight size={16} color={t.textFaint} />
-              </button>
+                <ChevronRight size={15} color={t.textFaint} />
+              </motion.button>
             ))}
           </div>
         </div>

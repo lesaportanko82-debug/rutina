@@ -26,7 +26,8 @@ export function WeekPage() {
   const [adjusted, setAdjusted] = useState<null | "moved" | "kept">(null);
 
   const days = useMemo(() => lastNDates(7), []);
-  const card: React.CSSProperties = { background: t.card, border: `1px solid ${t.border}`, borderRadius: 12 };
+  const hair = `0.5px solid ${t.borderLight}`;
+  const card: React.CSSProperties = {};
   const title: React.CSSProperties = { fontSize: "0.95rem", fontWeight: 700, color: t.text };
 
   const perHabit = useMemo(
@@ -56,20 +57,20 @@ export function WeekPage() {
   };
 
   return (
-    <div className="px-5 pt-6 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 26, paddingBottom: 32 }}>
       <button onClick={() => navigate(-1)} className="flex items-center gap-1 mb-4" style={{ fontSize: "0.82rem", color: t.textMuted }}>
         <ChevronLeft size={16} /> Назад
       </button>
       <div className="flex items-end justify-between gap-3 mb-5">
         <div>
-          <h1 className="display" style={{ fontSize: "1.4rem", color: t.text, marginBottom: 4 }}>Разбор недели</h1>
+          <h1 className="display" style={{ fontSize: "1.35rem", color: t.text, marginBottom: 4 }}>Разбор недели</h1>
           <p style={{ fontSize: "0.85rem", color: t.textSecondary }}>Две минуты: посмотреть, ответить, поправить.</p>
         </div>
         <InkLeaf mood="near" size={54} />
       </div>
 
       {/* 1. Неделя одним взглядом */}
-      <div className="p-4 mb-4" style={card}>
+      <div style={{ marginTop: 36, marginBottom: 40 }}>
         <span style={title}>Как прошла неделя</span>
         <div className="mt-3" style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           {days.map((d) => (
@@ -90,7 +91,7 @@ export function WeekPage() {
       </div>
 
       {/* 2. Один вопрос */}
-      <div className="p-4 mb-4" style={card}>
+      <div style={{ marginBottom: 40, paddingTop: 24, borderTop: hair }}>
         <span style={title}>Что на этой неделе помогло больше всего?</span>
         <textarea
           value={answer}
@@ -98,13 +99,13 @@ export function WeekPage() {
           placeholder="Одно-два предложения. Ответ сохранится в дневник."
           rows={3}
           className="w-full mt-3 p-3 rounded-lg outline-none resize-none"
-          style={{ background: t.inputBg, border: `1px solid ${t.border}`, color: t.text }}
+          style={{ background: t.bgSecondary, border: "none", color: t.text }}
         />
       </div>
 
       {/* 3. Одна настройка */}
       {weakest && weakest.done <= 3 && (
-        <div className="p-4 mb-4" style={card}>
+        <div style={{ marginBottom: 40, paddingTop: 24, borderTop: hair }}>
           <span style={title}>Одна настройка на следующую неделю</span>
           <div className="flex items-center gap-2 mt-3 mb-1">
             <AppIcon icon={weakest.habit.icon} size={16} color={weakest.habit.color} />

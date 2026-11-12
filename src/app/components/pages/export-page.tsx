@@ -59,7 +59,7 @@ export function ExportPage() {
   };
 
   return (
-    <div className="px-5 pt-6 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 26, paddingBottom: 32 }}>
       <button onClick={() => navigate(-1)} className="flex items-center gap-1 mb-4" style={{ fontSize: "0.82rem", color: t.textMuted }}>
         <ChevronLeft size={16} /> Назад
       </button>

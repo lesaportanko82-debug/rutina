@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
 import { useTheme, phaseAt, type DayPhase } from "./theme";
 import type { Habit, Task, Reminder } from "./use-app-store";
 
@@ -49,6 +51,7 @@ export function DayStripe({
   radius = 3,
   highlight,
   muted = false,
+  celebrate = false,
 }: {
   parts: StripePart[];
   height?: number;
@@ -58,9 +61,30 @@ export function DayStripe({
   highlight?: DayPhase;
   /** Приглушённый вариант — для рядов из многих дней */
   muted?: boolean;
+  /** Закрытую часть дня заливает мазок. Только для сегодняшней полосы. */
+  celebrate?: boolean;
 }) {
   const t = useTheme();
   const fill = muted ? "#7FA98A" : "#5B8A64";
+
+  // Момент закрытия части дня: раз в день, две десятых секунды.
+  const prev = useRef<Record<string, number>>({});
+  const [swept, setSwept] = useState<string | null>(null);
+  useEffect(() => {
+    if (!celebrate) return;
+    for (const p of parts) {
+      const ratio = p.total > 0 ? p.done / p.total : 0;
+      const was = prev.current[p.key];
+      if (was !== undefined && was < 1 && ratio === 1) {
+        setSwept(p.key);
+        const id = setTimeout(() => setSwept(null), 900);
+        return () => clearTimeout(id);
+      }
+    }
+  }, [parts, celebrate]);
+  useEffect(() => {
+    for (const p of parts) prev.current[p.key] = p.total > 0 ? p.done / p.total : 0;
+  });
 
   return (
     <div style={{ display: "flex", gap, width: "100%" }} aria-hidden>
@@ -81,15 +105,20 @@ export function DayStripe({
               outlineOffset: 1.5,
             }}
           >
-            <div
-              style={{
-                width: `${Math.round(ratio * 100)}%`,
-                height: "100%",
-                background: fill,
-                borderRadius: radius,
-                transition: "width 0.4s ease",
-              }}
+            <motion.div
+              style={{ height: "100%", background: fill, borderRadius: radius }}
+              animate={{ width: `${Math.round(ratio * 100)}%` }}
+              transition={{ type: "spring", stiffness: 180, damping: 22, mass: 0.9 }}
             />
+            {swept === p.key && (
+              // мазок тушью поверх залитого сегмента
+              <motion.div
+                style={{ position: "absolute", inset: 0, background: "#2F4A35", borderRadius: radius, transformOrigin: "left center" }}
+                initial={{ scaleX: 0, opacity: 0.85 }}
+                animate={{ scaleX: 1, opacity: 0 }}
+                transition={{ duration: 0.65, ease: [0.3, 0.8, 0.3, 1] }}
+              />
+            )}
           </div>
         );
       })}

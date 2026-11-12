@@ -302,7 +302,7 @@ export function MoodPage() {
   const accentColor = selectedMood !== null ? moodOptions[selectedMood].color : th.sage;
 
   return (
-    <div className="px-5 pt-14 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
       {/* Header */}
       <div className="mb-5">
         <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: th.text }} className="display mb-0.5">

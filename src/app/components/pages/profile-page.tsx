@@ -519,8 +519,8 @@ export function ProfilePage() {
               <div className="relative inline-block mb-3">
                 {/* Avatar circle */}
                 <motion.div
-                  className="w-24 h-24 rounded-full shadow-sm mx-auto overflow-hidden relative"
-                  style={{ background: "#5B8A64" }}
+                  className="w-16 h-16 rounded-full mx-auto overflow-hidden relative"
+                  style={{ background: t.bgSecondary, border: `0.5px solid ${t.borderLight}` }}
                   whileTap={{ scale: 0.95 }}
                 >
                   {avatarUrl ? (
@@ -532,7 +532,7 @@ export function ProfilePage() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <span style={{ fontSize: "2rem" }} className="text-white display-num">{((questionnaire.filled && questionnaire.name) || profile.name || "?").trim().charAt(0).toUpperCase()}</span>
+                      <span style={{ fontSize: "1.3rem", color: t.textSecondary }} className="display-num">{((questionnaire.filled && questionnaire.name) || profile.name || "?").trim().charAt(0).toUpperCase()}</span>
                     </div>
                   )}
                 </motion.div>
@@ -576,10 +576,10 @@ export function ProfilePage() {
             <GlassPanel darkMode={darkMode} className="rounded-xl mb-5 overflow-hidden"
               style={{ padding: 0 }}>
               {/* Dark mode */}
-              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
+              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
                 onClick={toggleDarkMode}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.bgSecondary }}>
-                  {darkMode ? <Moon className="w-5 h-5" style={{ color: t.lavender }} /> : <Sun className="w-5 h-5" style={{ color: t.gold }} />}
+                <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                  {darkMode ? <Moon className="w-5 h-5" style={{ color: t.textSecondary }} /> : <Sun className="w-5 h-5" style={{ color: t.textSecondary }} />}
                 </div>
                 <div className="flex-1 text-left">
                   <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Тёмная тема</span>
@@ -591,10 +591,10 @@ export function ProfilePage() {
                 </div>
               </button>
               {/* Оттенок по времени суток */}
-              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
+              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
                 onClick={toggleDayTinting}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.bgSecondary }}>
-                  <Sun className="w-5 h-5" style={{ color: t.terracotta }} />
+                <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                  <Sun className="w-5 h-5" style={{ color: t.textSecondary }} />
                 </div>
                 <div className="flex-1 text-left">
                   <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Оттенок по времени суток</span>
@@ -606,9 +606,9 @@ export function ProfilePage() {
                 </div>
               </button>
               {/* Edit questionnaire */}
-              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
+              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
                 onClick={() => { setShowQuestionnaire(true); setStep(0); }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.bgSecondary }}>
+                <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
                   <Edit3 className="w-5 h-5" style={{ color: t.textMuted }} />
                 </div>
                 <div className="flex-1 text-left">
@@ -619,10 +619,10 @@ export function ProfilePage() {
                 <ChevronRight className="w-5 h-5" style={{ color: t.textFaint }} />
               </button>
               {/* Notifications */}
-              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
+              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
                 onClick={() => navigate("/notifications")}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.bgSecondary }}>
-                  <Bell className="w-5 h-5" style={{ color: t.terracotta }} />
+                <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                  <Bell className="w-5 h-5" style={{ color: t.textSecondary }} />
                 </div>
                 <div className="flex-1 text-left">
                   <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Напоминания</span>
@@ -630,10 +630,10 @@ export function ProfilePage() {
                 <ChevronRight className="w-5 h-5" style={{ color: t.textFaint }} />
               </button>
               {/* Journal */}
-              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
+              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
                 onClick={() => navigate("/journal")}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.bgSecondary }}>
-                  <BookOpen className="w-5 h-5" style={{ color: t.lavender }} />
+                <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                  <BookOpen className="w-5 h-5" style={{ color: t.textSecondary }} />
                 </div>
                 <div className="flex-1 text-left">
                   <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Дневник</span>
@@ -641,9 +641,9 @@ export function ProfilePage() {
                 <ChevronRight className="w-5 h-5" style={{ color: t.textFaint }} />
               </button>
               {/* Export JSON */}
-              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }} onClick={exportData}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.bgSecondary }}>
-                  <Download className="w-5 h-5" style={{ color: t.dustyBlue }} />
+              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }} onClick={exportData}>
+                <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                  <Download className="w-5 h-5" style={{ color: t.textSecondary }} />
                 </div>
                 <div className="flex-1 text-left">
                   <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Экспорт данных</span>
@@ -652,10 +652,10 @@ export function ProfilePage() {
                 <ChevronRight className="w-5 h-5" style={{ color: t.textFaint }} />
               </button>
               {/* Export PDF */}
-              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
+              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
                 onClick={() => setShowPdfModal(true)}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.sage + "12" }}>
-                  <FileText className="w-5 h-5" style={{ color: t.sage }} />
+                <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                  <FileText className="w-5 h-5" style={{ color: t.textSecondary }} />
                 </div>
                 <div className="flex-1 text-left">
                   <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>PDF-отчёт</span>
@@ -666,8 +666,8 @@ export function ProfilePage() {
               {/* Reset tours */}
               {(seenTours.length > 0 || seenTips.length > 0) && (
                 <button className="w-full p-4 flex items-center gap-3" onClick={resetTours}>
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.bgSecondary }}>
-                    <RotateCcw className="w-5 h-5" style={{ color: t.warm }} />
+                  <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                    <RotateCcw className="w-5 h-5" style={{ color: t.textSecondary }} />
                   </div>
                   <div className="flex-1 text-left">
                     <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Сбросить подсказки</span>
@@ -685,10 +685,10 @@ export function ProfilePage() {
                   <span style={{ fontSize: "0.72rem", fontWeight: 600, color: t.textFaint, letterSpacing: "0.5px", textTransform: "uppercase" as const }}>Аккаунт</span>
                 </div>
                 {/* Change Name */}
-                <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
+                <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
                   onClick={() => { setShowChangeName(true); setNewDisplayName(questionnaire.name || profile.name || ""); setAccountError(""); setAccountSuccess(""); }}>
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.dustyBlue + "12" }}>
-                    <UserPen className="w-5 h-5" style={{ color: t.dustyBlue }} />
+                  <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                    <UserPen className="w-5 h-5" style={{ color: t.textSecondary }} />
                   </div>
                   <div className="flex-1 text-left">
                     <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Сменить имя</span>
@@ -697,10 +697,10 @@ export function ProfilePage() {
                   <ChevronRight className="w-5 h-5" style={{ color: t.textFaint }} />
                 </button>
                 {/* Change Password */}
-                <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
+                <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
                   onClick={() => { setShowChangePassword(true); setCurrentPw(""); setNewPw(""); setConfirmPw(""); setAccountError(""); setAccountSuccess(""); }}>
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.lavender + "12" }}>
-                    <KeyRound className="w-5 h-5" style={{ color: t.lavender }} />
+                  <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                    <KeyRound className="w-5 h-5" style={{ color: t.textSecondary }} />
                   </div>
                   <div className="flex-1 text-left">
                     <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Сменить пароль</span>
@@ -710,8 +710,8 @@ export function ProfilePage() {
                 </button>
                 {/* Logout */}
                 <button className="w-full p-4 flex items-center gap-3" onClick={() => setShowLogoutConfirm(true)}>
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.terracotta + "12" }}>
-                    <LogOut className="w-5 h-5" style={{ color: t.terracotta }} />
+                  <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                    <LogOut className="w-5 h-5" style={{ color: t.textSecondary }} />
                   </div>
                   <div className="flex-1 text-left">
                     <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.terracotta }}>Выйти из аккаунта</span>
@@ -729,8 +729,8 @@ export function ProfilePage() {
                 style={{ backgroundColor: t.terracotta + "08", borderColor: t.terracotta + "20" }}
                 onClick={handleLogout} whileTap={{ scale: 0.98 }}
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.terracotta + "12" }}>
-                  <LogOut className="w-5 h-5" style={{ color: t.terracotta }} />
+                <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
+                  <LogOut className="w-5 h-5" style={{ color: t.textSecondary }} />
                 </div>
                 <div className="flex-1 text-left">
                   <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.terracotta }}>Выйти из аккаунта</span>

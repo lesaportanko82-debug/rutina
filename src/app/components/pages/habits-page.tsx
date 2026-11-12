@@ -2,6 +2,8 @@ import { useState, useMemo } from "react";
 import { InkCheck } from "../ink";
 import { useApp } from "../app-context";
 import { consistency, consistencyLabel, averageConsistency } from "../../lib/consistency";
+import { motion as M, ACCENT } from "../../lib/design";
+import { InkCheck } from "../ink";
 import { suggestedHabits } from "../use-app-store";
 import { useTheme } from "../theme";
 import { motion, AnimatePresence } from "motion/react";
@@ -190,9 +192,9 @@ export function HabitsPage() {
   };
 
   return (
-    <div className="px-5 pt-14 pb-8">
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: th.text }}>Привычки</h1>
+        <h1 className="display" style={{ fontSize: "1.35rem", color: th.text }}>Привычки</h1>
         {mode === "list" ? (
           <motion.button
             className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm"
@@ -221,17 +223,15 @@ export function HabitsPage() {
 
       {/* Stats */}
       {mode === "list" && (
-        <div className="flex gap-3 mb-5">
-          <GlassPanel darkMode={darkMode} color={th.sage} className="flex-1 rounded-xl p-3 text-center">
-            <CheckCircle2 className="w-5 h-5 mx-auto mb-1" style={{ color: th.sage }} />
-            <span className="block display-num" style={{ fontSize: "1.3rem", color: th.text }}>{doneToday}/{habits.length}</span>
-            <span style={{ fontSize: "0.65rem", color: th.textMuted }}>Сегодня</span>
-          </GlassPanel>
-          <GlassPanel darkMode={darkMode} color={th.lavender} className="flex-1 rounded-xl p-3 text-center">
-            <Activity className="w-5 h-5 mx-auto mb-1" style={{ color: th.lavender }} />
-            <span className="block display-num" style={{ fontSize: "1.3rem", color: th.text }}>{avgConsistency}%</span>
-            <span style={{ fontSize: "0.65rem", color: th.textMuted }}>Постоянство</span>
-          </GlassPanel>
+        <div className="flex" style={{ gap: 36, marginBottom: 32 }}>
+          <div>
+            <span className="block display-num" style={{ fontSize: "1.6rem", color: th.text }}>{doneToday}/{habits.length}</span>
+            <span style={{ fontSize: "0.72rem", color: th.textMuted }}>сегодня</span>
+          </div>
+          <div>
+            <span className="block display-num" style={{ fontSize: "1.6rem", color: th.text }}>{avgConsistency}%</span>
+            <span style={{ fontSize: "0.72rem", color: th.textMuted }}>постоянство</span>
+          </div>
         </div>
       )}
 
@@ -472,7 +472,7 @@ export function HabitsPage() {
         {mode === "list" && (
           <motion.div key="list" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
 
-            <div className="space-y-3">
+            <div style={{ borderTop: `0.5px solid ${th.borderLight}` }}>
               {habits.map((habit, i) => {
                 const isDoneToday = habit.completedDates.includes(d);
                 const isFrozenToday = (habit.frozenDates || []).includes(d);
@@ -481,35 +481,29 @@ export function HabitsPage() {
                 const heatmapData = showHeatmap === habit.id ? generateHeatmap(habit.completedDates) : [];
 
                 return (
-                  <motion.div key={habit.id} className="rounded-xl overflow-hidden"
-                    style={{
-                      background: isFrozenToday
-                        ? (darkMode ? `rgba(126,168,190,0.08)` : `rgba(126,168,190,0.1)`)
-                        : isDoneToday
-                          ? (darkMode ? `rgba(141,181,150,0.08)` : `rgba(141,181,150,0.1)`)
-                          : (darkMode ? `rgba(36,34,32,0.7)` : `rgba(255,255,255,0.7)`),
-                      border: `1px solid ${isFrozenToday ? th.dustyBlue + "30" : isDoneToday ? th.sage + "30" : (darkMode ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.55)")}`,
-                      boxShadow: darkMode
-                        ? "0 4px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)"
-                        : "0 4px 16px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.7)",
-                    }}
-                    initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} layout>
-                    <div className="p-4 flex items-center gap-3">
-                      <motion.button className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                        style={{ backgroundColor: isFrozenToday ? th.dustyBlue + "18" : isDoneToday ? th.sage + "18" : habit.color + "15" }}
-                        onClick={() => !isFrozenToday && toggleHabitToday(habit.id)} whileTap={{ scale: 0.85 }}>
+                  <motion.div key={habit.id} className="overflow-hidden"
+                    style={{ borderBottom: `0.5px solid ${th.borderLight}` }}
+                    initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }} layout>
+                    <div className="flex items-center gap-3" style={{ paddingTop: 14, paddingBottom: 14 }}>
+                      <motion.button className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
+                        style={{
+                          border: `1.5px solid ${isFrozenToday ? th.dustyBlue + "66" : isDoneToday ? ACCENT : th.borderLight}`,
+                          background: isDoneToday ? ACCENT : "transparent",
+                        }}
+                        onClick={() => !isFrozenToday && toggleHabitToday(habit.id)}
+                        whileTap={{ scale: 0.9 }} transition={M.press}>
                         {isFrozenToday ? (
-                          <Snowflake className="w-6 h-6" style={{ color: th.dustyBlue }} />
+                          <Snowflake className="w-5 h-5" style={{ color: th.dustyBlue }} />
                         ) : isDoneToday ? (
-                          <CheckCircle2 className="w-6 h-6" style={{ color: th.sage }} />
+                          <InkCheck size={20} />
                         ) : (
-                          <AppIcon icon={habit.icon} size={22} color={habit.color} />
+                          <AppIcon icon={habit.icon} size={20} color={th.textSecondary} />
                         )}
                       </motion.button>
                       <div className="flex-1 min-w-0" onClick={() => setExpandedHabit(isExpanded ? null : habit.id)}>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-1.5">
-                            <span style={{ fontSize: "0.9rem", fontWeight: 600, color: isFrozenToday ? th.dustyBlue : isDoneToday ? "#6B8F71" : th.text }}>
+                            <span style={{ fontSize: "0.9rem", fontWeight: 600, color: isFrozenToday ? th.dustyBlue : isDoneToday ? th.textMuted : th.text }}>
                               {habit.title}
                             </span>
                             {isFrozenToday && (
@@ -517,18 +511,18 @@ export function HabitsPage() {
                             )}
                           </div>
                           <div className="flex items-center gap-1.5">
-                            <span style={{ fontSize: "0.78rem", fontWeight: 600, color: th.textSecondary }}>{consistencyLabel(cons)}</span>
+                            <span style={{ fontSize: "0.78rem", fontWeight: 400, color: th.textMuted }}>{consistencyLabel(cons)}</span>
                             {isExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-1" style={{ color: th.textFaint }} /> : <ChevronDown className="w-3.5 h-3.5 ml-1" style={{ color: th.textFaint }} />}
                           </div>
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
                           <div className="flex-1 rounded-full h-2" style={{ backgroundColor: th.border }}>
-                            <motion.div className="h-2 rounded-full" style={{ backgroundColor: habit.color, opacity: 0.65 }}
+                            <motion.div className="h-2 rounded-full" style={{ backgroundColor: ACCENT, opacity: 0.55 }}
                               initial={{ width: 0 }} animate={{ width: `${cons.percent}%` }} transition={{ delay: 0.2 + i * 0.05, duration: 0.5 }} />
                           </div>
-                          <span style={{ fontSize: "0.65rem", color: th.textMuted }}>
-                            {cons.percent}%{cons.current > 1 ? ` · ${cons.current} подряд` : ""}
-                          </span>
+                          {cons.current > 1 && (
+                            <span style={{ fontSize: "0.65rem", color: th.textFaint }}>{cons.current} подряд</span>
+                          )}
                         </div>
                       </div>
                     </div>

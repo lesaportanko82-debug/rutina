@@ -1,3 +1,4 @@
+import { useTheme } from "./theme";
 import { AppIcon } from "./app-icon";
 import { motion } from "motion/react";
 import { useMemo } from "react";
@@ -172,13 +173,16 @@ export function GlassPanel({
   color?: string;
   style?: React.CSSProperties;
 }) {
+  const t = useTheme();
+  // Поверхность — бумага чуть светлее страницы, а не белая коробка с рамкой.
+  // Линия волосяная и низкоконтрастная: она разделяет, но не обводит.
   return (
     <div
       className={`relative ${className}`}
       style={{
-        background: darkMode ? "#242220" : "#FFFFFF",
-        border: `1px solid ${darkMode ? "#3A3734" : "#E8E3DC"}`,
-        borderRadius: 12,
+        background: t.card,
+        border: `0.5px solid ${t.borderLight}`,
+        borderRadius: 14,
         ...style,
       }}
     >

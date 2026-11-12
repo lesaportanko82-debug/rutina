@@ -1,16 +1,17 @@
 import { useMemo, useState } from "react";
-import { InkCheck } from "../ink";
 import { useNavigate } from "react-router";
-import { Plus, Check, ChevronRight, Timer } from "lucide-react";
+import { Plus, ChevronRight, Timer } from "lucide-react";
+import { motion } from "motion/react";
 import { useApp } from "../app-context";
 import { useTheme } from "../theme";
 import { AppIcon } from "../app-icon";
 import { DayStripe, buildStripe } from "../day-stripe";
-import { InkFace } from "../ink";
+import { InkCheck, InkFace } from "../ink";
 import { InkLeaf, leafMoodForHour } from "../ink-leaf";
 import { consistency } from "../../lib/consistency";
 import { computeInsights } from "../../lib/insights";
 import { weekReviewDone } from "../../lib/week";
+import { type as T, space as S, motion as M, ACCENT } from "../../lib/design";
 
 const today = () => new Date().toISOString().split("T")[0];
 
@@ -63,238 +64,311 @@ export function TodayPage() {
   const d = today();
   const [moodSaved, setMoodSaved] = useState(false);
   const nowPart = partNow();
-  const insight = useMemo(() => computeInsights(habits, moods, anxietyEntries), [habits, moods, anxietyEntries]);
-  const stripe = useMemo(() => buildStripe(d, habits, tasks, reminders), [d, habits, tasks, reminders]);
 
   const name = questionnaire.filled && questionnaire.name ? questionnaire.name : profile.name;
   const todayMood = moods.find((m) => m.date === d);
   const wd = new Date().getDay();
   const showWeekReview = (wd === 0 || wd === 1) && (habits.length > 0 || moods.length > 0) && !weekReviewDone();
   const suggestion = todayMood ? MOOD_PRACTICE[todayMood.mood] : undefined;
+  const insight = useMemo(() => computeInsights(habits, moods, anxietyEntries), [habits, moods, anxietyEntries]);
+  const stripe = useMemo(() => buildStripe(d, habits, tasks, reminders), [d, habits, tasks, reminders]);
   const openTasks = useMemo(() => tasks.filter((x) => !x.completed), [tasks]);
   const habitsDone = habits.filter((h) => h.completedDates.includes(d)).length;
 
-  const card: React.CSSProperties = {
-    background: t.card,
-    border: `1px solid ${t.border}`,
-    borderRadius: 12,
+  const done = habits.length + openTasks.length > 0;
+  const hair = `0.5px solid ${t.borderLight}`;
+  const sectionLabel: React.CSSProperties = {
+    fontSize: T.micro,
+    color: t.textMuted,
+    letterSpacing: "0.02em",
+    marginBottom: S.tight,
   };
-  const sectionTitle: React.CSSProperties = { fontSize: "0.95rem", fontWeight: 700, color: t.text };
-  const link: React.CSSProperties = { fontSize: "0.78rem", color: t.textMuted, display: "flex", alignItems: "center", gap: 2 };
-
   const pickMood = (m: (typeof MOODS)[number]) => {
     addMoodEntry(m.name, m.color, 3);
     setMoodSaved(true);
   };
 
+  /** Строка списка: живёт на бумаге, разделена волосяной линией */
+  const Row = ({
+    checked,
+    onToggle,
+    icon,
+    title,
+    trailing,
+    last,
+  }: {
+    checked: boolean;
+    onToggle: () => void;
+    icon?: React.ReactNode;
+    title: string;
+    trailing?: React.ReactNode;
+    last?: boolean;
+  }) => (
+    <motion.button
+      onClick={onToggle}
+      whileTap={{ scale: 0.985 }}
+      transition={M.press}
+      className="w-full flex items-center text-left"
+      style={{ gap: S.inner, paddingTop: 13, paddingBottom: 13, borderBottom: last ? "none" : hair }}
+    >
+      <span
+        className="rounded-full flex items-center justify-center flex-shrink-0"
+        style={{
+          width: 23,
+          height: 23,
+          border: `1.5px solid ${checked ? ACCENT : t.borderLight}`,
+          background: checked ? ACCENT : "transparent",
+        }}
+      >
+        {checked && <InkCheck size={14} />}
+      </span>
+      {icon}
+      <span
+        className="flex-1"
+        style={{ fontSize: T.body, color: checked ? t.textMuted : t.text, textDecoration: checked ? "line-through" : "none" }}
+      >
+        {title}
+      </span>
+      {trailing}
+    </motion.button>
+  );
+
   return (
-    <div className="px-5 pt-6 pb-8">
-      {/* Header */}
-      <div className="mb-5 flex items-end justify-between gap-3">
-        <div>
-          <p style={{ fontSize: "0.8rem", color: t.textMuted, textTransform: "capitalize" }}>{dateLabel()}</p>
-          <h1 className="display" style={{ fontSize: "1.3rem", color: t.text, lineHeight: 1.25 }}>
-            {greeting()}{name && name !== "Пользователь" ? `, ${name}` : ""}
+    <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 26, paddingBottom: 32 }}>
+      {/* Шапка: дата, приветствие, Листик и полоса дня — один блок статуса */}
+      <div className="flex items-start justify-between" style={{ gap: S.inner }}>
+        <div style={{ paddingTop: 2 }}>
+          <p style={{ fontSize: T.micro, color: t.textMuted, textTransform: "capitalize" }}>{dateLabel()}</p>
+          <h1 className="display" style={{ fontSize: "1.7rem", color: t.text, lineHeight: 1.12, marginTop: 3 }}>
+            {greeting()}
+            {name && name !== "Пользователь" ? <>,&nbsp;{name}</> : ""}
           </h1>
         </div>
-        <InkLeaf mood={leafMoodForHour(new Date().getHours())} size={62} />
+        <InkLeaf mood={leafMoodForHour(new Date().getHours())} size={58} />
       </div>
 
-      {/* Полоса дня */}
-      <button onClick={() => navigate("/app/day")} className="w-full px-4 py-4 mb-4 text-left" style={card}>
-        <DayStripe parts={stripe} highlight={nowPart} height={10} />
-        <div className="flex mt-2">
+      <button onClick={() => navigate("/app/day")} className="w-full text-left" style={{ marginTop: S.group }}>
+        <DayStripe parts={stripe} highlight={nowPart} height={9} celebrate />
+        <div className="flex" style={{ marginTop: 7 }}>
           {DAY_PARTS.map((p) => {
             const isNow = p.key === nowPart;
             const part = stripe.find((s) => s.key === p.key);
             return (
-              <span key={p.key} className="flex-1" style={{ fontSize: "0.72rem", color: isNow ? t.text : t.textMuted, fontWeight: isNow ? 700 : 500 }}>
+              <span key={p.key} className="flex-1" style={{ fontSize: T.micro, color: isNow ? t.text : t.textMuted, fontWeight: isNow ? 700 : 500 }}>
                 {p.label}
-                {part && part.total > 0 && (
-                  <span style={{ color: t.textMuted, fontWeight: 500 }}> {part.done}/{part.total}</span>
-                )}
+                {part && part.total > 0 && <span style={{ color: t.textMuted, fontWeight: 500 }}> {part.done}/{part.total}</span>}
               </span>
             );
           })}
         </div>
       </button>
 
-      {/* Mood: one tap */}
-      <div className="p-4 mb-4" style={card}>
-        <div className="flex items-center justify-between mb-3">
-          <span style={sectionTitle}>Настроение</span>
-          <button onClick={() => navigate("/app/mood")} style={link}>
-            Подробнее <ChevronRight size={14} />
-          </button>
-        </div>
+      {/* Разбор недели — в воскресенье и понедельник */}
+      {showWeekReview && (
+        <button
+          onClick={() => navigate("/app/week")}
+          className="w-full flex items-center justify-between"
+          style={{ marginTop: S.group, paddingTop: S.inner, paddingBottom: S.inner, borderTop: hair, borderBottom: hair }}
+        >
+          <span>
+            <span style={{ display: "block", fontSize: T.body, fontWeight: 700, color: t.text }}>Разбор недели</span>
+            <span style={{ fontSize: T.small, color: t.textMuted }}>Две минуты, чтобы закрыть неделю</span>
+          </span>
+          <ChevronRight size={17} color={t.textMuted} />
+        </button>
+      )}
+
+      {/* Настроение: действие в одно касание. Отмечено — сворачивается в строку */}
+      <div style={{ marginTop: S.section }}>
         {todayMood || moodSaved ? (
           <>
-            <p style={{ fontSize: "0.85rem", color: t.textSecondary }}>
-              Сегодня: {todayMood?.mood ?? "записано"}.{" "}
-              <button onClick={() => navigate("/app/mood")} style={{ color: "#5B8A64", fontWeight: 600, fontSize: "inherit" }}>
+            <div className="flex items-center" style={{ gap: S.tight }}>
+              <InkFace mood={todayMood?.mood ?? "Спокойствие"} size={20} color={t.textSecondary} />
+              <span style={{ fontSize: T.small, color: t.textSecondary }}>
+                Сегодня: {(todayMood?.mood ?? "записано").toLowerCase()}
+              </span>
+              <button onClick={() => navigate("/app/mood")} style={{ fontSize: T.small, color: ACCENT, fontWeight: 600 }}>
                 Изменить
               </button>
-            </p>
+            </div>
             {suggestion && (
-              <div className="mt-3 pt-3" style={{ borderTop: `1px solid ${t.border}` }}>
-                <p style={{ fontSize: "0.84rem", color: t.text, marginBottom: 8 }}>{suggestion.text}</p>
-                <button
+              <div style={{ marginTop: S.inner, paddingTop: S.inner, borderTop: hair }}>
+                <p style={{ fontSize: T.body, color: t.text, marginBottom: S.tight + 2, lineHeight: 1.45 }}>{suggestion.text}</p>
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
+                  transition={M.press}
                   onClick={() => (suggestion.event ? document.dispatchEvent(new CustomEvent(suggestion.event)) : navigate(suggestion.path!))}
-                  className="px-3 py-2 rounded-lg"
-                  style={{ background: "#5B8A64", color: "#fff", fontSize: "0.82rem", fontWeight: 600 }}
+                  className="rounded-lg"
+                  style={{ background: ACCENT, color: "#fff", fontSize: T.small, fontWeight: 600, padding: "9px 14px" }}
                 >
                   {suggestion.action}
-                </button>
+                </motion.button>
               </div>
             )}
           </>
         ) : (
-          <div className="flex gap-2">
-            {MOODS.map((m) => (
-              <button
-                key={m.name}
-                onClick={() => pickMood(m)}
-                className="flex-1 flex flex-col items-center gap-1 py-2 rounded-xl"
-                style={{ background: t.bgSecondary, border: `1px solid ${t.border}` }}
-                aria-label={m.name}
-              >
-                <InkFace mood={m.name} size={28} color={t.text} tint={m.color} />
-                <span style={{ fontSize: "0.6rem", color: t.textMuted }}>{m.name}</span>
-              </button>
-            ))}
+          <>
+            <p style={sectionLabel}>Как вы сейчас?</p>
+            <div className="flex" style={{ gap: 6 }}>
+              {MOODS.map((m) => (
+                <motion.button
+                  key={m.name}
+                  onClick={() => pickMood(m)}
+                  whileTap={{ scale: 0.93 }}
+                  transition={M.press}
+                  className="flex-1 flex flex-col items-center rounded-xl"
+                  style={{ gap: 5, paddingTop: 11, paddingBottom: 9, background: t.bgSecondary, opacity: 0.95 }}
+                  aria-label={m.name}
+                >
+                  <InkFace mood={m.name} size={27} color={t.text} tint={m.color} />
+                  <span style={{ fontSize: "0.6rem", color: t.textMuted }}>{m.name}</span>
+                </motion.button>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Главное: список сегодняшнего */}
+      <div style={{ marginTop: S.section }}>
+        <div className="flex items-baseline justify-between" style={{ marginBottom: S.tight }}>
+          <p style={sectionLabel}>Привычки</p>
+          <div className="flex items-baseline" style={{ gap: S.inner }}>
+            {habits.length > 0 && (
+              <span style={{ fontSize: T.small, color: t.textMuted, fontWeight: 500 }}>
+                {habitsDone}/{habits.length}
+              </span>
+            )}
+            <button onClick={() => navigate("/app/habits")} style={{ fontSize: T.micro, color: t.textMuted }}>
+              Все
+            </button>
+          </div>
+        </div>
+
+        {habits.length === 0 ? (
+          <button
+            onClick={() => navigate("/app/habits")}
+            className="w-full flex items-center"
+            style={{ gap: S.inner, paddingTop: 13, paddingBottom: 13, borderTop: hair, borderBottom: hair }}
+          >
+            <Plus size={18} color={ACCENT} />
+            <span style={{ fontSize: T.body, color: t.text }}>Добавить первую привычку</span>
+          </button>
+        ) : (
+          <div style={{ borderTop: hair }}>
+            {habits.map((h, i) => {
+              const checked = h.completedDates.includes(d);
+              const c = consistency(h);
+              return (
+                <Row
+                  key={h.id}
+                  checked={checked}
+                  onToggle={() => toggleHabitToday(h.id)}
+                  icon={<AppIcon icon={h.icon} size={17} color={t.textSecondary} />}
+                  title={h.title}
+                  last={i === habits.length - 1}
+                  trailing={
+                    c.window >= 5 ? (
+                      <span style={{ fontSize: T.micro, color: t.textFaint, fontWeight: 400 }}>{c.percent}%</span>
+                    ) : undefined
+                  }
+                />
+              );
+            })}
           </div>
         )}
       </div>
 
-      {/* Разбор недели: в воскресенье и понедельник, пока не пройден */}
-      {showWeekReview && (
-        <button onClick={() => navigate("/app/week")} className="w-full p-4 mb-4 text-left flex items-center justify-between" style={{ ...card, borderColor: "#5B8A64" }}>
-          <span>
-            <span style={{ display: "block", fontSize: "0.92rem", fontWeight: 700, color: t.text }}>Разбор недели</span>
-            <span style={{ fontSize: "0.78rem", color: t.textMuted }}>Две минуты, чтобы закрыть неделю</span>
-          </span>
-          <ChevronRight size={16} color={t.textMuted} />
-        </button>
-      )}
+      {/* Задачи */}
+      <div style={{ marginTop: S.group }}>
+        <div className="flex items-baseline justify-between" style={{ marginBottom: S.tight }}>
+          <p style={sectionLabel}>Задачи</p>
+          <div className="flex items-center" style={{ gap: S.inner }}>
+            <button
+              onClick={() => document.dispatchEvent(new CustomEvent("open-pomodoro"))}
+              className="flex items-center"
+              style={{ gap: 4, fontSize: T.micro, color: t.textMuted }}
+              aria-label="Таймер фокуса"
+            >
+              <Timer size={13} /> Фокус
+            </button>
+            <button onClick={() => navigate("/app/tasks")} style={{ fontSize: T.micro, color: t.textMuted }}>
+              Все
+            </button>
+          </div>
+        </div>
 
-      {/* Наблюдения: приложение отвечает на данные */}
+        {openTasks.length === 0 ? (
+          <button
+            onClick={() => navigate("/app/tasks")}
+            className="w-full flex items-center"
+            style={{ gap: S.inner, paddingTop: 13, paddingBottom: 13, borderTop: hair, borderBottom: hair }}
+          >
+            <Plus size={18} color={ACCENT} />
+            <span style={{ fontSize: T.body, color: t.text }}>
+              {tasks.length === 0 ? "Добавить задачу" : "Всё выполнено. Добавить ещё"}
+            </span>
+          </button>
+        ) : (
+          <div style={{ borderTop: hair }}>
+            {openTasks.slice(0, 5).map((task, i) => (
+              <Row
+                key={task.id}
+                checked={false}
+                onToggle={() => toggleTask(task.id)}
+                title={task.title}
+                last={i === Math.min(openTasks.length, 5) - 1 && openTasks.length <= 5}
+                trailing={
+                  task.priority === "high" ? (
+                    <span style={{ fontSize: T.micro, color: "#C4876C", fontWeight: 600 }}>важно</span>
+                  ) : undefined
+                }
+              />
+            ))}
+            {openTasks.length > 5 && (
+              <button
+                onClick={() => navigate("/app/tasks")}
+                className="w-full text-left"
+                style={{ fontSize: T.small, color: t.textMuted, paddingTop: 12, paddingBottom: 2 }}
+              >
+                Ещё {openTasks.length - 5}
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* Наблюдения — контекст, а не задача, поэтому ниже списка */}
       {(insight.insights.length > 0 || (insight.daysCollected >= 3 && insight.daysCollected < insight.daysNeeded)) && (
-        <div className="p-4 mb-4" style={card}>
-          <span style={sectionTitle}>Наблюдения</span>
+        <div style={{ marginTop: S.section }}>
+          <p style={sectionLabel}>Наблюдения</p>
           {insight.insights.length > 0 ? (
-            <div className="mt-2 space-y-3">
+            <div style={{ display: "flex", flexDirection: "column", gap: S.inner }}>
               {insight.insights.map((it) => (
                 <div key={it.id}>
-                  <p style={{ fontSize: "0.86rem", color: t.text, lineHeight: 1.45 }}>{it.text}</p>
-                  <p style={{ fontSize: "0.7rem", color: t.textMuted, marginTop: 2 }}>{it.basis}</p>
+                  <p style={{ fontSize: T.body, color: t.text, lineHeight: 1.5 }}>{it.text}</p>
+                  <p style={{ fontSize: T.micro, color: t.textFaint, marginTop: 3 }}>{it.basis}</p>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="mt-2" style={{ fontSize: "0.84rem", color: t.textSecondary, lineHeight: 1.45 }}>
-              Пока собираю данные: {insight.daysCollected} из {insight.daysNeeded} дней с настроением.
-              Раньше любые выводы были бы догадкой.
+            <p style={{ fontSize: T.small, color: t.textSecondary, lineHeight: 1.5 }}>
+              Пока собираю данные: {insight.daysCollected} из {insight.daysNeeded} дней с настроением. Раньше любые выводы были бы догадкой.
             </p>
           )}
         </div>
       )}
 
-      {/* Habits */}
-      <div className="flex items-center justify-between mb-2">
-        <span style={sectionTitle}>
-          Привычки{habits.length > 0 && <span style={{ color: t.textMuted, fontWeight: 500 }}> {habitsDone}/{habits.length}</span>}
-        </span>
-        <button onClick={() => navigate("/app/habits")} style={link}>
-          Все <ChevronRight size={14} />
-        </button>
-      </div>
-      {habits.length === 0 ? (
-        <button onClick={() => navigate("/app/habits")} className="w-full p-4 mb-4 text-left flex items-center gap-3" style={card}>
-          <Plus size={18} color="#5B8A64" />
-          <span style={{ fontSize: "0.88rem", color: t.text }}>Добавить первую привычку</span>
-        </button>
-      ) : (
-        <div className="mb-4 space-y-2">
-          {habits.map((h) => {
-            const done = h.completedDates.includes(d);
-            return (
-              <button
-                key={h.id}
-                onClick={() => toggleHabitToday(h.id)}
-                className="w-full flex items-center gap-3 px-4 py-3 text-left"
-                style={{ ...card, opacity: done ? 0.7 : 1 }}
-              >
-                <span
-                  className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ border: `1.5px solid ${done ? "#5B8A64" : t.borderLight}`, background: done ? "#5B8A64" : "transparent" }}
-                >
-                  {done && <InkCheck size={15} />}
-                </span>
-                <AppIcon icon={h.icon} size={18} color={h.color} />
-                <span className="flex-1" style={{ fontSize: "0.9rem", color: t.text, textDecoration: done ? "line-through" : "none" }}>
-                  {h.title}
-                </span>
-                {(() => { const c = consistency(h); return c.window >= 5 ? <span style={{ fontSize: "0.72rem", color: t.textMuted }}>{c.percent}%</span> : null; })()}
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {/* Tasks */}
-      <div className="flex items-center justify-between mb-2">
-        <span style={sectionTitle}>
-          Задачи{openTasks.length > 0 && <span style={{ color: t.textMuted, fontWeight: 500 }}> {openTasks.length}</span>}
-        </span>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => document.dispatchEvent(new CustomEvent("open-pomodoro"))}
-            style={link}
-            aria-label="Таймер фокуса"
-          >
-            <Timer size={14} /> Фокус
-          </button>
-          <button onClick={() => navigate("/app/tasks")} style={link}>
-            Все <ChevronRight size={14} />
-          </button>
-        </div>
-      </div>
-      {openTasks.length === 0 ? (
-        <button onClick={() => navigate("/app/tasks")} className="w-full p-4 mb-4 text-left flex items-center gap-3" style={card}>
-          <Plus size={18} color="#5B8A64" />
-          <span style={{ fontSize: "0.88rem", color: t.text }}>
-            {tasks.length === 0 ? "Добавить задачу" : "Все задачи выполнены. Добавить ещё"}
-          </span>
-        </button>
-      ) : (
-        <div className="mb-4 space-y-2">
-          {openTasks.slice(0, 5).map((task) => (
-            <div key={task.id} className="flex items-center gap-3 px-4 py-3" style={card}>
-              <button
-                onClick={() => toggleTask(task.id)}
-                className="w-6 h-6 rounded-full flex-shrink-0"
-                style={{ border: `1.5px solid ${t.borderLight}` }}
-                aria-label="Выполнить"
-              />
-              <span className="flex-1" style={{ fontSize: "0.9rem", color: t.text }}>{task.title}</span>
-              {task.priority === "high" && (
-                <span style={{ fontSize: "0.68rem", color: "#C4876C", fontWeight: 600 }}>важно</span>
-              )}
-            </div>
-          ))}
-          {openTasks.length > 5 && (
-            <button onClick={() => navigate("/app/tasks")} className="w-full py-2 text-center" style={{ fontSize: "0.8rem", color: t.textMuted }}>
-              Ещё {openTasks.length - 5}
-            </button>
-          )}
-        </div>
-      )}
-
-      {/* Practices entry */}
-      <button onClick={() => navigate("/app/practices")} className="w-full px-4 py-3 flex items-center justify-between" style={card}>
-        <span style={{ fontSize: "0.88rem", color: t.text }}>Практики: дыхание, заземление, дневник</span>
+      <button
+        onClick={() => navigate("/app/practices")}
+        className="w-full flex items-center justify-between"
+        style={{ marginTop: S.section, paddingTop: S.inner, borderTop: hair }}
+      >
+        <span style={{ fontSize: T.small, color: t.textSecondary }}>Практики: дыхание, заземление, дневник</span>
         <ChevronRight size={16} color={t.textMuted} />
       </button>
+
+      {!done && <div style={{ height: S.group }} />}
     </div>
   );
 }
