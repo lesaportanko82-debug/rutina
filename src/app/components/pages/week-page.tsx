@@ -6,6 +6,7 @@ import { useApp } from "../app-context";
 import { useTheme } from "../theme";
 import { AppIcon } from "../app-icon";
 import { DayStripe, buildStripe } from "../day-stripe";
+import { InkLeaf } from "../ink-leaf";
 import { lastNDates } from "../../lib/consistency";
 import { markWeekReviewDone } from "../../lib/week";
 
@@ -59,8 +60,13 @@ export function WeekPage() {
       <button onClick={() => navigate(-1)} className="flex items-center gap-1 mb-4" style={{ fontSize: "0.82rem", color: t.textMuted }}>
         <ChevronLeft size={16} /> Назад
       </button>
-      <h1 className="display" style={{ fontSize: "1.4rem", color: t.text, marginBottom: 4 }}>Разбор недели</h1>
-      <p style={{ fontSize: "0.85rem", color: t.textSecondary, marginBottom: 18 }}>Две минуты: посмотреть, ответить, поправить.</p>
+      <div className="flex items-end justify-between gap-3 mb-5">
+        <div>
+          <h1 className="display" style={{ fontSize: "1.4rem", color: t.text, marginBottom: 4 }}>Разбор недели</h1>
+          <p style={{ fontSize: "0.85rem", color: t.textSecondary }}>Две минуты: посмотреть, ответить, поправить.</p>
+        </div>
+        <InkLeaf mood="near" size={54} />
+      </div>
 
       {/* 1. Неделя одним взглядом */}
       <div className="p-4 mb-4" style={card}>

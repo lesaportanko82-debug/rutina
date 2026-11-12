@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Wind } from "lucide-react";
 import { useTheme } from "./theme";
+import { InkLeaf } from "./ink-leaf";
 
 type BreathPattern = {
   name: string;
@@ -123,9 +124,9 @@ export function BreathingWidget() {
         {isOpen && (
           <motion.div
             className="fixed inset-0 z-50 flex flex-col items-center justify-center"
-            style={{
-              background: `${th.bg}F0`,
-            }}
+            // непрозрачный фон: во время дыхания за Листиком не должно
+            // читаться остальное приложение
+            style={{ background: th.bg }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -239,51 +240,33 @@ export function BreathingWidget() {
                   </span>
                 </div>
 
-                {/* Breathing circle */}
-                <div className="relative w-64 h-64 flex items-center justify-center">
-                  {/* Outer glow rings */}
-                  {[0, 1, 2].map((ring) => (
-                    <motion.div
-                      key={ring}
-                      className="absolute rounded-full"
-                      style={{
-                        border: `1px solid ${phaseColor}${15 - ring * 4}`,
-                      }}
-                      animate={{
-                        width: isRunning ? `${(currentPhase.scale * 100 + 60) + ring * 30}%` : "90%",
-                        height: isRunning ? `${(currentPhase.scale * 100 + 60) + ring * 30}%` : "90%",
-                        opacity: isRunning ? [0.3, 0.1] : 0.2,
-                      }}
-                      transition={{ duration: currentPhase.duration, ease: "easeInOut" }}
-                    />
-                  ))}
-
-                  {/* Main circle */}
+                {/* Листик дышит вместе с вами */}
+                <div className="relative flex items-center justify-center" style={{ width: 256, height: 236 }}>
+                  {/* одно тихое кольцо вместо стопки свечений: показывает фазу */}
                   <motion.div
-                    className="rounded-full flex items-center justify-center"
-                    style={{
-                      background: `${phaseColor}30`,
-                      border: `2px solid ${phaseColor}50`,
-                    }}
+                    className="absolute rounded-full"
+                    style={{ border: `1.5px solid ${phaseColor}40` }}
                     animate={{
-                      width: isRunning ? `${currentPhase.scale * 85 + 15}%` : "50%",
-                      height: isRunning ? `${currentPhase.scale * 85 + 15}%` : "50%",
+                      width: isRunning ? `${currentPhase.scale * 55 + 45}%` : "72%",
+                      height: isRunning ? `${currentPhase.scale * 55 + 45}%` : "72%",
                     }}
-                    transition={{ duration: currentPhase.duration, ease: "easeInOut" }}
-                  >
-                    <motion.div
-                      className="rounded-full"
-                      style={{
-                        width: "40%",
-                        height: "40%",
-                        background: `${phaseColor}60`,
-                      }}
-                      animate={{
-                        scale: isRunning ? [0.9, 1.1, 0.9] : 1,
-                      }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    />
-                  </motion.div>
+                    transition={{ duration: isRunning ? currentPhase.duration : 0.6, ease: "easeInOut" }}
+                  />
+                  <InkLeaf
+                    mood="day"
+                    size={132}
+                    draw={false}
+                    breathDuration={currentPhase.duration}
+                    breath={
+                      !isRunning
+                        ? "rest"
+                        : currentPhase.label === "Вдох"
+                          ? "inhale"
+                          : currentPhase.label === "Выдох"
+                            ? "exhale"
+                            : "hold"
+                    }
+                  />
                 </div>
 
                 {/* Phase label */}

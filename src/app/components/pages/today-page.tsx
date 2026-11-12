@@ -7,6 +7,7 @@ import { useTheme } from "../theme";
 import { AppIcon } from "../app-icon";
 import { DayStripe, buildStripe } from "../day-stripe";
 import { InkFace } from "../ink";
+import { InkLeaf, leafMoodForHour } from "../ink-leaf";
 import { consistency } from "../../lib/consistency";
 import { computeInsights } from "../../lib/insights";
 import { weekReviewDone } from "../../lib/week";
@@ -89,11 +90,14 @@ export function TodayPage() {
   return (
     <div className="px-5 pt-6 pb-8">
       {/* Header */}
-      <div className="mb-5">
-        <p style={{ fontSize: "0.8rem", color: t.textMuted, textTransform: "capitalize" }}>{dateLabel()}</p>
-        <h1 className="display" style={{ fontSize: "1.3rem", color: t.text, lineHeight: 1.25 }}>
-          {greeting()}{name && name !== "Пользователь" ? `, ${name}` : ""}
-        </h1>
+      <div className="mb-5 flex items-end justify-between gap-3">
+        <div>
+          <p style={{ fontSize: "0.8rem", color: t.textMuted, textTransform: "capitalize" }}>{dateLabel()}</p>
+          <h1 className="display" style={{ fontSize: "1.3rem", color: t.text, lineHeight: 1.25 }}>
+            {greeting()}{name && name !== "Пользователь" ? `, ${name}` : ""}
+          </h1>
+        </div>
+        <InkLeaf mood={leafMoodForHour(new Date().getHours())} size={62} />
       </div>
 
       {/* Полоса дня */}
