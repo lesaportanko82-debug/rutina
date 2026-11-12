@@ -507,7 +507,7 @@ export function ProfilePage() {
                   onClick={() => setStep(step + 1)}>Дальше</button>
               ) : (
                 <button className="flex-1 py-3 rounded-xl"
-                  style={{ background: t.accent, fontSize: "0.9rem", fontWeight: 600, color: th.onInk}}
+                  style={{ background: t.accent, fontSize: "0.9rem", fontWeight: 600, color: t.onInk}}
                   onClick={handleSave}>Сохранить </button>
               )}
             </div>

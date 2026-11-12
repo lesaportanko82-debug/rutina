@@ -297,7 +297,7 @@ export function AvatarCropper({ file, onCrop, onCancel }: AvatarCropperProps) {
             </motion.button>
             <motion.button
               className="flex-1 h-10 rounded-xl flex items-center justify-center gap-2"
-              style={{ background: t.accent, color: th.onInk}}
+              style={{ background: t.accent, color: t.onInk}}
               onClick={handleCrop}
               whileTap={{ scale: 0.95 }}
             >

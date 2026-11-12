@@ -156,7 +156,7 @@ export function FeatureTour({ steps, tourKey, seenTours, onComplete, delay = 800
                   style={{
                     fontSize: "0.8rem",
                     fontWeight: 600,
-                    background: t.accent, color: th.onInk}}
+                    background: "#437253", color: "#fff"}}
                   onClick={handleNext}
                   whileTap={{ scale: 0.95 }}
                 >

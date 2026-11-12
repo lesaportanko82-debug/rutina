@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "vite"
+    "dev": "vite",
+    "check:theme": "node scripts/check-theme-vars.mjs",
+    "prebuild": "node scripts/check-theme-vars.mjs"
   },
   "dependencies": {
     "@emotion/react": "11.14.0",

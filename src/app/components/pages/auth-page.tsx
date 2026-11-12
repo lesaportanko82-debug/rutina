@@ -366,7 +366,7 @@ export function AuthPage({ onAuth }: AuthPageProps) {
             style={{
               background: `${C.sage}`,
               fontSize: "0.9rem",
-              fontWeight: 700, color: th.onInk}}
+              fontWeight: 700, color: "#fff"}}
             onClick={handleSubmit}
             disabled={loading}
             whileTap={{ scale: 0.97 }}
@@ -422,7 +422,7 @@ export function AuthPage({ onAuth }: AuthPageProps) {
                 />
                 <button
                   className="px-4 py-2 rounded-xl"
-                  style={{ fontSize: "0.75rem", fontWeight: 600, backgroundColor: C.lavender, color: th.onInk}}
+                  style={{ fontSize: "0.75rem", fontWeight: 600, backgroundColor: C.lavender, color: "#fff"}}
                   onClick={handleAdminLogin}
                 >
                   Войти

@@ -946,7 +946,7 @@ export function MeditationPage() {
             <button
               onClick={() => { stopAll(); setSelected(null); setCompleted(false); setCurrentStep(0); }}
               className="flex-1 py-3.5 rounded-xl"
-              style={{ fontSize: "0.82rem", fontWeight: 600, background: `${selected.color}`, color: th.onInk}}
+              style={{ fontSize: "0.82rem", fontWeight: 600, background: `${selected.color}`, color: t.onInk}}
             >
               Готово
             </button>

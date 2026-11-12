@@ -335,7 +335,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
                         ? `${C.terracotta}`
                         : `${C.sage}`,
                       fontSize: "0.85rem",
-                      fontWeight: 700, color: th.onInk}}
+                      fontWeight: 700, color: "#fff"}}
                   >
                     {user.name.charAt(0).toUpperCase()}
                     {user.banned && (
@@ -625,7 +625,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
                         : `${C.sage}`,
                       fontSize: "0.85rem",
                       fontWeight: 600,
-                      opacity: modalLoading ? 0.7 : 1, color: th.onInk}}
+                      opacity: modalLoading ? 0.7 : 1, color: "#fff"}}
                     whileTap={{ scale: 0.97 }}
                     onClick={handleModalAction}
                     disabled={modalLoading}

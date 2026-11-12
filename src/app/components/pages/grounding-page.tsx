@@ -349,7 +349,7 @@ export function GroundingPage() {
                 style={{
                   background: `${currentStep.color}`,
                   fontSize: "0.88rem",
-                  fontWeight: 600, color: th.onInk}}
+                  fontWeight: 600, color: t.onInk}}
                 onClick={goNext}
                 whileTap={{ scale: 0.98 }}
                 initial={{ opacity: 0, y: 10 }}
