@@ -343,21 +343,21 @@ export function NotificationsPage() {
       )}
 
       <motion.div
-        className="rounded-xl p-5 mt-6 text-white"
-        style={{ background: "#7B8F71" }}
+        className="rounded-xl p-5 mt-6"
+        style={{ background: t.card, border: `1px solid ${t.border}`, color: t.textSecondary }}
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
       >
         <div className="flex items-center gap-2 mb-2">
-          <BellRing className="w-5 h-5" />
-          <span style={{ fontSize: "0.9rem", fontWeight: 700 }}>Как это работает</span>
+          <BellRing className="w-5 h-5" color={t.textMuted} />
+          <span style={{ fontSize: "0.9rem", fontWeight: 700, color: t.text }}>Как это работает</span>
         </div>
         <div className="space-y-1.5">
           {[
-            "Напоминания приходят через уведомления браузера",
-            "Включите разрешения, чтобы ничего не пропустить",
-            "Настройте дни и время — мы подстроимся под вас",
+            "Напоминания приходят с сервера — приложение может быть закрыто",
+            "Время считается по вашему часовому поясу",
+            "На iPhone добавьте приложение на экран «Домой», иначе уведомления не придут",
           ].map((text, i) => (
             <p key={i} style={{ fontSize: "0.75rem", opacity: 0.85, lineHeight: 1.4 }}>• {text}</p>
           ))}
