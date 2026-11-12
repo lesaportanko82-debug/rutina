@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { setInkReference } from "../lib/design";
 import { useApp } from "./app-context";
 
 export interface Theme {
@@ -25,6 +26,16 @@ export interface Theme {
   teal: string;
   rose: string;
   warm: string;
+  /** Цвет рисунка — тёмный на бумаге, светлый в тёмной теме. */
+  ink: string;
+  onInk: string;
+  /** Погружающая панель (дыхание) — тёмная в обоих режимах. */
+  field: string;
+  onField: string;
+  accent: string;
+  attention: string;
+  /** Контур элемента управления — единственный его признак, потому ≥3:1. */
+  control: string;
 }
 
 const lightTheme: Theme = {
@@ -50,6 +61,13 @@ const lightTheme: Theme = {
   teal: "#7BAFB0",
   rose: "#B88FA7",
   warm: "#A3907A",
+  ink: "#20261F",
+  onInk: "#EDE7DB",
+  field: "#20261F",
+  onField: "#EDE7DB",
+  accent: "#437253",
+  attention: "#94593C",
+  control: "#7F7360",
 };
 
 const darkTheme: Theme = {
@@ -75,6 +93,13 @@ const darkTheme: Theme = {
   teal: "#7BAFB0",
   rose: "#B88FA7",
   warm: "#A3907A",
+  ink: "#F6F5F3",
+  onInk: "#12150F",
+  field: "#12150F",
+  onField: "#E5E0D8",
+  accent: "#8CC6A3",
+  attention: "#D99A72",
+  control: "#A9A296",
 };
 
 // ─── Температура интерфейса по времени суток ───
@@ -98,47 +123,61 @@ export function phaseAt(hour: number): DayPhase {
   return "night";
 }
 
-type Surfaces = Pick<Theme, "bg" | "bgSecondary" | "bgTertiary" | "card" | "border" | "borderLight" | "navBg" | "inputBg">;
+type Surfaces = Pick<Theme,
+  | "bg" | "bgSecondary" | "bgTertiary" | "card" | "border" | "borderLight" | "navBg" | "inputBg"
+  | "text" | "textSecondary" | "textMuted" | "textFaint" | "accent" | "attention">;
 
 const lightPhases: Record<DayPhase, Surfaces> = {
-  // тёплый кремовый, золотистый
   morning: {
-    bg: "#FCF8F0", bgSecondary: "#F7EFE1", bgTertiary: "#F3EBDE", card: "#FEFBF5",
-    border: "#EBE2D2", borderLight: "#E8DFCE", navBg: "rgba(252, 248, 240, 0.95)", inputBg: "#FEFBF5",
+    bg: "#E6E0D7", bgSecondary: "#EDE9E2", bgTertiary: "#E6E0D7", card: "#F4F2EE",
+    border: "#D3C7B3", borderLight: "#D9CFBF", navBg: "rgba(230, 224, 215, 0.96)", inputBg: "#E6E0D7",
+    text: "#403A32", textSecondary: "#554E45", textMuted: "#615B51", textFaint: "#635D55",
+    accent: "#3C664A", attention: "#845036",
   },
-  // светлый нейтральный — базовая палитра
   day: {
-    bg: "#FAF8F5", bgSecondary: "#F5F0E8", bgTertiary: "#F0EDE8", card: "#FDFCFA",
-    border: "#E8E3DC", borderLight: "#E5E0D8", navBg: "rgba(250, 248, 245, 0.95)", inputBg: "#FDFCFA",
+    bg: "#EDE9E2", bgSecondary: "#F4F2EE", bgTertiary: "#EDE9E2", card: "#FBFAF9",
+    border: "#D9CFBF", borderLight: "#DFD8CB", navBg: "rgba(237, 233, 226, 0.96)", inputBg: "#EDE9E2",
+    text: "#453F37", textSecondary: "#5A534A", textMuted: "#665F55", textFaint: "#696259",
+    accent: "#3F6B4E", attention: "#8B5439",
   },
-  // приглушённый тёплый
   evening: {
-    bg: "#F6F0E8", bgSecondary: "#EFE6D9", bgTertiary: "#EAE1D5", card: "#FAF5EE",
-    border: "#E2D8C9", borderLight: "#DED4C4", navBg: "rgba(246, 240, 232, 0.95)", inputBg: "#FAF5EE",
+    bg: "#DFD8CB", bgSecondary: "#E6E0D7", bgTertiary: "#DFD8CB", card: "#EDE9E2",
+    border: "#CDBFA6", borderLight: "#D3C7B3", navBg: "rgba(223, 216, 203, 0.96)", inputBg: "#DFD8CB",
+    text: "#3B352E", textSecondary: "#504A42", textMuted: "#5C564D", textFaint: "#5E5950",
+    accent: "#396046", attention: "#7D4C33",
   },
-  // глубокий тёплый серый, ещё спокойнее
   night: {
-    bg: "#F1ECE5", bgSecondary: "#E9E2D8", bgTertiary: "#E4DCD2", card: "#F6F2EC",
-    border: "#DCD3C6", borderLight: "#D7CEC1", navBg: "rgba(241, 236, 229, 0.95)", inputBg: "#F6F2EC",
+    bg: "#D9CFBF", bgSecondary: "#DFD8CB", bgTertiary: "#D9CFBF", card: "#E6E0D7",
+    border: "#C7B69A", borderLight: "#CDBFA6", navBg: "rgba(217, 207, 191, 0.96)", inputBg: "#D9CFBF",
+    text: "#35302A", textSecondary: "#4B453E", textMuted: "#575149", textFaint: "#59544C",
+    accent: "#365B42", attention: "#764730",
   },
 };
 
 const darkPhases: Record<DayPhase, Surfaces> = {
   morning: {
-    bg: "#1B1917", bgSecondary: "#272320", bgTertiary: "#332E29", card: "#272320",
-    border: "#3D3832", borderLight: "#3D3832", navBg: "rgba(27, 25, 23, 0.95)", inputBg: "#332E29",
+    bg: "#22201C", bgSecondary: "#302D29", bgTertiary: "#3E3A36", card: "#302D29",
+    border: "#44413C", borderLight: "#3E3A36", navBg: "rgba(34, 32, 28, 0.95)", inputBg: "#3E3A36",
+    text: "#F6F5F3", textSecondary: "#E0DCD7", textMuted: "#CFCBC3", textFaint: "#CDC9C2",
+    accent: "#AAD5B9", attention: "#E6C5AF",
   },
   day: {
-    bg: "#1A1918", bgSecondary: "#242220", bgTertiary: "#302D2A", card: "#242220",
-    border: "#3A3734", borderLight: "#3A3734", navBg: "rgba(26, 25, 24, 0.95)", inputBg: "#302D2A",
+    bg: "#292623", bgSecondary: "#37342F", bgTertiary: "#44413C", card: "#37342F",
+    border: "#4B4843", borderLight: "#44413C", navBg: "rgba(41, 38, 35, 0.95)", inputBg: "#44413C",
+    text: "#F6F5F3", textSecondary: "#E0DCD7", textMuted: "#CFCBC3", textFaint: "#CDC9C2",
+    accent: "#AAD5B9", attention: "#E6C5AF",
   },
   evening: {
-    bg: "#1C1917", bgSecondary: "#28231F", bgTertiary: "#342E28", card: "#28231F",
-    border: "#3E3831", borderLight: "#3E3831", navBg: "rgba(28, 25, 23, 0.95)", inputBg: "#342E28",
+    bg: "#22201C", bgSecondary: "#302D29", bgTertiary: "#3E3A36", card: "#302D29",
+    border: "#44413C", borderLight: "#3E3A36", navBg: "rgba(34, 32, 28, 0.95)", inputBg: "#3E3A36",
+    text: "#F6F5F3", textSecondary: "#E0DCD7", textMuted: "#CFCBC3", textFaint: "#CDC9C2",
+    accent: "#AAD5B9", attention: "#E6C5AF",
   },
   night: {
-    bg: "#161513", bgSecondary: "#201E1B", bgTertiary: "#2B2824", card: "#201E1B",
-    border: "#34302B", borderLight: "#34302B", navBg: "rgba(22, 21, 19, 0.95)", inputBg: "#2B2824",
+    bg: "#141210", bgSecondary: "#22201C", bgTertiary: "#302D29", card: "#22201C",
+    border: "#37342F", borderLight: "#302D29", navBg: "rgba(20, 18, 16, 0.95)", inputBg: "#302D29",
+    text: "#F6F5F3", textSecondary: "#E0DCD7", textMuted: "#CFCBC3", textFaint: "#CDC9C2",
+    accent: "#AAD5B9", attention: "#E6C5AF",
   },
 };
 
@@ -163,6 +202,8 @@ export function useTheme(): Theme {
   const base = darkMode ? darkTheme : lightTheme;
   if (dayTinting === false) return base;
   const surfaces = (darkMode ? darkPhases : lightPhases)[phase];
+  // Самая «опасная» поверхность режима — против неё решается читаемость оттенков.
+  setInkReference(darkMode ? "#56534F" : "#D3C9BF");
   return { ...base, ...surfaces };
 }
 

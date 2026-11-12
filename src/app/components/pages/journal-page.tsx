@@ -56,7 +56,7 @@ export function JournalPage() {
   return (
     <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="display" style={{ fontSize: "1.35rem", color: t.text }}>
+        <h1 className="display" style={{ fontSize: "1.35rem", color: t.ink }}>
           Дневник
         </h1>
         <motion.button
@@ -65,10 +65,10 @@ export function JournalPage() {
           onClick={() => setShowForm(!showForm)}
           whileTap={{ scale: 0.9 }}
         >
-          {showForm ? <X className="w-5 h-5 text-white" /> : <Plus className="w-5 h-5 text-white" />}
+          {showForm ? <X className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
         </motion.button>
       </div>
-      <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 16 }}>
+      <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 16}}>
         
       </p>
 
@@ -135,8 +135,8 @@ export function JournalPage() {
                 </div>
               </div>
               <motion.button
-                className="w-full text-white rounded-xl py-3"
-                style={{ fontSize: "0.9rem", fontWeight: 600, backgroundColor: t.sage }}
+                className="w-full rounded-xl py-3"
+                style={{ fontSize: "0.9rem", fontWeight: 600, backgroundColor: t.accent, color: t.onInk}}
                 onClick={handleSave}
                 whileTap={{ scale: 0.98 }}
               >
@@ -173,8 +173,8 @@ export function JournalPage() {
                 {confirmDelete === entry.id ? (
                   <div className="flex items-center gap-2">
                     <button
-                      className="px-2 py-1 rounded-lg text-white"
-                      style={{ fontSize: "0.65rem", backgroundColor: t.terracotta }}
+                      className="px-2 py-1 rounded-lg"
+                      style={{ fontSize: "0.65rem", backgroundColor: t.accent, color: t.onInk}}
                       onClick={() => { deleteJournalEntry(entry.id); setConfirmDelete(null); }}
                     >
                       Удалить
@@ -202,7 +202,7 @@ export function JournalPage() {
                     const def = distortionOptions.find((d) => d.id === tag.distortion);
                     return (
                       <span key={tag.id} className="px-2 py-0.5 rounded-full"
-                        style={{ fontSize: "0.6rem", fontWeight: 500, backgroundColor: t.lavender + "12", color: t.lavender }}>
+                        style={{ fontSize: "0.6rem", fontWeight: 500, backgroundColor: t.lavender + "12", color: t.text}}>
                         {def?.name || tag.distortion}
                       </span>
                     );

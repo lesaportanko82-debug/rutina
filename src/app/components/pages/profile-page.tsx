@@ -248,15 +248,15 @@ export function ProfilePage() {
 
   const getTier = (level: number) => {
     if (level >= 50) return { name: "Легенда", icon: "👑", color: "#C4A86C", gradient: "#C4A86C", minLevel: 50 };
-    if (level >= 40) return { name: "Мудрец", icon: "🧙", color: "#9B8EC4", gradient: "#9B8EC4", minLevel: 40 };
-    if (level >= 30) return { name: "Хранитель", icon: "🦋", color: "#B88FA7", gradient: "#B88FA7", minLevel: 30 };
-    if (level >= 25) return { name: "Лес", icon: "🌲", color: "#6B8F71", gradient: "#6B8F71", minLevel: 25 };
-    if (level >= 20) return { name: "Роща", icon: "🌳", color: "#7BAFB0", gradient: "#7BAFB0", minLevel: 20 };
+    if (level >= 40) return { name: "Мудрец", icon: "🧙", color: t.textSecondary, gradient: "#9B8EC4", minLevel: 40 };
+    if (level >= 30) return { name: "Хранитель", icon: "🦋", color: t.textSecondary, gradient: "#B88FA7", minLevel: 30 };
+    if (level >= 25) return { name: "Лес", icon: "🌲", color: t.accent, gradient: "#6B8F71", minLevel: 25 };
+    if (level >= 20) return { name: "Роща", icon: "🌳", color: t.accent, gradient: "#7BAFB0", minLevel: 20 };
     if (level >= 17) return { name: "Сад", icon: "🏡", color: "#C4A86C", gradient: "#C4A86C", minLevel: 17 };
-    if (level >= 14) return { name: "Дерево", icon: "🌴", color: "#8DB596", gradient: "#8DB596", minLevel: 14 };
+    if (level >= 14) return { name: "Дерево", icon: "🌴", color: t.accent, gradient: "#8DB596", minLevel: 14 };
     if (level >= 11) return { name: "Куст", icon: "🌿", color: "#7EA8BE", gradient: "#7EA8BE", minLevel: 11 };
-    if (level >= 8) return { name: "Цветок", icon: "🌸", color: "#B88FA7", gradient: "#B88FA7", minLevel: 8 };
-    if (level >= 5) return { name: "Побег", icon: "🌱", color: "#8DB596", gradient: "#8DB596", minLevel: 5 };
+    if (level >= 8) return { name: "Цветок", icon: "🌸", color: t.textSecondary, gradient: "#B88FA7", minLevel: 8 };
+    if (level >= 5) return { name: "Побег", icon: "🌱", color: t.accent, gradient: "#8DB596", minLevel: 5 };
     if (level >= 3) return { name: "Росток", icon: "🌾", color: "#C4A86C", gradient: "#C4A86C", minLevel: 3 };
     return { name: "Семечко", icon: "🌰", color: "#A3ADB8", gradient: "#A3ADB8", minLevel: 0 };
   };
@@ -264,15 +264,15 @@ export function ProfilePage() {
   const allTiers = [
     { name: "Семечко", icon: "🌰", minLevel: 0, color: "#A3ADB8" },
     { name: "Росток", icon: "🌾", minLevel: 3, color: "#C4A86C" },
-    { name: "Побег", icon: "🌱", minLevel: 5, color: "#8DB596" },
-    { name: "Цветок", icon: "🌸", minLevel: 8, color: "#B88FA7" },
+    { name: "Побег", icon: "🌱", minLevel: 5, color: t.accent },
+    { name: "Цветок", icon: "🌸", minLevel: 8, color: t.textSecondary },
     { name: "Куст", icon: "🌿", minLevel: 11, color: "#7EA8BE" },
-    { name: "Дерево", icon: "🌴", minLevel: 14, color: "#8DB596" },
+    { name: "Дерево", icon: "🌴", minLevel: 14, color: t.accent },
     { name: "Сад", icon: "🏡", minLevel: 17, color: "#C4A86C" },
-    { name: "Роща", icon: "🌳", minLevel: 20, color: "#7BAFB0" },
-    { name: "Лес", icon: "🌲", minLevel: 25, color: "#6B8F71" },
-    { name: "Хранитель", icon: "🦋", minLevel: 30, color: "#B88FA7" },
-    { name: "Мудрец", icon: "🧙", minLevel: 40, color: "#9B8EC4" },
+    { name: "Роща", icon: "🌳", minLevel: 20, color: t.accent },
+    { name: "Лес", icon: "🌲", minLevel: 25, color: t.accent },
+    { name: "Хранитель", icon: "🦋", minLevel: 30, color: t.textSecondary },
+    { name: "Мудрец", icon: "🧙", minLevel: 40, color: t.textSecondary },
     { name: "Легенда", icon: "👑", minLevel: 50, color: "#C4A86C" },
   ];
 
@@ -285,9 +285,9 @@ export function ProfilePage() {
 
   const tier = getTier(profile.level);
   const stats = [
-    { label: "Задач выполнено", value: completedTasks, icon: CheckCircle2, color: t.sage },
-    { label: "Привычек", value: habits.length, icon: Star, color: t.gold },
-    { label: "Постоянство", value: avgConsistency, icon: Activity, color: t.terracotta, suffix: "%" },
+    { label: "Задач выполнено", value: completedTasks, icon: CheckCircle2, color: t.accent },
+    { label: "Привычек", value: habits.length, icon: Star, color: t.attention },
+    { label: "Постоянство", value: avgConsistency, icon: Activity, color: t.attention, suffix: "%" },
   ];
 
   const handleSave = () => { saveQuestionnaire(formData); setShowQuestionnaire(false); };
@@ -488,7 +488,7 @@ export function ProfilePage() {
             <div className="flex items-center justify-between mb-2">
               <span style={{ fontSize: "0.75rem", color: t.textMuted }}>Шаг {step + 1} из {totalSteps}</span>
               {questionnaire.filled && (
-                <button onClick={() => setShowQuestionnaire(false)} style={{ fontSize: "0.75rem", color: t.sage, fontWeight: 500 }}>Пропустить</button>
+                <button onClick={() => setShowQuestionnaire(false)} style={{ fontSize: "0.75rem", color: t.accent, fontWeight: 500 }}>Пропустить</button>
               )}
             </div>
             <div className="w-full rounded-full h-1.5 mb-6" style={{ backgroundColor: t.border }}>
@@ -503,11 +503,11 @@ export function ProfilePage() {
                   onClick={() => setStep(step - 1)}>Назад</button>
               )}
               {step < totalSteps - 1 ? (
-                <button className="flex-1 py-3 rounded-xl text-white" style={{ backgroundColor: t.sage, fontSize: "0.9rem", fontWeight: 600 }}
+                <button className="flex-1 py-3 rounded-xl" style={{ backgroundColor: t.accent, fontSize: "0.9rem", fontWeight: 600, color: t.onInk}}
                   onClick={() => setStep(step + 1)}>Дальше</button>
               ) : (
-                <button className="flex-1 py-3 rounded-xl text-white"
-                  style={{ background: "#8DB596", fontSize: "0.9rem", fontWeight: 600 }}
+                <button className="flex-1 py-3 rounded-xl"
+                  style={{ background: t.accent, fontSize: "0.9rem", fontWeight: 600, color: th.onInk}}
                   onClick={handleSave}>Сохранить </button>
               )}
             </div>
@@ -560,14 +560,14 @@ export function ProfilePage() {
                       animate={{ rotate: 360 }}
                       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                     >
-                      <Loader2 className="w-4 h-4 text-white" />
+                      <Loader2 className="w-4 h-4" />
                     </motion.div>
                   ) : (
-                    <Camera className="w-4 h-4 text-white" />
+                    <Camera className="w-4 h-4" />
                   )}
                 </motion.button>
               </div>
-              <h1 className="display" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>
+              <h1 className="display" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.ink}}>
                 {questionnaire.filled && questionnaire.name ? questionnaire.name : profile.name}
               </h1>
             </motion.div>
@@ -714,7 +714,7 @@ export function ProfilePage() {
                     <LogOut className="w-5 h-5" style={{ color: t.textSecondary }} />
                   </div>
                   <div className="flex-1 text-left">
-                    <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.terracotta }}>Выйти из аккаунта</span>
+                    <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.attention }}>Выйти из аккаунта</span>
                     <p style={{ fontSize: "0.72rem", color: t.textMuted }}>Данные сохранятся на сервере</p>
                   </div>
                   <ChevronRight className="w-5 h-5" style={{ color: t.textFaint }} />
@@ -733,7 +733,7 @@ export function ProfilePage() {
                   <LogOut className="w-5 h-5" style={{ color: t.textSecondary }} />
                 </div>
                 <div className="flex-1 text-left">
-                  <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.terracotta }}>Выйти из аккаунта</span>
+                  <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.attention }}>Выйти из аккаунта</span>
                 </div>
               </motion.button>
             )}
@@ -773,7 +773,7 @@ export function ProfilePage() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.15 + i * 0.05 }}>
                     <stat.icon className="w-5 h-5 mb-2" style={{ color: stat.color }} />
-                    <span className="block display-num" style={{ fontSize: "1.45rem", color: t.text }}>{stat.value.toLocaleString()}{stat.suffix ?? ""}</span>
+                    <span className="block display-num" style={{ fontSize: "1.45rem", color: t.ink }}>{stat.value.toLocaleString()}{stat.suffix ?? ""}</span>
                     <span style={{ fontSize: "0.7rem", color: t.textMuted }}>{stat.label}</span>
                   </motion.div>
                 </GlassPanel>
@@ -796,7 +796,7 @@ export function ProfilePage() {
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.dustyBlue + "15" }}>
-                    <UserPen className="w-4 h-4" style={{ color: t.dustyBlue }} />
+                    <UserPen className="w-4 h-4" style={{ color: t.textSecondary }} />
                   </div>
                   <span style={{ fontSize: "1rem", fontWeight: 700, color: t.text }}>Сменить имя</span>
                 </div>
@@ -813,16 +813,16 @@ export function ProfilePage() {
                     onKeyDown={(e) => e.key === "Enter" && handleChangeName()} />
                 </div>
                 {accountError && (
-                  <p style={{ fontSize: "0.75rem", color: t.terracotta, padding: "8px 12px", borderRadius: 10, backgroundColor: t.terracotta + "10" }}>{accountError}</p>
+                  <p style={{ fontSize: "0.75rem", color: t.text, padding: "8px 12px", borderRadius: 10, backgroundColor: t.terracotta + "10" }}>{accountError}</p>
                 )}
                 {accountSuccess && (
                   <motion.p initial={{ scale: 0.9 }} animate={{ scale: 1 }}
-                    style={{ fontSize: "0.75rem", color: t.sage, padding: "8px 12px", borderRadius: 10, backgroundColor: t.sage + "10", display: "flex", alignItems: "center", gap: 6 }}>
+                    style={{ fontSize: "0.75rem", color: t.text, padding: "8px 12px", borderRadius: 10, backgroundColor: t.sage + "10", display: "flex", alignItems: "center", gap: 6 }}>
                     <Check className="w-3.5 h-3.5" /> {accountSuccess}
                   </motion.p>
                 )}
-                <button className="w-full py-3 rounded-xl text-white flex items-center justify-center gap-2"
-                  style={{ background: `${t.dustyBlue}`, fontSize: "0.9rem", fontWeight: 600, opacity: accountLoading ? 0.7 : 1 }}
+                <button className="w-full py-3 rounded-xl flex items-center justify-center gap-2"
+                  style={{ background: t.accent, fontSize: "0.9rem", fontWeight: 600, opacity: accountLoading ? 0.7 : 1, color: t.onInk}}
                   onClick={handleChangeName} disabled={accountLoading}>
                   {accountLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
                   {accountLoading ? "Сохранение..." : "Сохранить"}
@@ -846,7 +846,7 @@ export function ProfilePage() {
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.lavender + "15" }}>
-                    <KeyRound className="w-4 h-4" style={{ color: t.lavender }} />
+                    <KeyRound className="w-4 h-4" style={{ color: t.textSecondary }} />
                   </div>
                   <span style={{ fontSize: "1rem", fontWeight: 700, color: t.text }}>Сменить пароль</span>
                 </div>
@@ -884,25 +884,25 @@ export function ProfilePage() {
                     style={{ fontSize: "0.9rem", backgroundColor: t.inputBg, borderColor: t.borderLight, color: t.text }}
                     onKeyDown={(e) => e.key === "Enter" && handleChangePassword()} />
                   {newPw && confirmPw && newPw !== confirmPw && (
-                    <p style={{ fontSize: "0.68rem", color: t.terracotta, marginTop: 4 }}>Пароли не совпадают</p>
+                    <p style={{ fontSize: "0.68rem", color: t.attention, marginTop: 4 }}>Пароли не совпадают</p>
                   )}
                   {newPw && confirmPw && newPw === confirmPw && (
-                    <p style={{ fontSize: "0.68rem", color: t.sage, marginTop: 4, display: "flex", alignItems: "center", gap: 4 }}>
+                    <p style={{ fontSize: "0.68rem", color: t.accent, marginTop: 4, display: "flex", alignItems: "center", gap: 4 }}>
                       <Check className="w-3 h-3" /> Пароли совпадают
                     </p>
                   )}
                 </div>
                 {accountError && (
-                  <p style={{ fontSize: "0.75rem", color: t.terracotta, padding: "8px 12px", borderRadius: 10, backgroundColor: t.terracotta + "10" }}>{accountError}</p>
+                  <p style={{ fontSize: "0.75rem", color: t.text, padding: "8px 12px", borderRadius: 10, backgroundColor: t.terracotta + "10" }}>{accountError}</p>
                 )}
                 {accountSuccess && (
                   <motion.p initial={{ scale: 0.9 }} animate={{ scale: 1 }}
-                    style={{ fontSize: "0.75rem", color: t.sage, padding: "8px 12px", borderRadius: 10, backgroundColor: t.sage + "10", display: "flex", alignItems: "center", gap: 6 }}>
+                    style={{ fontSize: "0.75rem", color: t.text, padding: "8px 12px", borderRadius: 10, backgroundColor: t.sage + "10", display: "flex", alignItems: "center", gap: 6 }}>
                     <Check className="w-3.5 h-3.5" /> {accountSuccess}
                   </motion.p>
                 )}
-                <button className="w-full py-3 rounded-xl text-white flex items-center justify-center gap-2"
-                  style={{ background: `${t.lavender}`, fontSize: "0.9rem", fontWeight: 600, opacity: accountLoading ? 0.7 : 1 }}
+                <button className="w-full py-3 rounded-xl flex items-center justify-center gap-2"
+                  style={{ background: t.accent, fontSize: "0.9rem", fontWeight: 600, opacity: accountLoading ? 0.7 : 1, color: t.onInk}}
                   onClick={handleChangePassword} disabled={accountLoading}>
                   {accountLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
                   {accountLoading ? "Сохранение..." : "Изменить пароль"}
@@ -924,7 +924,7 @@ export function ProfilePage() {
               initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 30 }}
               transition={{ type: "spring", damping: 25, stiffness: 300 }}>
               <div className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: t.terracotta + "12" }}>
-                <LogOut className="w-7 h-7" style={{ color: t.terracotta }} />
+                <LogOut className="w-7 h-7" style={{ color: t.attention }} />
               </div>
               <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: t.text, marginBottom: 6 }}>Выйти из аккаунта?</h3>
               <p style={{ fontSize: "0.8rem", color: t.textMuted, marginBottom: 20, lineHeight: 1.5 }}>
@@ -934,8 +934,8 @@ export function ProfilePage() {
                 <button className="flex-1 py-3 rounded-xl border"
                   style={{ borderColor: t.borderLight, fontSize: "0.88rem", fontWeight: 500, color: t.textMuted }}
                   onClick={() => setShowLogoutConfirm(false)}>Отмена</button>
-                <motion.button className="flex-1 py-3 rounded-xl text-white"
-                  style={{ backgroundColor: t.terracotta, fontSize: "0.88rem", fontWeight: 600 }}
+                <motion.button className="flex-1 py-3 rounded-xl"
+                  style={{ backgroundColor: t.accent, fontSize: "0.88rem", fontWeight: 600, color: t.onInk}}
                   onClick={handleLogout} whileTap={{ scale: 0.97 }}>Выйти</motion.button>
               </div>
             </motion.div>

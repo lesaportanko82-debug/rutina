@@ -11,7 +11,7 @@ import { InkLeaf, leafMoodForHour } from "../ink-leaf";
 import { consistency } from "../../lib/consistency";
 import { computeInsights } from "../../lib/insights";
 import { weekReviewDone } from "../../lib/week";
-import { type as T, space as S, motion as M, ACCENT } from "../../lib/design";
+import { type as T, space as S, motion as M } from "../../lib/design";
 
 const today = () => new Date().toISOString().split("T")[0];
 
@@ -116,8 +116,8 @@ export function TodayPage() {
         style={{
           width: 23,
           height: 23,
-          border: `1.5px solid ${checked ? ACCENT : t.borderLight}`,
-          background: checked ? ACCENT : "transparent",
+          border: `1.5px solid ${checked ? t.accent : t.control}`,
+          background: checked ? t.accent : "transparent",
         }}
       >
         {checked && <InkCheck size={14} />}
@@ -139,7 +139,7 @@ export function TodayPage() {
       <div className="flex items-start justify-between" style={{ gap: S.inner }}>
         <div style={{ paddingTop: 2 }}>
           <p style={{ fontSize: T.micro, color: t.textMuted, textTransform: "capitalize" }}>{dateLabel()}</p>
-          <h1 className="display" style={{ fontSize: "1.7rem", color: t.text, lineHeight: 1.12, marginTop: 3 }}>
+          <h1 className="display" style={{ fontSize: "1.7rem", color: t.ink, lineHeight: 1.12, marginTop: 3 }}>
             {greeting()}
             {name && name !== "Пользователь" ? <>,&nbsp;{name}</> : ""}
           </h1>
@@ -187,7 +187,7 @@ export function TodayPage() {
               <span style={{ fontSize: T.small, color: t.textSecondary }}>
                 Сегодня: {(todayMood?.mood ?? "записано").toLowerCase()}
               </span>
-              <button onClick={() => navigate("/app/mood")} style={{ fontSize: T.small, color: ACCENT, fontWeight: 600 }}>
+              <button onClick={() => navigate("/app/mood")} style={{ fontSize: T.small, color: t.accent, fontWeight: 600 }}>
                 Изменить
               </button>
             </div>
@@ -199,7 +199,7 @@ export function TodayPage() {
                   transition={M.press}
                   onClick={() => (suggestion.event ? document.dispatchEvent(new CustomEvent(suggestion.event)) : navigate(suggestion.path!))}
                   className="rounded-lg"
-                  style={{ background: ACCENT, color: "#fff", fontSize: T.small, fontWeight: 600, padding: "9px 14px" }}
+                  style={{ background: t.accent, color: t.onInk, fontSize: T.small, fontWeight: 600, padding: "9px 14px" }}
                 >
                   {suggestion.action}
                 </motion.button>
@@ -251,7 +251,7 @@ export function TodayPage() {
             className="w-full flex items-center"
             style={{ gap: S.inner, paddingTop: 13, paddingBottom: 13, borderTop: hair, borderBottom: hair }}
           >
-            <Plus size={18} color={ACCENT} />
+            <Plus size={18} color={t.accent} />
             <span style={{ fontSize: T.body, color: t.text }}>Добавить первую привычку</span>
           </button>
         ) : (
@@ -304,7 +304,7 @@ export function TodayPage() {
             className="w-full flex items-center"
             style={{ gap: S.inner, paddingTop: 13, paddingBottom: 13, borderTop: hair, borderBottom: hair }}
           >
-            <Plus size={18} color={ACCENT} />
+            <Plus size={18} color={t.accent} />
             <span style={{ fontSize: T.body, color: t.text }}>
               {tasks.length === 0 ? "Добавить задачу" : "Всё выполнено. Добавить ещё"}
             </span>
@@ -320,7 +320,7 @@ export function TodayPage() {
                 last={i === Math.min(openTasks.length, 5) - 1 && openTasks.length <= 5}
                 trailing={
                   task.priority === "high" ? (
-                    <span style={{ fontSize: T.micro, color: "#C4876C", fontWeight: 600 }}>важно</span>
+                    <span style={{ fontSize: T.micro, color: t.attention, fontWeight: 600 }}>важно</span>
                   ) : undefined
                 }
               />

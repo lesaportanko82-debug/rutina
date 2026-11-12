@@ -117,6 +117,8 @@ export function InkLeaf({
   breathDuration = 4,
   /** Рисовать линию при появлении. По умолчанию да — один раз за монтирование. */
   draw = true,
+  /** Цвет линии. На тёмном поле передаётся светлый. */
+  color,
   className,
 }: {
   mood?: LeafMood;
@@ -124,12 +126,13 @@ export function InkLeaf({
   breath?: BreathPhase;
   breathDuration?: number;
   draw?: boolean;
+  color?: string;
   className?: string;
 }) {
   const reduce = useReducedMotion();
   const body = BODY[mood];
   const face = breath ? FACES.breathe : FACES[mood];
-  const ink = "#3A3632";
+  const ink = color ?? "#3A3632";
 
   // Порядок прорисовки — как если бы рисовали от руки: черешок, контур,
   // нажим, жилка, боковые жилки, лицо.

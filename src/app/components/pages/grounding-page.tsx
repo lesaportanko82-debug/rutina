@@ -38,7 +38,7 @@ const steps: GroundingStep[] = [
     sense: "Осязание",
     emoji: "✋",
     prompt: "Назовите 3 вещи, которые ощущаете",
-    color: "#9B8EC4",
+    color: "#8DB596",
     examples: ["Ткань одежды", "Тёплый воздух", "Кресло"],
   },
   {
@@ -54,7 +54,7 @@ const steps: GroundingStep[] = [
     sense: "Вкус",
     emoji: "👅",
     prompt: "Назовите 1 вкус",
-    color: "#C4876C",
+    color: "#8DB596",
     examples: ["Вода"],
   },
 ];
@@ -135,7 +135,7 @@ export function GroundingPage() {
           <ArrowLeft className="w-4.5 h-4.5" style={{ color: t.textSecondary }} />
         </button>
         <div className="flex-1">
-          <h1 className="display" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>
+          <h1 className="display" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.ink }}>
             Заземление 5-4-3-2-1
           </h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>
@@ -223,8 +223,8 @@ export function GroundingPage() {
                 Ещё раз
               </button>
               <button
-                className="flex-1 py-3 rounded-xl text-white flex items-center justify-center gap-2"
-                style={{ background: `${t.sage}`, fontSize: "0.82rem", fontWeight: 600 }}
+                className="flex-1 py-3 rounded-xl flex items-center justify-center gap-2"
+                style={{ background: t.accent, fontSize: "0.82rem", fontWeight: 600, color: t.onInk}}
                 onClick={() => navigate(-1)}
               >
                 Готово
@@ -277,12 +277,11 @@ export function GroundingPage() {
                   transition={{ delay: i * 0.05 }}
                 >
                   <div
-                    className="w-7 h-7 rounded-full flex items-center justify-center text-white shrink-0"
+                    className="w-7 h-7 rounded-full flex items-center justify-center shrink-0"
                     style={{
                       backgroundColor: answer ? currentStep.color : t.border,
                       fontSize: "0.7rem",
-                      fontWeight: 600,
-                    }}
+                      fontWeight: 600, color: t.onInk}}
                   >
                     {answer ? <Check className="w-3.5 h-3.5" /> : i + 1}
                   </div>
@@ -340,18 +339,17 @@ export function GroundingPage() {
                     whileTap={{ scale: 0.9 }}
                     disabled={!inputValue.trim()}
                   >
-                    <Check className="w-4.5 h-4.5 text-white" />
+                    <Check className="w-4.5 h-4.5" />
                   </motion.button>
                 </div>
               </>
             ) : (
               <motion.button
-                className="w-full py-3.5 rounded-xl text-white flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2"
                 style={{
                   background: `${currentStep.color}`,
                   fontSize: "0.88rem",
-                  fontWeight: 600,
-                }}
+                  fontWeight: 600, color: th.onInk}}
                 onClick={goNext}
                 whileTap={{ scale: 0.98 }}
                 initial={{ opacity: 0, y: 10 }}

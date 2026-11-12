@@ -10,7 +10,7 @@ import { PomodoroTimer } from "./pomodoro-timer";
 import { CelebrationOverlay } from "./confetti";
 import { Onboarding } from "./onboarding";
 import { Toaster } from "sonner";
-import { getThemeColors } from "./theme";
+import { useTheme } from "./theme";
 import { BreathingWidget } from "./breathing-widget";
 import { LeafMascot } from "./leaf-mascot";
 
@@ -29,7 +29,9 @@ export function MobileLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const { darkMode, onboardingDone } = useApp();
-  const t = getThemeColors(darkMode);
+  // useTheme, а не getThemeColors: оболочка должна видеть время суток,
+  // иначе самая большая поверхность экрана остаётся статичной
+  const t = useTheme();
 
   // ─── Track input focus to hide bottom nav ───
   const [inputFocused, setInputFocused] = useState(false);
@@ -367,7 +369,7 @@ export function MobileLayout() {
             >
               <div className="flex items-center gap-1.5">
                 <span style={{ fontSize: "0.8rem" }}><AppIcon icon="🌿" size={20} /></span>
-                <span style={{ fontSize: "0.72rem", color: "#8DB596", fontWeight: 600 }}>
+                <span style={{ fontSize: "0.72rem", color: t.accent, fontWeight: 600 }}>
                   Бесплатный режим
                 </span>
                 <span style={{ fontSize: "0.65rem", color: "#9B9489" }}>· Просмотр</span>
@@ -377,7 +379,7 @@ export function MobileLayout() {
                 disabled={paymentLoading}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
                 style={{
-                  background: "#5B8A64",
+                  background: t.accent,
                   color: "white",
                   fontSize: "0.7rem",
                   fontWeight: 600,
@@ -434,14 +436,14 @@ export function MobileLayout() {
                     )}
                     <tab.icon
                       className="w-[20px] h-[20px] transition-colors"
-                      style={{ color: isActive ? "#6B8F71" : t.textFaint }}
+                      style={{ color: isActive ? t.accent : t.textMuted }}
                     />
                     <span
                       className="transition-colors"
                       style={{
                         fontSize: "0.6rem",
                         fontWeight: isActive ? 600 : 400,
-                        color: isActive ? "#6B8F71" : t.textFaint,
+                        color: isActive ? t.accent : t.textMuted,
                       }}
                     >
                       {tab.label}
@@ -496,7 +498,7 @@ export function MobileLayout() {
                         background: "rgba(141,181,150,0.18)",
                       }}
                     >
-                      <Lock className="w-7 h-7" style={{ color: "#8DB596" }} />
+                      <Lock className="w-7 h-7" style={{ color: t.accent }} />
                     </div>
                     <h3
                       className="font-bold mb-2"
@@ -517,7 +519,7 @@ export function MobileLayout() {
                       "Дневник и инструменты роста",
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2.5">
-                        <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: "#8DB596" }} />
+                        <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: t.accent }} />
                         <span style={{ fontSize: "0.87rem", color: t.text }}>{item}</span>
                       </div>
                     ))}
@@ -528,7 +530,7 @@ export function MobileLayout() {
                     disabled={paymentLoading}
                     className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-sm"
                     style={{
-                      background: "#5B8A64",
+                      background: t.accent,
                       color: "white",
                       fontWeight: 600,
                       fontSize: "0.95rem",

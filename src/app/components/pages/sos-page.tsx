@@ -147,7 +147,7 @@ export function SOSPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div>
-          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>SOS</h1>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.ink }}>SOS</h1>
           <p style={{ fontSize: "0.72rem", color: t.textMuted }}>Быстрые инструменты на случай паники</p>
         </div>
       </div>
@@ -196,7 +196,7 @@ export function SOSPage() {
           Близкие люди
         </h2>
         <button onClick={() => setShowAddContact(true)} className="p-1.5 rounded-lg" style={{ backgroundColor: t.bgSecondary }}>
-          <Plus className="w-4 h-4" style={{ color: t.sage }} />
+          <Plus className="w-4 h-4" style={{ color: t.accent }} />
         </button>
       </div>
 
@@ -231,7 +231,7 @@ export function SOSPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <a href={`tel:${contact.phone}`} className="p-2 rounded-lg" style={{ backgroundColor: "#8DB59618" }}>
-                    <Phone className="w-4 h-4" style={{ color: "#8DB596" }} />
+                    <Phone className="w-4 h-4" style={{ color: t.accent }} />
                   </a>
                   <button onClick={() => removeContact(idx)} className="p-2 rounded-lg" style={{ backgroundColor: t.bgSecondary }}>
                     <Trash2 className="w-3.5 h-3.5" style={{ color: t.textFaint }} />
@@ -248,7 +248,7 @@ export function SOSPage() {
         <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
         >
-        <p style={{ fontSize: "0.75rem", fontWeight: 600, color: "#C4876C", marginBottom: 4 }}>
+        <p style={{ fontSize: "0.75rem", fontWeight: 600, color: t.attention, marginBottom: 4 }}>
           Если вам нужна профессиональная помощь
         </p>
         <p style={{ fontSize: "0.7rem", color: t.textMuted, lineHeight: 1.5 }}>
@@ -279,7 +279,7 @@ export function SOSPage() {
                 style={{ backgroundColor: t.bgSecondary, color: t.text, border: `1px solid ${t.border}`, fontSize: "0.85rem" }}
                 value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} type="tel" />
               <button className="w-full rounded-xl py-3 font-semibold"
-                style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.9rem" }}
+                style={{ backgroundColor: t.accent, color: t.onInk, fontSize: "0.9rem" }}
                 onClick={addContact}>
                 Сохранить
               </button>
@@ -309,7 +309,7 @@ export function SOSPage() {
                 {currentAffirmation}
               </p>
               <button className="mt-6 px-6 py-2.5 rounded-xl"
-                style={{ backgroundColor: t.lavender + "20", color: t.lavender, fontSize: "0.85rem", fontWeight: 600 }}
+                style={{ backgroundColor: t.lavender + "20", color: t.text, fontSize: "0.85rem", fontWeight: 600 }}
                 onClick={() => {
                   setCurrentAffirmation(affirmations[Math.floor(Math.random() * affirmations.length)]);
                 }}>

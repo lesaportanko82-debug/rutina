@@ -6,6 +6,7 @@ import {
   Check, Eye, EyeOff, AlertTriangle,
 } from "lucide-react";
 import { projectId, publicAnonKey } from "../supabase-client";
+import { inkFor } from "../../lib/design";
 
 const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-ff738703`;
 // Admin key — read from env var (set VITE_ADMIN_SECRET_KEY in your environment)
@@ -266,7 +267,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
             >
-              <p style={{ fontSize: "1.1rem", fontWeight: 800, color: s.color }}>{s.value}</p>
+              <p style={{ fontSize: "1.1rem", fontWeight: 800, color: inkFor(s.color) }}>{s.value}</p>
               <p style={{ fontSize: "0.55rem", color: C.textMuted }}>{s.label}</p>
             </motion.div>
           ))}
@@ -328,14 +329,13 @@ export function AdminPage({ onLogout }: AdminPageProps) {
                   onClick={() => setExpandedUser(expandedUser === user.id ? null : user.id)}
                 >
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white shrink-0 relative"
+                    className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 relative"
                     style={{
                       background: user.banned
                         ? `${C.terracotta}`
                         : `${C.sage}`,
                       fontSize: "0.85rem",
-                      fontWeight: 700,
-                    }}
+                      fontWeight: 700, color: th.onInk}}
                   >
                     {user.name.charAt(0).toUpperCase()}
                     {user.banned && (
@@ -389,7 +389,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
                             { label: "Посл. вход", value: user.lastSignIn, color: C.textMuted },
                           ].map((item, j) => (
                             <div key={j} className="rounded-lg p-2 text-center" style={{ backgroundColor: C.bg }}>
-                              <p style={{ fontSize: "0.75rem", fontWeight: 700, color: item.color }}>{item.value}</p>
+                              <p style={{ fontSize: "0.75rem", fontWeight: 700, color: inkFor(item.color) }}>{item.value}</p>
                               <p style={{ fontSize: "0.5rem", color: C.textFaint }}>{item.label}</p>
                             </div>
                           ))}
@@ -616,7 +616,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
                     Отмена
                   </button>
                   <motion.button
-                    className="flex-1 py-3 rounded-xl text-white flex items-center justify-center gap-2"
+                    className="flex-1 py-3 rounded-xl flex items-center justify-center gap-2"
                     style={{
                       background: modal === "delete"
                         ? C.terracotta
@@ -625,8 +625,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
                         : `${C.sage}`,
                       fontSize: "0.85rem",
                       fontWeight: 600,
-                      opacity: modalLoading ? 0.7 : 1,
-                    }}
+                      opacity: modalLoading ? 0.7 : 1, color: th.onInk}}
                     whileTap={{ scale: 0.97 }}
                     onClick={handleModalAction}
                     disabled={modalLoading}

@@ -139,33 +139,12 @@ export const router = createBrowserRouter([
             },
           },
           {
-            path: "bingo",
-            lazy: async () => {
-              const { BingoPage } = await import("./components/pages/bingo-page");
-              return { Component: BingoPage };
-            },
-          },
-          {
-            path: "skills",
-            lazy: async () => {
-              const { SkillTreePage } = await import("./components/pages/skill-tree-page");
-              return { Component: SkillTreePage };
-            },
-          },
-          {
             path: "distortions",
             lazy: async () => {
               const { CognitiveDistortionsPage } = await import(
                 "./components/pages/cognitive-distortions-page"
               );
               return { Component: CognitiveDistortionsPage };
-            },
-          },
-          {
-            path: "challenge",
-            lazy: async () => {
-              const { ChallengePage } = await import("./components/pages/challenge-page");
-              return { Component: ChallengePage };
             },
           },
           {

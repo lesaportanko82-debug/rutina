@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { InkCheck } from "../ink";
 import { useApp } from "../app-context";
 import { consistency, consistencyLabel, averageConsistency } from "../../lib/consistency";
-import { motion as M, ACCENT } from "../../lib/design";
+import { motion as M } from "../../lib/design";
 import { InkCheck } from "../ink";
 import { suggestedHabits } from "../use-app-store";
 import { useTheme } from "../theme";
@@ -202,12 +202,12 @@ export function HabitsPage() {
             onClick={() => setMode("catalog")}
             whileTap={{ scale: 0.9 }}
           >
-            <Plus className="w-5 h-5 text-white" />
+            <Plus className="w-5 h-5" />
           </motion.button>
         ) : (
           <motion.button
             className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm"
-            style={{ backgroundColor: th.border }}
+            style={{ backgroundColor: th.border, color: th.onInk}}
             onClick={() => { setMode("list"); setSearchQuery(""); setSelectedCategory(null); }}
             whileTap={{ scale: 0.9 }}
           >
@@ -244,7 +244,7 @@ export function HabitsPage() {
           animate={{ opacity: 1, y: 0 }}
         >
           <div className="flex items-center gap-2 mb-3">
-            <Star className="w-4 h-4" style={{ color: th.gold }} />
+            <Star className="w-4 h-4" style={{ color: th.attention }} />
             <span style={{ fontSize: "0.85rem", fontWeight: 600, color: th.text }}>Рекомендуем для вас</span>
           </div>
           <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
@@ -260,7 +260,7 @@ export function HabitsPage() {
                 <span style={{ fontSize: "0.6rem", fontWeight: 500, color: th.textMuted, textAlign: "center", lineHeight: 1.2 }}>
                   {habit.title}
                 </span>
-                <Plus className="w-3.5 h-3.5" style={{ color: th.sage }} />
+                <Plus className="w-3.5 h-3.5" style={{ color: th.accent }} />
               </motion.button>
             ))}
           </div>
@@ -340,7 +340,7 @@ export function HabitsPage() {
                         </div>
                         {alreadyAdded ? (
                           <div className="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: th.sage + "18" }}>
-                            <CheckCircle2 className="w-4 h-4" style={{ color: th.sage }} />
+                            <CheckCircle2 className="w-4 h-4" style={{ color: th.accent }} />
                           </div>
                         ) : (
                           <div
@@ -372,7 +372,7 @@ export function HabitsPage() {
               whileTap={{ scale: 0.98 }}
             >
               <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: th.border }}>
-                <Sparkles className="w-5 h-5" style={{ color: th.gold }} />
+                <Sparkles className="w-5 h-5" style={{ color: th.attention }} />
               </div>
               <div className="flex-1 text-left">
                 <span style={{ fontSize: "0.85rem", fontWeight: 600, color: th.text }}>Создать свою привычку</span>
@@ -391,13 +391,12 @@ export function HabitsPage() {
                   transition={{ type: "spring", stiffness: 300, damping: 25 }}
                 >
                   <motion.button
-                    className="w-full text-white rounded-xl py-4 shadow-sm flex items-center justify-center gap-2"
+                    className="w-full rounded-xl py-4 shadow-sm flex items-center justify-center gap-2"
                     style={{
                       fontSize: "0.95rem",
                       fontWeight: 600,
                       background: `#8DB596`,
-                      boxShadow: "none",
-                    }}
+                      boxShadow: "none", color: th.onInk}}
                     onClick={handleSaveSelectedHabits}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -461,8 +460,8 @@ export function HabitsPage() {
               <motion.button className="flex-1 rounded-xl py-3 border"
                 style={{ fontSize: "0.85rem", fontWeight: 600, color: th.textMuted, borderColor: th.borderLight, backgroundColor: th.inputBg }}
                 onClick={() => setMode("catalog")} whileTap={{ scale: 0.98 }}>Назад</motion.button>
-              <motion.button className="flex-1 text-white rounded-xl py-3"
-                style={{ fontSize: "0.85rem", fontWeight: 600, backgroundColor: th.sage }}
+              <motion.button className="flex-1 rounded-xl py-3"
+                style={{ fontSize: "0.85rem", fontWeight: 600, backgroundColor: th.accent, color: th.onInk}}
                 onClick={handleAddCustom} whileTap={{ scale: 0.98 }}>Добавить</motion.button>
             </div>
           </motion.div>
@@ -487,13 +486,13 @@ export function HabitsPage() {
                     <div className="flex items-center gap-3" style={{ paddingTop: 14, paddingBottom: 14 }}>
                       <motion.button className="w-11 h-11 rounded-full flex items-center justify-center shrink-0"
                         style={{
-                          border: `1.5px solid ${isFrozenToday ? th.dustyBlue + "66" : isDoneToday ? ACCENT : th.borderLight}`,
-                          background: isDoneToday ? ACCENT : "transparent",
+                          border: `1.5px solid ${isFrozenToday ? th.dustyBlue + "66" : isDoneToday ? th.accent : th.control}`,
+                          background: isDoneToday ? th.accent : "transparent",
                         }}
                         onClick={() => !isFrozenToday && toggleHabitToday(habit.id)}
                         whileTap={{ scale: 0.9 }} transition={M.press}>
                         {isFrozenToday ? (
-                          <Snowflake className="w-5 h-5" style={{ color: th.dustyBlue }} />
+                          <Snowflake className="w-5 h-5" style={{ color: th.textSecondary }} />
                         ) : isDoneToday ? (
                           <InkCheck size={20} />
                         ) : (
@@ -507,7 +506,7 @@ export function HabitsPage() {
                               {habit.title}
                             </span>
                             {isFrozenToday && (
-                              <span style={{ fontSize: "0.6rem", color: th.dustyBlue, fontWeight: 500 }}>отдых</span>
+                              <span style={{ fontSize: "0.6rem", color: th.textSecondary, fontWeight: 500 }}>отдых</span>
                             )}
                           </div>
                           <div className="flex items-center gap-1.5">
@@ -517,7 +516,7 @@ export function HabitsPage() {
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
                           <div className="flex-1 rounded-full h-2" style={{ backgroundColor: th.border }}>
-                            <motion.div className="h-2 rounded-full" style={{ backgroundColor: ACCENT, opacity: 0.55 }}
+                            <motion.div className="h-2 rounded-full" style={{ backgroundColor: th.accent, opacity: 0.55 }}
                               initial={{ width: 0 }} animate={{ width: `${cons.percent}%` }} transition={{ delay: 0.2 + i * 0.05, duration: 0.5 }} />
                           </div>
                           {cons.current > 1 && (
@@ -547,7 +546,7 @@ export function HabitsPage() {
                                   fontSize: "0.75rem", fontWeight: 500,
                                   backgroundColor: th.lavender + "08",
                                   borderColor: th.lavender + "25",
-                                  color: th.lavender,
+                                  color: th.textSecondary,
                                 }}
                                 whileTap={{ scale: 0.98 }}
                                 onClick={() => toggleHabitMicroToday(habit.id)}
@@ -601,7 +600,7 @@ export function HabitsPage() {
                                 const parent = habits.find((h) => h.id === habit.stackedAfter);
                                 if (!parent) return null;
                                 return (
-                                  <p style={{ fontSize: "0.62rem", color: th.sage, marginTop: 3, fontStyle: "italic" }}>
+                                  <p style={{ fontSize: "0.62rem", color: th.accent, marginTop: 3, fontStyle: "italic" }}>
                                     После «{parent.title}» → «{habit.title}»
                                   </p>
                                 );
@@ -638,7 +637,7 @@ export function HabitsPage() {
                                   fontWeight: 500,
                                   borderColor: isFrozenToday ? th.dustyBlue + "40" : th.border,
                                   backgroundColor: isFrozenToday ? th.dustyBlue + "12" : "transparent",
-                                  color: th.dustyBlue,
+                                  color: th.textSecondary,
                                 }}
                                 onClick={() => freezeHabitToday(habit.id)}
                               >
@@ -648,8 +647,8 @@ export function HabitsPage() {
 
                               {confirmDelete === habit.id ? (
                                 <>
-                                  <button className="flex-1 py-2 rounded-xl text-white"
-                                    style={{ fontSize: "0.78rem", fontWeight: 600, backgroundColor: th.terracotta }}
+                                  <button className="flex-1 py-2 rounded-xl"
+                                    style={{ fontSize: "0.78rem", fontWeight: 600, backgroundColor: th.accent, color: th.onInk}}
                                     onClick={() => { deleteHabit(habit.id); setConfirmDelete(null); }}>Удалить</button>
                                   <button className="flex-1 py-2 rounded-xl border"
                                     style={{ fontSize: "0.78rem", fontWeight: 600, borderColor: th.border, color: th.textMuted }}
@@ -657,7 +656,7 @@ export function HabitsPage() {
                                 </>
                               ) : (
                                 <button className="flex-1 py-2 rounded-xl border flex items-center justify-center gap-1.5"
-                                  style={{ fontSize: "0.78rem", fontWeight: 500, borderColor: th.border, color: th.terracotta }}
+                                  style={{ fontSize: "0.78rem", fontWeight: 500, borderColor: th.border, color: th.attention }}
                                   onClick={() => setConfirmDelete(habit.id)}>
                                   <Trash2 className="w-3.5 h-3.5" /> Удалить привычку
                                 </button>
@@ -681,7 +680,7 @@ export function HabitsPage() {
                       style={{ background: th.card, border: `1px solid ${th.border}` }}>
                       <AppIcon icon={h.icon} size={18} color={h.color} />
                       <span className="flex-1" style={{ fontSize: "0.9rem", color: th.text }}>{h.title}</span>
-                      <Plus className="w-4 h-4" style={{ color: "#5B8A64" }} />
+                      <Plus className="w-4 h-4" style={{ color: th.accent }} />
                     </button>
                   ))}
                 </div>

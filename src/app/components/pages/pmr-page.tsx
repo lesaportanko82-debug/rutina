@@ -122,7 +122,7 @@ export function PMRPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 className="display" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>Мышечная релаксация</h1>
+          <h1 className="display" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.ink }}>Мышечная релаксация</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Техника Джейкобсона, 4 минуты</p>
         </div>
       </div>
@@ -153,7 +153,7 @@ export function PMRPage() {
 
           <motion.button
             className="mt-6 px-8 py-3 rounded-xl font-semibold flex items-center gap-2 mx-auto"
-            style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.9rem" }}
+            style={{ backgroundColor: t.accent, color: t.onInk, fontSize: "0.9rem" }}
             whileTap={{ scale: 0.95 }}
             onClick={start}
           >
@@ -176,12 +176,12 @@ export function PMRPage() {
           </p>
           <div className="flex gap-3 mt-6 justify-center">
             <button className="px-5 py-2.5 rounded-xl font-semibold"
-              style={{ backgroundColor: t.sage + "18", color: t.sage, fontSize: "0.82rem" }}
+              style={{ backgroundColor: t.sage + "18", color: t.text, fontSize: "0.82rem" }}
               onClick={start}>
               <RotateCcw className="w-4 h-4 inline mr-1" /> Ещё раз
             </button>
             <button className="px-5 py-2.5 rounded-xl font-semibold"
-              style={{ backgroundColor: t.lavender + "18", color: t.lavender, fontSize: "0.82rem" }}
+              style={{ backgroundColor: t.lavender + "18", color: t.text, fontSize: "0.82rem" }}
               onClick={() => navigate(-1)}>
               Готово
             </button>
@@ -294,7 +294,7 @@ export function PMRPage() {
                     border: isCurrent ? `2px solid ${phaseColor}40` : `1px solid ${t.border}`,
                   }}>
                   <span style={{ fontSize: isDone ? "0.55rem" : "0.7rem", filter: isDone ? "none" : i > stepIdx ? "grayscale(0.5) opacity(0.5)" : "none" }}>
-                    {isDone ? <InkCheck size={12} color="#5B8A64" /> : <AppIcon icon={s.icon} size={12} />}
+                    {isDone ? <InkCheck size={12} color={t.accent} /> : <AppIcon icon={s.icon} size={12} />}
                   </span>
                 </div>
               );

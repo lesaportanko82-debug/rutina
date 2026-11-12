@@ -91,7 +91,7 @@ export function TasksPage() {
   return (
     <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="display" style={{ fontSize: "1.35rem", color: t.text }}>
+        <h1 className="display" style={{ fontSize: "1.35rem", color: t.ink }}>
           Задачи
         </h1>
         <motion.button
@@ -100,10 +100,10 @@ export function TasksPage() {
           onClick={() => setShowForm(!showForm)}
           whileTap={{ scale: 0.9 }}
         >
-          {showForm ? <X className="w-5 h-5 text-white" /> : <Plus className="w-5 h-5 text-white" />}
+          {showForm ? <X className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
         </motion.button>
       </div>
-      <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 12 }}>
+      <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 12}}>
         Свайп вправо: выполнить, влево: удалить
       </p>
 
@@ -181,8 +181,8 @@ export function TasksPage() {
                 ))}
               </div>
               <motion.button
-                className="w-full text-white rounded-xl py-3"
-                style={{ fontSize: "0.9rem", fontWeight: 600, backgroundColor: t.sage }}
+                className="w-full rounded-xl py-3"
+                style={{ fontSize: "0.9rem", fontWeight: 600, backgroundColor: t.accent, color: t.onInk}}
                 onClick={handleAdd}
                 whileTap={{ scale: 0.98 }}
               >
@@ -215,7 +215,7 @@ export function TasksPage() {
             {filter === f.key && (
               <motion.span
                 layoutId="tasks-filter"
-                style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 2, background: "#5B8A64", borderRadius: 2 }}
+                style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 2, background: t.accent, borderRadius: 2 }}
               />
             )}
           </button>
@@ -254,8 +254,8 @@ export function TasksPage() {
                   >
                     <div className="flex gap-2">
                       <button
-                        className="px-3 py-2 rounded-xl text-white"
-                        style={{ fontSize: "0.75rem", fontWeight: 600, backgroundColor: t.terracotta }}
+                        className="px-3 py-2 rounded-xl"
+                        style={{ fontSize: "0.75rem", fontWeight: 600, backgroundColor: t.accent, color: t.onInk}}
                         onClick={() => { deleteTask(task.id); setSwipedId(null); }}
                       >
                         Удалить
@@ -279,7 +279,7 @@ export function TasksPage() {
                   <div className="flex items-start gap-3">
                     <button onClick={() => toggleTask(task.id)} className="mt-0.5">
                       {task.completed ? (
-                        <CheckCircle2 className="w-5 h-5" style={{ color: t.sage }} />
+                        <CheckCircle2 className="w-5 h-5" style={{ color: t.accent }} />
                       ) : (
                         <Circle className="w-5 h-5" style={{ color: t.textFaint }} />
                       )}
@@ -296,8 +296,8 @@ export function TasksPage() {
                             autoFocus
                           />
                           <button
-                            className="px-3 py-1 rounded-lg text-white"
-                            style={{ fontSize: "0.75rem", backgroundColor: t.sage }}
+                            className="px-3 py-1 rounded-lg"
+                            style={{ fontSize: "0.75rem", backgroundColor: t.accent, color: t.onInk}}
                             onClick={() => handleSaveEdit(task.id)}
                           ><AppIcon icon="✓" size={20} /></button>
                         </div>
@@ -372,7 +372,7 @@ export function TasksPage() {
                               onClick={() => toggleSubtask(task.id, sub.id)}
                             >
                               {sub.completed ? (
-                                <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: t.sage }} />
+                                <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: t.accent }} />
                               ) : (
                                 <Circle className="w-4 h-4 shrink-0" style={{ color: t.textFaint }} />
                               )}
@@ -404,8 +404,8 @@ export function TasksPage() {
                               autoFocus
                             />
                             <button
-                              className="px-2 py-1 rounded-lg text-white"
-                              style={{ fontSize: "0.7rem", backgroundColor: t.sage }}
+                              className="px-2 py-1 rounded-lg"
+                              style={{ fontSize: "0.7rem", backgroundColor: t.accent, color: t.onInk}}
                               onClick={() => handleAddSubtask(task.id)}
                             >
                               +
@@ -419,7 +419,7 @@ export function TasksPage() {
                         ) : (
                           <button
                             className="flex items-center gap-1.5 mt-1"
-                            style={{ fontSize: "0.75rem", color: t.sage }}
+                            style={{ fontSize: "0.75rem", color: t.accent }}
                             onClick={() => setAddingSubtaskFor(task.id)}
                           >
                             <Plus className="w-3.5 h-3.5" /> Подзадача

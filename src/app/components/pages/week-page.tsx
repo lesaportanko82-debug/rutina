@@ -63,7 +63,7 @@ export function WeekPage() {
       </button>
       <div className="flex items-end justify-between gap-3 mb-5">
         <div>
-          <h1 className="display" style={{ fontSize: "1.35rem", color: t.text, marginBottom: 4 }}>Разбор недели</h1>
+          <h1 className="display" style={{ fontSize: "1.35rem", color: t.ink, marginBottom: 4 }}>Разбор недели</h1>
           <p style={{ fontSize: "0.85rem", color: t.textSecondary }}>Две минуты: посмотреть, ответить, поправить.</p>
         </div>
         <InkLeaf mood="near" size={54} />
@@ -117,7 +117,7 @@ export function WeekPage() {
             Возможно, ей не подходит время. Попробовать другую часть дня?
           </p>
           {adjusted ? (
-            <p style={{ fontSize: "0.82rem", color: "#5B8A64", fontWeight: 600 }}>{adjusted === "moved" ? "Перенесено. Посмотрим через неделю." : "Оставили как есть."}</p>
+            <p style={{ fontSize: "0.82rem", color: t.accent, fontWeight: 600 }}>{adjusted === "moved" ? "Перенесено. Посмотрим через неделю." : "Оставили как есть."}</p>
           ) : (
             <div className="flex gap-2">
               {(Object.keys(PART_LABEL) as (keyof typeof PART_LABEL)[])
@@ -144,7 +144,7 @@ export function WeekPage() {
         </div>
       )}
 
-      <button onClick={finish} className="w-full py-3 rounded-xl" style={{ background: "#5B8A64", color: "#fff", fontWeight: 600 }}>
+      <button onClick={finish} className="w-full py-3 rounded-xl" style={{ background: t.accent, color: t.onInk, fontWeight: 600 }}>
         Закрыть неделю
       </button>
     </div>

@@ -72,11 +72,11 @@ export function CapsulePage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Капсула времени</h1>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.ink }}>Капсула времени</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Письмо будущему себе</p>
         </div>
         <button onClick={() => setShowForm(true)} className="p-2 rounded-xl" style={{ backgroundColor: t.lavender + "18" }}>
-          <Plus className="w-5 h-5" style={{ color: t.lavender }} />
+          <Plus className="w-5 h-5" style={{ color: t.textSecondary }} />
         </button>
       </div>
 
@@ -97,7 +97,7 @@ export function CapsulePage() {
                   Капсула от {new Date(cap.createdAt).toLocaleDateString("ru")}
                 </p>
                 <motion.button className="mt-3 px-6 py-2.5 rounded-xl font-semibold"
-                  style={{ backgroundColor: t.gold + "20", color: t.gold, fontSize: "0.85rem" }}
+                  style={{ backgroundColor: t.gold + "20", color: t.text, fontSize: "0.85rem" }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => handleOpen(cap.id)}>
                   <Unlock className="w-4 h-4 inline mr-1" /> Открыть капсулу
@@ -128,7 +128,7 @@ export function CapsulePage() {
                         Закопана {new Date(cap.createdAt).toLocaleDateString("ru")}
                       </p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span style={{ fontSize: "0.65rem", color: t.lavender, fontWeight: 600 }}>
+                        <span style={{ fontSize: "0.65rem", color: t.textSecondary, fontWeight: 600 }}>
                           Ещё {days} {days === 1 ? "день" : days >= 2 && days <= 4 ? "дня" : "дней"}
                         </span>
                         <div className="flex-1 rounded-full h-1" style={{ backgroundColor: t.border }}>
@@ -185,7 +185,7 @@ export function CapsulePage() {
             Напишите письмо будущему себе. Через неделю, месяц или 3 месяца оно откроется — как сюрприз от прошлого.
           </p>
           <motion.button className="mt-5 px-6 py-3 rounded-xl font-semibold"
-            style={{ backgroundColor: t.lavender, color: "#fff", fontSize: "0.9rem" }}
+            style={{ backgroundColor: t.accent, color: t.onInk, fontSize: "0.9rem" }}
             whileTap={{ scale: 0.95 }} onClick={() => setShowForm(true)}>
             Написать письмо
           </motion.button>
@@ -237,7 +237,7 @@ export function CapsulePage() {
               </div>
 
               <button className="w-full rounded-xl py-3 font-semibold"
-                style={{ backgroundColor: t.lavender, color: "#fff", fontSize: "0.9rem", opacity: message.trim() ? 1 : 0.5 }}
+                style={{ backgroundColor: t.accent, color: t.onInk, fontSize: "0.9rem", opacity: message.trim() ? 1 : 0.5 }}
                 onClick={handleCreate} disabled={!message.trim()}>
                 Закопать капсулу
               </button>
@@ -270,7 +270,7 @@ export function CapsulePage() {
                   "{cap.message}"
                 </motion.p>
                 <motion.button className="mt-6 px-6 py-2.5 rounded-xl"
-                  style={{ backgroundColor: t.lavender + "20", color: t.lavender, fontSize: "0.85rem", fontWeight: 600 }}
+                  style={{ backgroundColor: t.lavender + "20", color: t.text, fontSize: "0.85rem", fontWeight: 600 }}
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
                   onClick={() => setRevealedId(null)}>
                   Спасибо, прошлый я

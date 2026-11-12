@@ -81,10 +81,10 @@ export function SleepPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 className="display" style={{ fontSize: "1.35rem", color: t.text }}>Сон</h1>
+          <h1 className="display" style={{ fontSize: "1.35rem", color: t.ink }}>Сон</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Как вы спали сегодня?</p>
         </div>
-        <Moon className="w-5 h-5" style={{ color: t.lavender }} />
+        <Moon className="w-5 h-5" style={{ color: t.textSecondary }} />
       </div>
 
       {/* Quality */}
@@ -121,7 +121,7 @@ export function SleepPage() {
         <div className="grid grid-cols-3 gap-3">
           <div>
             <div className="flex items-center gap-1.5 mb-2">
-              <Moon className="w-3.5 h-3.5" style={{ color: t.lavender }} />
+              <Moon className="w-3.5 h-3.5" style={{ color: t.textSecondary }} />
               <span style={{ fontSize: "0.72rem", fontWeight: 500, color: t.textMuted }}>Лёг</span>
             </div>
             <input type="time" lang="ru-RU" step={300} value={bedtime} onChange={(e) => setBedtime(e.target.value)}
@@ -130,7 +130,7 @@ export function SleepPage() {
           </div>
           <div>
             <div className="flex items-center gap-1.5 mb-2">
-              <Sun className="w-3.5 h-3.5" style={{ color: t.gold }} />
+              <Sun className="w-3.5 h-3.5" style={{ color: t.attention }} />
               <span style={{ fontSize: "0.72rem", fontWeight: 500, color: t.textMuted }}>Встал</span>
             </div>
             <input type="time" lang="ru-RU" step={300} value={wakeTime} onChange={(e) => setWakeTime(e.target.value)}
@@ -139,7 +139,7 @@ export function SleepPage() {
           </div>
           <div>
             <div className="flex items-center gap-1.5 mb-2">
-              <Star className="w-3.5 h-3.5" style={{ color: t.sage }} />
+              <Star className="w-3.5 h-3.5" style={{ color: t.accent }} />
               <span style={{ fontSize: "0.72rem", fontWeight: 500, color: t.textMuted }}>Часов</span>
             </div>
             <input type="number" min={0} max={16} step={0.5} value={hours}
@@ -187,8 +187,8 @@ export function SleepPage() {
       {/* Save */}
       <motion.button className="w-full rounded-xl py-3 font-semibold mb-5"
         style={{
-          backgroundColor: saved ? t.sage + "20" : t.lavender,
-          color: saved ? t.sage : "#fff",
+          backgroundColor: saved ? t.accent + "1F" : t.accent,
+          color: saved ? t.accent : t.onInk,
           fontSize: "0.9rem",
         }}
         whileTap={{ scale: 0.98 }}
@@ -204,15 +204,15 @@ export function SleepPage() {
           <p style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text, marginBottom: 10 }}>Статистика сна</p>
           <div className="grid grid-cols-3 gap-3 mb-3">
             <div className="rounded-xl p-3 text-center" style={{ backgroundColor: t.bgSecondary }}>
-              <p style={{ fontSize: "1.2rem", fontWeight: 700, color: t.lavender }}>{avgQuality}</p>
+              <p style={{ fontSize: "1.2rem", fontWeight: 700, color: t.textSecondary }}>{avgQuality}</p>
               <p style={{ fontSize: "0.6rem", color: t.textFaint }}>Ср. качество</p>
             </div>
             <div className="rounded-xl p-3 text-center" style={{ backgroundColor: t.bgSecondary }}>
-              <p style={{ fontSize: "1.2rem", fontWeight: 700, color: t.dustyBlue }}>{avgHours}ч</p>
+              <p style={{ fontSize: "1.2rem", fontWeight: 700, color: t.textSecondary }}>{avgHours}ч</p>
               <p style={{ fontSize: "0.6rem", color: t.textFaint }}>Ср. длительность</p>
             </div>
             <div className="rounded-xl p-3 text-center" style={{ backgroundColor: t.bgSecondary }}>
-              <p style={{ fontSize: "1.2rem", fontWeight: 700, color: t.sage }}>{sleepEntries.length}</p>
+              <p style={{ fontSize: "1.2rem", fontWeight: 700, color: t.accent }}>{sleepEntries.length}</p>
               <p style={{ fontSize: "0.6rem", color: t.textFaint }}>Записей</p>
             </div>
           </div>

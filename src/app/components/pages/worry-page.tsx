@@ -100,11 +100,11 @@ export function WorryPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 className="display" style={{ fontSize: "1.35rem", color: t.text }}>Дневник тревог</h1>
+          <h1 className="display" style={{ fontSize: "1.35rem", color: t.ink }}>Дневник тревог</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Записать тревогу и проверить позже, сбылась ли</p>
         </div>
         <button onClick={() => setShowForm(true)} className="p-2 rounded-xl" style={{ backgroundColor: t.sage + "18" }}>
-          <Plus className="w-5 h-5" style={{ color: t.sage }} />
+          <Plus className="w-5 h-5" style={{ color: t.accent }} />
         </button>
       </div>
 
@@ -115,10 +115,10 @@ export function WorryPage() {
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
             <div className="flex items-center gap-3 mb-3">
               <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: "#8DB59618" }}>
-                <TrendingDown className="w-6 h-6" style={{ color: "#8DB596" }} />
+                <TrendingDown className="w-6 h-6" style={{ color: t.accent }} />
               </div>
               <div>
-                <p style={{ fontSize: "1.4rem", fontWeight: 700, color: "#8DB596" }}>{stats.pct}%</p>
+                <p style={{ fontSize: "1.4rem", fontWeight: 700, color: t.accent }}>{stats.pct}%</p>
                 <p style={{ fontSize: "0.72rem", color: t.textMuted }}>тревог НЕ сбылись</p>
               </div>
             </div>
@@ -128,11 +128,11 @@ export function WorryPage() {
                 <p style={{ fontSize: "0.6rem", color: t.textFaint }}>Проверено</p>
               </div>
               <div className="rounded-xl p-2 text-center" style={{ backgroundColor: "#8DB59610" }}>
-                <p style={{ fontSize: "1rem", fontWeight: 700, color: "#8DB596" }}>{stats.notHappened}</p>
+                <p style={{ fontSize: "1rem", fontWeight: 700, color: t.accent }}>{stats.notHappened}</p>
                 <p style={{ fontSize: "0.6rem", color: t.textFaint }}>Не сбылось</p>
               </div>
               <div className="rounded-xl p-2 text-center" style={{ backgroundColor: "#C4876C10" }}>
-                <p style={{ fontSize: "1rem", fontWeight: 700, color: "#C4876C" }}>{stats.happened}</p>
+                <p style={{ fontSize: "1rem", fontWeight: 700, color: t.attention }}>{stats.happened}</p>
                 <p style={{ fontSize: "0.6rem", color: t.textFaint }}>Сбылось</p>
               </div>
             </div>
@@ -249,12 +249,12 @@ export function WorryPage() {
                       />
                       <div className="flex gap-2">
                         <button className="flex-1 rounded-xl py-2.5 flex items-center justify-center gap-2 font-semibold"
-                          style={{ backgroundColor: "#8DB59618", color: "#8DB596", fontSize: "0.82rem" }}
+                          style={{ backgroundColor: "#8DB59618", color: t.accent, fontSize: "0.82rem" }}
                           onClick={() => handleReview(w.id, false)}>
                           <XCircle className="w-4 h-4" /> Не сбылось
                         </button>
                         <button className="flex-1 rounded-xl py-2.5 flex items-center justify-center gap-2 font-semibold"
-                          style={{ backgroundColor: "#C4876C18", color: "#C4876C", fontSize: "0.82rem" }}
+                          style={{ backgroundColor: "#C4876C18", color: t.attention, fontSize: "0.82rem" }}
                           onClick={() => handleReview(w.id, true)}>
                           <Check className="w-4 h-4" /> Сбылось
                         </button>
@@ -262,7 +262,7 @@ export function WorryPage() {
                     </div>
                   ) : (
                     <button className="w-full rounded-xl py-2.5 flex items-center justify-center gap-2 font-semibold"
-                      style={{ backgroundColor: t.lavender + "18", color: t.lavender, fontSize: "0.82rem" }}
+                      style={{ backgroundColor: t.lavender + "18", color: t.text, fontSize: "0.82rem" }}
                       onClick={() => setReviewingId(w.id)}>
                       <Eye className="w-4 h-4" /> Проверить
                     </button>
@@ -291,7 +291,7 @@ export function WorryPage() {
                     <span className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center" style={{
                       backgroundColor: w.happened ? "#C4876C18" : "#8DB59618",
                     }}>
-                      {w.happened ? <span style={{ fontSize: "0.6rem" }}>!</span> : <Check className="w-3 h-3" style={{ color: "#8DB596" }} />}
+                      {w.happened ? <span style={{ fontSize: "0.6rem" }}>!</span> : <Check className="w-3 h-3" style={{ color: t.accent }} />}
                     </span>
                     <div className="flex-1">
                       <p style={{ fontSize: "0.78rem", color: t.text, textDecoration: w.happened ? "none" : "line-through", opacity: w.happened ? 1 : 0.7 }}>
@@ -389,7 +389,7 @@ export function WorryPage() {
               </div>
 
               <button className="w-full rounded-xl py-3 font-semibold"
-                style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.9rem", opacity: worry.trim() ? 1 : 0.5 }}
+                style={{ backgroundColor: t.accent, color: t.onInk, fontSize: "0.9rem", opacity: worry.trim() ? 1 : 0.5 }}
                 onClick={handleAdd} disabled={!worry.trim()}>
                 Записать
               </button>

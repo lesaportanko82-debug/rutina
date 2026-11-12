@@ -152,12 +152,11 @@ export function FeatureTour({ steps, tourKey, seenTours, onComplete, delay = 800
                   </button>
                 )}
                 <motion.button
-                  className="px-4 py-2 rounded-xl text-white flex items-center gap-1"
+                  className="px-4 py-2 rounded-xl flex items-center gap-1"
                   style={{
                     fontSize: "0.8rem",
                     fontWeight: 600,
-                    background: "#8DB596",
-                  }}
+                    background: t.accent, color: th.onInk}}
                   onClick={handleNext}
                   whileTap={{ scale: 0.95 }}
                 >

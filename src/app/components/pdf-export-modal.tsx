@@ -91,7 +91,7 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center"
                 style={{ background: `${t.sage}20` }}>
-                <FileText className="w-5 h-5" style={{ color: t.sage }} />
+                <FileText className="w-5 h-5" style={{ color: t.accent }} />
               </div>
               <div>
                 <h3 style={{ fontSize: "1rem", fontWeight: 700, color: t.text }}>PDF-отчёт</h3>
@@ -155,12 +155,12 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {[
-                  { label: "Задачи", value: sectionCounts.tasks, color: t.sage },
-                  { label: "Настроение", value: sectionCounts.moods, color: t.lavender },
-                  { label: "Привычки", value: sectionCounts.habits, color: t.teal },
-                  { label: "Дневник", value: sectionCounts.journal, color: t.dustyBlue },
-                  { label: "Тревога", value: sectionCounts.anxiety, color: t.terracotta },
-                  { label: "Сон", value: sectionCounts.sleep, color: t.gold },
+                  { label: "Задачи", value: sectionCounts.tasks, color: t.accent },
+                  { label: "Настроение", value: sectionCounts.moods, color: t.textSecondary },
+                  { label: "Привычки", value: sectionCounts.habits, color: t.accent },
+                  { label: "Дневник", value: sectionCounts.journal, color: t.textSecondary },
+                  { label: "Тревога", value: sectionCounts.anxiety, color: t.attention },
+                  { label: "Сон", value: sectionCounts.sleep, color: t.attention },
                 ].map((s) => (
                   <div key={s.label} className="text-center py-1.5 rounded-xl"
                     style={{ backgroundColor: s.value > 0 ? s.color + "10" : "transparent" }}>
@@ -174,8 +174,8 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
               {/* Charts indicator */}
               {(sectionCounts.moods >= 2 || sectionCounts.anxiety >= 2 || sectionCounts.sleep >= 2) && (
                 <div className="mt-2 flex items-center gap-1.5 justify-center">
-                  <BarChart3 className="w-3 h-3" style={{ color: t.sage }} />
-                  <span style={{ fontSize: "0.6rem", color: t.sage, fontWeight: 500 }}>
+                  <BarChart3 className="w-3 h-3" style={{ color: t.accent }} />
+                  <span style={{ fontSize: "0.6rem", color: t.accent, fontWeight: 500 }}>
                     Включает графики и диаграммы
                   </span>
                 </div>
@@ -186,13 +186,12 @@ export function PdfExportModal({ open, onClose, data }: PdfExportModalProps) {
           {/* Generate button */}
           <div className="px-5 pb-5">
             <motion.button
-              className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 text-white"
+              className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2"
               style={{
                 background: done
                   ? `${t.sage}`
                   : `${t.sage}`,
-                opacity: generating && !done ? 0.85 : 1,
-              }}
+                opacity: generating && !done ? 0.85 : 1, color: t.onInk}}
               onClick={handleGenerate}
               disabled={generating}
               whileTap={generating ? {} : { scale: 0.97 }}

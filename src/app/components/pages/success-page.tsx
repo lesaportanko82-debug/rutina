@@ -91,7 +91,7 @@ export function SuccessPage() {
                 transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.6, ease: "easeInOut" }}
               />
             ))}
-            <CheckCircle2 className="w-14 h-14" style={{ color: "#8DB596" }} />
+            <CheckCircle2 className="w-14 h-14" style={{ color: t.accent }} />
           </div>
         </motion.div>
 
@@ -120,7 +120,7 @@ export function SuccessPage() {
         >
           <GlassPanel darkMode={darkMode} className="p-6 rounded-xl" color="#8DB596">
             <div className="flex items-center gap-2 mb-4">
-              <Sparkles className="w-5 h-5" style={{ color: "#8DB596" }} />
+              <Sparkles className="w-5 h-5" style={{ color: t.accent }} />
               <span className="font-semibold" style={{ color: t.text, fontSize: "0.95rem" }}>
                 Что теперь доступно
               </span>
@@ -134,7 +134,7 @@ export function SuccessPage() {
                   transition={{ delay: 0.55 + idx * 0.08 }}
                   className="flex items-center gap-2.5"
                 >
-                  <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: "#8DB596" }} />
+                  <CheckCircle2 className="w-4 h-4 flex-shrink-0" style={{ color: t.accent }} />
                   <span style={{ color: t.text, fontSize: "0.9rem" }}>{perk}</span>
                 </motion.div>
               ))}

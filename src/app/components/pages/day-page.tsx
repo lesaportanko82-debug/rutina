@@ -68,7 +68,7 @@ export function DayPage() {
         <ChevronLeft size={16} /> Сегодня
       </button>
 
-      <h1 className="display" style={{ fontSize: "1.35rem", color: t.text, marginBottom: 4 }}>Ритм дня</h1>
+      <h1 className="display" style={{ fontSize: "1.35rem", color: t.ink, marginBottom: 4 }}>Ритм дня</h1>
       <p style={{ fontSize: "0.85rem", color: t.textSecondary, marginBottom: 14 }}>
         Привычки и напоминания, разложенные по частям дня.
       </p>
@@ -85,11 +85,11 @@ export function DayPage() {
           return (
             <div key={key} style={{ marginBottom: 32 }}>
               <div className="flex items-center gap-2" style={{ marginBottom: 10, paddingBottom: 8, borderBottom: hair }}>
-                <Icon size={15} color={isNow ? "#5B8A64" : t.textMuted} strokeWidth={1.7} />
+                <Icon size={15} color={isNow ? t.accent : t.textMuted} strokeWidth={1.7} />
                 <span style={{ fontSize: "0.95rem", fontWeight: 700, color: isNow ? t.text : t.textSecondary }}>{label}</span>
                 <span style={{ fontSize: "0.72rem", color: t.textFaint }}>{hint}</span>
                 {isNow && (
-                  <span style={{ fontSize: "0.66rem", color: "#5B8A64", fontWeight: 600, marginLeft: "auto" }}>сейчас</span>
+                  <span style={{ fontSize: "0.66rem", color: t.accent, fontWeight: 600, marginLeft: "auto" }}>сейчас</span>
                 )}
               </div>
 
@@ -109,7 +109,7 @@ export function DayPage() {
                         >
                           <span
                             className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
-                            style={{ border: `1.5px solid ${done ? "#5B8A64" : t.borderLight}`, background: done ? "#5B8A64" : "transparent" }}
+                            style={{ border: `1.5px solid ${done ? t.accent : t.control}`, background: done ? t.accent : "transparent" }}
                           >
                             {done && <InkCheck size={13} />}
                           </span>
@@ -143,7 +143,7 @@ export function DayPage() {
                       onClick={() => toggleTask(task.id)}
                       className="w-full flex items-center gap-3 text-left"
                     >
-                      <span className="w-5 h-5 rounded-full flex-shrink-0" style={{ border: `1.5px solid ${t.borderLight}` }} />
+                      <span className="w-5 h-5 rounded-full flex-shrink-0" style={{ border: `1.5px solid ${t.control}` }} />
                       <span style={{ fontSize: "0.88rem", color: t.text }}>{task.title}</span>
                       <span style={{ fontSize: "0.68rem", color: t.textMuted, marginLeft: "auto" }}>задача</span>
                     </button>

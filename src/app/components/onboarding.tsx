@@ -69,13 +69,13 @@ export function Onboarding() {
                   key={h.title}
                   onClick={() => toggle(h.title)}
                   className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left"
-                  style={{ background: t.card, border: `1px solid ${on ? "#5B8A64" : t.border}` }}
+                  style={{ background: t.card, border: `1px solid ${on ? t.accent : t.border}` }}
                 >
                   <AppIcon icon={h.icon} size={18} color={h.color} />
                   <span className="flex-1" style={{ fontSize: "0.92rem", color: t.text }}>{h.title}</span>
                   <span
                     className="w-6 h-6 rounded-full flex items-center justify-center"
-                    style={{ background: on ? "#5B8A64" : "transparent", border: `1.5px solid ${on ? "#5B8A64" : t.borderLight}` }}
+                    style={{ background: on ? t.accent : "transparent", border: `1.5px solid ${on ? t.accent : t.control}` }}
                   >
                     {on && <InkCheck size={15} />}
                   </span>
@@ -89,7 +89,7 @@ export function Onboarding() {
       <button
         onClick={next}
         className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2"
-        style={{ background: "#5B8A64", color: "white", fontWeight: 600, fontSize: "0.95rem" }}
+        style={{ background: t.accent, color: "white", fontWeight: 600, fontSize: "0.95rem" }}
       >
         {step === 0 ? "Дальше" : "Начать"} <ArrowRight size={16} />
       </button>

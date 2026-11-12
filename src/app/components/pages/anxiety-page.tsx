@@ -6,6 +6,7 @@ import { useTheme } from "../theme";
 import { ArrowLeft, Plus, Wind, Hand, X, TrendingDown, TrendingUp, Minus, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { GlassPanel } from "../ambient-elements";
+import { inkFor } from "../../lib/design";
 
 const triggerSuggestions = [
   "Работа", "Дедлайн", "Конфликт", "Неизвестность",
@@ -14,13 +15,26 @@ const triggerSuggestions = [
 ];
 
 const dayNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+/** Для фразы «тревога выше по …» нужен дательный падеж множественного числа */
+const dayNamesDative = ["воскресеньям", "понедельникам", "вторникам", "средам", "четвергам", "пятницам", "субботам"];
 
+/** Цвет уровня для заливок и меток */
 function getLevelColor(level: number): string {
   if (level <= 2) return "#8DB596";
   if (level <= 4) return "#C4A86C";
   if (level <= 6) return "#C4876C";
   if (level <= 8) return "#B8696C";
   return "#9B5A5E";
+}
+
+/**
+ * Тот же уровень, но пригодный для текста: светлые оттенки заливок
+ * не проходят AA на кремовом, поэтому для надписей берём затемнённые.
+ */
+function getLevelTextColor(level: number): string {
+  // оттенок уровня один; читаемость подбирает inkFor под текущий режим
+  const hue = level <= 2 ? "#4E8A62" : level <= 4 ? "#9E8333" : level <= 6 ? "#B4683F" : level <= 8 ? "#BF5A49" : "#CC4F4A";
+  return inkFor(hue);
 }
 
 function getLevelLabel(level: number): string {
@@ -140,7 +154,7 @@ export function AnxietyPage() {
           <ArrowLeft className="w-4.5 h-4.5" style={{ color: t.textSecondary }} />
         </button>
         <div>
-          <h1 className="display" style={{ fontSize: "1.2rem", color: t.text }}>
+          <h1 className="display" style={{ fontSize: "1.2rem", color: t.ink }}>
             Трекер тревоги
           </h1>
           <p style={{ fontSize: "0.72rem", color: t.textMuted }}>
@@ -167,7 +181,7 @@ export function AnxietyPage() {
           className="w-10 h-10 rounded-xl flex items-center justify-center"
           style={{ backgroundColor: t.lavender + "15" }}
         >
-          <Plus className="w-5 h-5" style={{ color: t.lavender }} />
+          <Plus className="w-5 h-5" style={{ color: t.textSecondary }} />
         </div>
         <div className="flex-1 text-left">
           <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>
@@ -197,7 +211,7 @@ export function AnxietyPage() {
               <div>
                 <span style={{ fontSize: "0.75rem", color: t.textMuted }}>Средний уровень</span>
                 <div className="flex items-center gap-2 mt-0.5">
-                  <span style={{ fontSize: "1.1rem", fontWeight: 700, color: getLevelColor(Math.round(patterns.avgLevel)) }}>
+                  <span style={{ fontSize: "1.1rem", fontWeight: 700, color: getLevelTextColor(Math.round(patterns.avgLevel)) }}>
                     {patterns.avgLevel.toFixed(1)}
                   </span>
                   <span style={{ fontSize: "0.72rem", color: t.textMuted }}>/ 10</span>
@@ -205,9 +219,9 @@ export function AnxietyPage() {
               </div>
               <div className="flex items-center gap-1">
                 {patterns.trend < -0.5 ? (
-                  <><TrendingDown className="w-4 h-4" style={{ color: "#8DB596" }} /><span style={{ fontSize: "0.7rem", color: "#8DB596" }}>Снижается</span></>
+                  <><TrendingDown className="w-4 h-4" style={{ color: t.accent }} /><span style={{ fontSize: "0.7rem", color: t.accent }}>Снижается</span></>
                 ) : patterns.trend > 0.5 ? (
-                  <><TrendingUp className="w-4 h-4" style={{ color: "#C4876C" }} /><span style={{ fontSize: "0.7rem", color: "#C4876C" }}>Растёт</span></>
+                  <><TrendingUp className="w-4 h-4" style={{ color: t.attention }} /><span style={{ fontSize: "0.7rem", color: t.attention }}>Растёт</span></>
                 ) : (
                   <><Minus className="w-4 h-4" style={{ color: t.textMuted }} /><span style={{ fontSize: "0.7rem", color: t.textMuted }}>Стабильно</span></>
                 )}
@@ -242,7 +256,7 @@ export function AnxietyPage() {
                           animate={{ scaleY: 1 }}
                           transition={{ delay: 0.2 + dayIdx * 0.05 }}
                         />
-                        <span style={{ fontSize: "0.55rem", color: isWorst ? getLevelColor(Math.round(avg)) : t.textFaint }}>
+                        <span style={{ fontSize: "0.55rem", color: isWorst ? getLevelTextColor(Math.round(avg)) : t.textMuted }}>
                           {dayNames[dayIdx]}
                         </span>
                       </div>
@@ -251,9 +265,9 @@ export function AnxietyPage() {
                 </div>
                 {patterns.worstDay && patterns.worstDay.count > 0 && (
                   <p style={{ fontSize: "0.68rem", color: t.textMuted, marginTop: 6 }}>
-                    Тревога обычно выше по {dayNames[patterns.worstDay.day]}м ({patterns.worstDay.avg.toFixed(1)}/10)
+                    Тревога обычно выше по {dayNamesDative[patterns.worstDay.day]} ({patterns.worstDay.avg.toFixed(1)}/10)
                     {patterns.bestDay && patterns.bestDay.day !== patterns.worstDay.day &&
-`, спокойнее — по ${dayNames[patterns.bestDay.day]}м (${patterns.bestDay.avg.toFixed(1)}/10)`}
+`, спокойнее — по ${dayNamesDative[patterns.bestDay.day]} (${patterns.bestDay.avg.toFixed(1)}/10)`}
                   </p>
                 )}
               </div>
@@ -270,7 +284,7 @@ export function AnxietyPage() {
                     <span
                       key={trig}
                       className="px-2.5 py-1 rounded-full"
-                      style={{ fontSize: "0.7rem", backgroundColor: t.lavender + "12", color: t.lavender, fontWeight: 500 }}
+                      style={{ fontSize: "0.7rem", backgroundColor: t.lavender + "12", color: t.text, fontWeight: 500 }}
                     >
                       {trig} ({count})
                     </span>
@@ -282,7 +296,7 @@ export function AnxietyPage() {
             {/* Breathing/grounding usage */}
             {(patterns.breathingUsed > 0 || patterns.groundingUsed > 0) && (
               <div className="mt-3 p-2.5 rounded-xl" style={{ backgroundColor: t.sage + "08" }}>
-                <p style={{ fontSize: "0.7rem", color: t.sage }}>
+                <p style={{ fontSize: "0.7rem", color: t.accent }}>
                   Вы использовали дыхание {patterns.breathingUsed}x и заземление {patterns.groundingUsed}x — это настоящая забота о себе
                 </p>
               </div>
@@ -306,7 +320,7 @@ export function AnxietyPage() {
           }}
           onClick={() => navigate("/app/anxiety/grounding")}
         >
-          <Hand className="w-5 h-5" style={{ color: t.teal }} />
+          <Hand className="w-5 h-5" style={{ color: t.accent }} />
           <div className="text-left">
             <span style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text, display: "block" }}>5-4-3-2-1</span>
             <span style={{ fontSize: "0.62rem", color: t.textMuted }}>Заземление</span>
@@ -323,7 +337,7 @@ export function AnxietyPage() {
             document.dispatchEvent(new CustomEvent("open-breathing"));
           }}
         >
-          <Wind className="w-5 h-5" style={{ color: t.dustyBlue }} />
+          <Wind className="w-5 h-5" style={{ color: t.textSecondary }} />
           <div className="text-left">
             <span style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text, display: "block" }}>Дыхание</span>
             <span style={{ fontSize: "0.62rem", color: t.textMuted }}>Практика</span>
@@ -364,7 +378,7 @@ export function AnxietyPage() {
               <div className="flex items-center justify-between mb-1.5">
                 <div className="flex items-center gap-2">
                   <AppIcon icon={getLevelEmoji(entry.level)} size={16} color={getLevelColor(entry.level)} />
-                  <span style={{ fontSize: "0.82rem", fontWeight: 600, color: getLevelColor(entry.level) }}>
+                  <span style={{ fontSize: "0.82rem", fontWeight: 600, color: getLevelTextColor(entry.level) }}>
                     {entry.level}/10
                   </span>
                   <span style={{ fontSize: "0.68rem", color: t.textFaint }}>
@@ -383,7 +397,7 @@ export function AnxietyPage() {
               {entry.trigger && (
                 <span
                   className="inline-block px-2 py-0.5 rounded-full mb-1"
-                  style={{ fontSize: "0.68rem", backgroundColor: t.lavender + "12", color: t.lavender }}
+                  style={{ fontSize: "0.68rem", backgroundColor: t.lavender + "12", color: t.text}}
                 >
                   {entry.trigger}
                 </span>
@@ -394,10 +408,10 @@ export function AnxietyPage() {
               {(entry.usedBreathing || entry.usedGrounding) && (
                 <div className="flex gap-2 mt-1.5">
                   {entry.usedBreathing && (
-                    <span style={{ fontSize: "0.62rem", color: t.sage }}> Дыхание</span>
+                    <span style={{ fontSize: "0.62rem", color: t.accent }}> Дыхание</span>
                   )}
                   {entry.usedGrounding && (
-                    <span style={{ fontSize: "0.62rem", color: t.teal }}> Заземление</span>
+                    <span style={{ fontSize: "0.62rem", color: t.accent }}> Заземление</span>
                   )}
                 </div>
               )}
@@ -447,12 +461,12 @@ export function AnxietyPage() {
                   </label>
                   <div className="flex items-center gap-1.5">
                     <AppIcon icon={getLevelEmoji(level)} size={16} color={getLevelColor(level)} />
-                    <span style={{ fontSize: "1rem", fontWeight: 700, color: getLevelColor(level) }}>{level}</span>
+                    <span style={{ fontSize: "1rem", fontWeight: 700, color: getLevelTextColor(level) }}>{level}</span>
                     <span style={{ fontSize: "0.72rem", color: t.textMuted }}>/10</span>
                   </div>
                 </div>
 
-                <p style={{ fontSize: "0.72rem", color: getLevelColor(level), fontWeight: 500, marginBottom: 8 }}>
+                <p style={{ fontSize: "0.72rem", color: getLevelTextColor(level), fontWeight: 500, marginBottom: 8 }}>
                   {getLevelLabel(level)}
                 </p>
 
@@ -496,7 +510,7 @@ export function AnxietyPage() {
                     <div className="flex gap-2">
                       <button
                         className="flex-1 py-2 rounded-xl text-center"
-                        style={{ fontSize: "0.75rem", fontWeight: 500, backgroundColor: t.dustyBlue + "15", color: t.dustyBlue }}
+                        style={{ fontSize: "0.75rem", fontWeight: 500, backgroundColor: t.dustyBlue + "15", color: t.text}}
                         onClick={() => {
                           setUsedBreathing(true);
                           document.dispatchEvent(new CustomEvent("open-breathing"));
@@ -507,7 +521,7 @@ export function AnxietyPage() {
                       </button>
                       <button
                         className="flex-1 py-2 rounded-xl text-center"
-                        style={{ fontSize: "0.75rem", fontWeight: 500, backgroundColor: t.teal + "15", color: t.teal }}
+                        style={{ fontSize: "0.75rem", fontWeight: 500, backgroundColor: t.teal + "15", color: t.text}}
                         onClick={() => {
                           setUsedGrounding(true);
                           setShowForm(false);
@@ -602,12 +616,11 @@ export function AnxietyPage() {
 
               {/* Save */}
               <motion.button
-                className="w-full text-white rounded-xl py-3.5 shadow-sm"
+                className="w-full rounded-xl py-3.5 shadow-sm"
                 style={{
                   fontSize: "0.9rem",
                   fontWeight: 600,
-                  background: `${t.lavender}`,
-                }}
+                  background: t.accent, color: t.onInk}}
                 onClick={handleSave}
                 whileTap={{ scale: 0.98 }}
               >

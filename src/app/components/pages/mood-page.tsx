@@ -8,6 +8,7 @@ import {
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
 import { InkFace } from "../ink";
+import { inkFor } from "../../lib/design";
 
 const today = () => new Date().toISOString().split("T")[0];
 
@@ -170,7 +171,7 @@ function MoodMapCard({
           <span className="flex items-center gap-1" style={{ fontSize: "0.75rem", color: th.textMuted }}>
             <Zap className="w-3.5 h-3.5" /> Энергия
           </span>
-          <span style={{ fontSize: "0.72rem", fontWeight: 600, color: entry.color }}>
+          <span style={{ fontSize: "0.72rem", fontWeight: 600, color: inkFor(entry.color) }}>
             {energyLabels[entry.energy]}
           </span>
         </div>
@@ -396,7 +397,7 @@ export function MoodPage() {
               <span className="flex items-center gap-1.5" style={{ fontSize: "0.82rem", fontWeight: 600, color: th.text }}>
                 <Zap className="w-4 h-4" style={{ color: accentColor }} /> Уровень энергии
               </span>
-              <span style={{ fontSize: "0.75rem", color: accentColor, fontWeight: 600 }}>
+              <span style={{ fontSize: "0.75rem", color: inkFor(accentColor), fontWeight: 600 }}>
                 {energy}/5
               </span>
             </div>
@@ -445,11 +446,12 @@ export function MoodPage() {
 
           {/* Save button */}
           <motion.button
-            className="w-full text-white rounded-xl py-3.5 mb-5"
+            className="w-full rounded-xl py-3.5 mb-5"
             style={{
               fontSize: "0.95rem",
               fontWeight: 600,
-              backgroundColor: selectedMood !== null ? accentColor : th.textFaint,
+              backgroundColor: selectedMood !== null ? th.accent : th.textFaint,
+              color: th.onInk,
               opacity: selectedMood !== null ? 1 : 0.5,
             }}
             onClick={handleSave}
@@ -468,7 +470,7 @@ export function MoodPage() {
           onClick={() => setShowCalendar(!showCalendar)}
         >
           <span className="flex items-center gap-2" style={{ fontSize: "0.9rem", fontWeight: 600, color: th.text }}>
-            <Calendar className="w-4 h-4" style={{ color: th.lavender }} />
+            <Calendar className="w-4 h-4" style={{ color: th.textSecondary }} />
             {monthCalendar.monthName}
           </span>
           {showCalendar ? (
@@ -523,7 +525,7 @@ export function MoodPage() {
       {moodDistribution.length > 0 && (
         <GlassPanel darkMode={darkMode} color={th.dustyBlue} className="rounded-xl p-4 mb-5">
           <h3 className="flex items-center gap-2 mb-3" style={{ fontSize: "0.9rem", fontWeight: 600, color: th.text }}>
-            <BarChart3 className="w-4 h-4" style={{ color: th.dustyBlue }} />
+            <BarChart3 className="w-4 h-4" style={{ color: th.textSecondary }} />
             Распределение настроений
           </h3>
           <div className="space-y-2.5">

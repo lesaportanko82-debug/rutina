@@ -8,6 +8,7 @@ import { consumeUsage, limitMessage } from "../lib/usage-limits";
 import { useNavigate } from "react-router";
 import { projectId, publicAnonKey } from "./supabase-client";
 import { syncToServer } from "./supabase-sync";
+import { inkFor } from "../lib/design";
 
 // ─── Types ───
 
@@ -458,8 +459,8 @@ function ChatBubble({ msg, t, isLast, onNavigate }: { msg: ChatMessage; t: Retur
               onClick={() => onNavigate(link.path)}
             >
               <span style={{ fontSize: "0.75rem" }}><AppIcon icon={link.emoji} size={18} /></span>
-              <span style={{ fontSize: "0.68rem", fontWeight: 600, color: link.color }}>{link.label}</span>
-              <ArrowRight className="w-3 h-3" style={{ color: link.color, opacity: 0.7 }} />
+              <span style={{ fontSize: "0.68rem", fontWeight: 600, color: inkFor(link.color) }}>{link.label}</span>
+              <ArrowRight className="w-3 h-3" style={{ color: inkFor(link.color), opacity: 0.7 }} />
             </motion.button>
           ))}
         </motion.div>
@@ -1018,19 +1019,16 @@ interface NavLink {
 const NAV_PATTERNS: { pattern: RegExp; link: NavLink }[] = [
   { pattern: /подыш|дыхан|вдох|выдох|дышать|breath/i, link: { label: "Дыхание", path: "__breathing__", emoji: "🌬️", color: "#7EA8BE" } },
   { pattern: /дневник|запис|journal|мысл[иь] записать/i, link: { label: "Дневник", path: "/app/journal", emoji: "📝", color: "#9B8EC4" } },
-  { pattern: /заземл|grounding|5.?4.?3.?2.?1/i, link: { label: "Заземление 5-4-3-2-1", path: "/app/app/anxiety/grounding", emoji: "🌍", color: "#7BAFB0" } },
+  { pattern: /заземл|grounding|5.?4.?3.?2.?1/i, link: { label: "Заземление 5-4-3-2-1", path: "/app/anxiety/grounding", emoji: "🌍", color: "#8DB596" } },
   { pattern: /тревог|тревож|anxiety|беспокой/i, link: { label: "Трекер тревоги", path: "/app/anxiety", emoji: "📊", color: "#C4876C" } },
-  { pattern: /настроен|mood|чувств/i, link: { label: "Настроение", path: "/app/mood", emoji: "😊", color: "#B88FA7" } },
+  { pattern: /настроен|mood|чувств/i, link: { label: "Настроение", path: "/app/mood", emoji: "😊", color: "#9B8EC4" } },
   { pattern: /SOS|экстренн|крити[чк]/i, link: { label: "SOS-карточка", path: "/app/sos", emoji: "🆘", color: "#E88A8A" } },
   { pattern: /привыч|habit|рутин/i, link: { label: "Привычки", path: "/app/habits", emoji: "🔄", color: "#8DB596" } },
   { pattern: /расслаб|мышеч|PMR|релаксац/i, link: { label: "Релаксация", path: "/app/pmr", emoji: "🧘", color: "#9B8EC4" } },
   { pattern: /сон|sleep|спать|уснуть|бессонниц/i, link: { label: "Трекер сна", path: "/app/sleep", emoji: "🌙", color: "#7EA8BE" } },
   { pattern: /worry|беспокойств|когнитив|CBT/i, link: { label: "Worry Journal", path: "/app/worry", emoji: "🧠", color: "#C4A86C" } },
-  { pattern: /bingo|self.?care|забот.*себ/i, link: { label: "Self-Care Bingo", path: "/app/bingo", emoji: "🎯", color: "#B88FA7" } },
-  { pattern: /колесо жизни|life.?wheel|баланс/i, link: { label: "Колесо жизни", path: "/app/lifewheel", emoji: "🎡", color: "#7BAFB0" } },
-  { pattern: /челлендж|challenge|30.?дн|мягкост/i, link: { label: "30-дневный челлендж", path: "/app/challenge", emoji: "🌸", color: "#C4876C" } },
-  { pattern: /капсул|capsul|письмо.?буду|будущ/i, link: { label: "Капсула времени", path: "/app/capsule", emoji: "💌", color: "#B88FA7" } },
-  { pattern: /skill.?tree|дерево.?навык|ветк|RPG|прокач/i, link: { label: "Дерево навыков", path: "/app/skills", emoji: "🌳", color: "#8DB596" } },
+  { pattern: /колесо жизни|life.?wheel|баланс/i, link: { label: "Колесо жизни", path: "/app/lifewheel", emoji: "🎡", color: "#8DB596" } },
+  { pattern: /капсул|capsul|письмо.?буду|будущ/i, link: { label: "Капсула времени", path: "/app/capsule", emoji: "💌", color: "#9B8EC4" } },
 ];
 
 function detectNavLinks(text: string): NavLink[] {

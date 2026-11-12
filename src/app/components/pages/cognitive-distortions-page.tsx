@@ -30,7 +30,7 @@ const distortions = [
     id: "mind_reading",
     name: "Чтение мыслей",
     icon: "🔮",
-    color: "#9B8EC4",
+    color: "#C4876C",
     description: "Убеждённость, что вы знаете, что думают другие.",
     example: "«Они точно подумали, что я глупый»",
     antidote: "Мы не умеем читать мысли. Спросите прямо или допустите нейтральный вариант.",
@@ -57,7 +57,7 @@ const distortions = [
     id: "emotional_reasoning",
     name: "Эмоциональное рассуждение",
     icon: "💔",
-    color: "#B8696C",
+    color: "#C4876C",
     description: "«Я чувствую это — значит, так и есть».",
     example: "«Я чувствую себя глупым, значит, я глупый»",
     antidote: "Чувства — не факты. Что бы сказал друг? Есть ли объективные данные?",
@@ -66,7 +66,7 @@ const distortions = [
     id: "should",
     name: "Долженствование",
     icon: "📏",
-    color: "#8DB596",
+    color: "#C4876C",
     description: "Жёсткие правила о том, как должно быть.",
     example: "«Я должен быть всегда продуктивным»",
     antidote: "Замените «должен» на «хотел бы». Будьте мягче к себе.",
@@ -75,7 +75,7 @@ const distortions = [
     id: "magnification",
     name: "Преувеличение/преуменьшение",
     icon: "🔍",
-    color: "#7BAFB0",
+    color: "#C4876C",
     description: "Раздувание негатива и обесценивание позитива.",
     example: "«Ошибка — катастрофа, а похвала — ерунда, мне просто повезло»",
     antidote: "Если бы друг рассказал вам это — что бы вы ответили?",
@@ -84,7 +84,7 @@ const distortions = [
     id: "labeling",
     name: "Навешивание ярлыков",
     icon: "🏷️",
-    color: "#B88FA7",
+    color: "#C4876C",
     description: "Приравнивание себя или других к одному действию.",
     example: "«Я неудачник» вместо «Я допустил ошибку»",
     antidote: "Отделяйте поступок от личности. Одна ошибка не определяет вас.",
@@ -154,11 +154,11 @@ export function CognitiveDistortionsPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Ловушки мышления</h1>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.ink }}>Ловушки мышления</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Справочник, журнал, паттерны</p>
         </div>
         <button onClick={() => setShowLogForm(true)} className="p-2 rounded-xl" style={{ backgroundColor: t.lavender + "18" }}>
-          <Plus className="w-5 h-5" style={{ color: t.lavender }} />
+          <Plus className="w-5 h-5" style={{ color: t.textSecondary }} />
         </button>
       </div>
 
@@ -223,12 +223,12 @@ export function CognitiveDistortionsPage() {
                       <p style={{ fontSize: "0.72rem", color: t.textMuted, fontStyle: "italic" }}>{d.example}</p>
                     </div>
                     <div className="rounded-xl p-3" style={{ backgroundColor: "#8DB59608" }}>
-                      <p style={{ fontSize: "0.7rem", fontWeight: 600, color: "#8DB596", marginBottom: 4 }}>Противоядие:</p>
+                      <p style={{ fontSize: "0.7rem", fontWeight: 600, color: t.accent, marginBottom: 4 }}>Противоядие:</p>
                       <p style={{ fontSize: "0.72rem", color: t.textMuted }}>{d.antidote}</p>
                     </div>
                     <button
                       className="mt-3 w-full rounded-xl py-2 text-center"
-                      style={{ backgroundColor: d.color + "15", fontSize: "0.78rem", fontWeight: 600, color: d.color }}
+                      style={{ backgroundColor: d.color + "15", fontSize: "0.78rem", fontWeight: 600, color: t.text}}
                       onClick={() => {
                         setSelectedDistortion(d.id);
                         setShowLogForm(true);
@@ -420,7 +420,7 @@ export function CognitiveDistortionsPage() {
                 value={context} onChange={(e) => setContext(e.target.value)} />
 
               <button className="w-full rounded-xl py-3 font-semibold"
-                style={{ backgroundColor: t.lavender, color: "#fff", fontSize: "0.9rem", opacity: selectedDistortion ? 1 : 0.5 }}
+                style={{ backgroundColor: t.accent, color: t.onInk, fontSize: "0.9rem", opacity: selectedDistortion ? 1 : 0.5 }}
                 onClick={handleLog} disabled={!selectedDistortion}>
                 Записать
               </button>

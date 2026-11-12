@@ -110,6 +110,7 @@ export function BreathingWidget() {
     setIsOpen(false);
   };
 
+  // На тёмном поле цвета фаз должны быть светлыми, иначе текст тонет
   const phaseColor =
     currentPhase?.label === "Вдох"
       ? "#8DB596"
@@ -124,9 +125,10 @@ export function BreathingWidget() {
         {isOpen && (
           <motion.div
             className="fixed inset-0 z-50 flex flex-col items-center justify-center"
-            // непрозрачный фон: во время дыхания за Листиком не должно
-            // читаться остальное приложение
-            style={{ background: th.bg }}
+            // Единственное тёмное поле приложения. Инверсия здесь оправдана:
+            // это момент фокуса, и она даёт палитре глубину, которой
+            // не хватало светлым экранам.
+            style={{ background: th.field }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -134,11 +136,11 @@ export function BreathingWidget() {
             {/* Close */}
             <motion.button
               className="absolute top-12 right-5 w-10 h-10 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: th.border }}
+              style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
               onClick={close}
               whileTap={{ scale: 0.9 }}
             >
-              <X className="w-5 h-5" style={{ color: th.textSecondary }} />
+              <X className="w-5 h-5" style={{ color: th.onField }} />
             </motion.button>
 
             {showPicker ? (
@@ -155,12 +157,12 @@ export function BreathingWidget() {
                     animate={{ scale: [1, 1.08, 1] }}
                     transition={{ repeat: Infinity, duration: 3 }}
                   >
-                    <Wind className="w-7 h-7" style={{ color: th.dustyBlue }} />
+                    <Wind className="w-7 h-7" style={{ color: th.textSecondary }} />
                   </motion.div>
-                  <h2 style={{ fontSize: "1.3rem", fontWeight: 700, color: th.text, marginBottom: 4 }}>
+                  <h2 style={{ fontSize: "1.3rem", fontWeight: 700, color: th.onField, marginBottom: 4 }}>
                     Дыхательная практика
                   </h2>
-                  <p style={{ fontSize: "0.78rem", color: th.textMuted, lineHeight: 1.4 }}>
+                  <p style={{ fontSize: "0.78rem", color: th.onField, opacity: 0.6, lineHeight: 1.4 }}>
                     Сделайте паузу. Несколько минут осознанного дыхания помогут вернуть спокойствие
                   </p>
                 </div>
@@ -171,14 +173,14 @@ export function BreathingWidget() {
                       key={p.name}
                       className="w-full rounded-xl p-4 border text-left"
                       style={{
-                        backgroundColor: selectedPattern.name === p.name ? phaseColor + "12" : th.card,
-                        borderColor: selectedPattern.name === p.name ? phaseColor + "40" : th.border,
+                        backgroundColor: selectedPattern.name === p.name ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.04)",
+                        borderColor: selectedPattern.name === p.name ? "rgba(255,255,255,0.3)" : "transparent",
                       }}
                       onClick={() => setSelectedPattern(p)}
                       whileTap={{ scale: 0.98 }}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span style={{ fontSize: "0.9rem", fontWeight: 600, color: th.text }}>{p.label}</span>
+                        <span style={{ fontSize: "0.9rem", fontWeight: 600, color: th.onField }}>{p.label}</span>
                         <div
                           className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
                           style={{
@@ -191,7 +193,7 @@ export function BreathingWidget() {
                           )}
                         </div>
                       </div>
-                      <p style={{ fontSize: "0.72rem", color: th.textMuted }}>{p.description}</p>
+                      <p style={{ fontSize: "0.72rem", color: th.onField, opacity: 0.55 }}>{p.description}</p>
                       <div className="flex gap-1.5 mt-2">
                         {p.phases.map((ph, i) => (
                           <span
@@ -201,7 +203,7 @@ export function BreathingWidget() {
                               fontSize: "0.6rem",
                               fontWeight: 500,
                               backgroundColor: th.bgSecondary,
-                              color: th.textMuted,
+                              color: th.onField,
                             }}
                           >
                             {ph.label} {ph.duration}s
@@ -213,13 +215,12 @@ export function BreathingWidget() {
                 </div>
 
                 <motion.button
-                  className="w-full text-white rounded-xl py-4 mt-6 shadow-sm"
+                  className="w-full rounded-xl py-4 mt-6 shadow-sm"
                   style={{
                     fontSize: "0.95rem",
                     fontWeight: 600,
                     background: "#7EA8BE",
-                    boxShadow: "none",
-                  }}
+                    boxShadow: "none", color: th.onInk}}
                   onClick={startSession}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -235,7 +236,7 @@ export function BreathingWidget() {
               >
                 {/* Cycle counter */}
                 <div className="absolute top-14 left-0 right-0 text-center">
-                  <span style={{ fontSize: "0.75rem", color: th.textMuted }}>
+                  <span style={{ fontSize: "0.75rem", color: th.onField, opacity: 0.6 }}>
                     {selectedPattern.label} — цикл {cycles + 1}
                   </span>
                 </div>
@@ -256,6 +257,7 @@ export function BreathingWidget() {
                     mood="day"
                     size={132}
                     draw={false}
+                    color={th.onField}
                     breathDuration={currentPhase.duration}
                     breath={
                       !isRunning
@@ -281,7 +283,7 @@ export function BreathingWidget() {
                   </h3>
                   <motion.span
                     key={timer}
-                    style={{ fontSize: "2.5rem", fontWeight: 300, color: th.textMuted }}
+                    className="display-num" style={{ fontSize: "2.6rem", color: th.onField, opacity: 0.75 }}
                     initial={{ opacity: 0.5, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                   >
@@ -296,7 +298,7 @@ export function BreathingWidget() {
                       key={i}
                       className="w-2.5 h-2.5 rounded-full transition-all duration-300"
                       style={{
-                        backgroundColor: i === phaseIndex ? phaseColor : th.border,
+                        backgroundColor: i === phaseIndex ? th.onField : "rgba(255,255,255,0.22)",
                         transform: i === phaseIndex ? "scale(1.3)" : "scale(1)",
                       }}
                     />
@@ -309,9 +311,9 @@ export function BreathingWidget() {
                   style={{
                     fontSize: "0.85rem",
                     fontWeight: 600,
-                    borderColor: th.border,
-                    color: th.textMuted,
-                    backgroundColor: th.card,
+                    borderColor: "rgba(255,255,255,0.28)",
+                    color: th.onField,
+                    backgroundColor: "transparent",
                   }}
                   onClick={stopSession}
                   whileTap={{ scale: 0.95 }}
@@ -324,7 +326,7 @@ export function BreathingWidget() {
                   {cycles >= 3 && (
                     <motion.p
                       className="mt-4"
-                      style={{ fontSize: "0.78rem", color: th.sage, fontStyle: "italic" }}
+                      style={{ fontSize: "0.78rem", color: th.accent, fontStyle: "italic" }}
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                     >

@@ -351,7 +351,7 @@ export function AuthPage({ onAuth }: AuthPageProps) {
             {error && (
               <MotionP
                 className="text-center px-3 py-2 rounded-xl"
-                style={{ fontSize: "0.75rem", color: C.terracotta, backgroundColor: C.terracotta + "10" }}
+                style={{ fontSize: "0.75rem", color: C.attention, backgroundColor: C.terracotta + "10" }}
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
@@ -362,12 +362,11 @@ export function AuthPage({ onAuth }: AuthPageProps) {
           </AnimatePresence>
 
           <MotionButton
-            className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 text-white shadow-sm"
+            className="w-full py-3.5 rounded-xl flex items-center justify-center gap-2 shadow-sm"
             style={{
               background: `${C.sage}`,
               fontSize: "0.9rem",
-              fontWeight: 700,
-            }}
+              fontWeight: 700, color: th.onInk}}
             onClick={handleSubmit}
             disabled={loading}
             whileTap={{ scale: 0.97 }}
@@ -422,8 +421,8 @@ export function AuthPage({ onAuth }: AuthPageProps) {
                   onKeyDown={(e) => e.key === "Enter" && handleAdminLogin()}
                 />
                 <button
-                  className="px-4 py-2 rounded-xl text-white"
-                  style={{ fontSize: "0.75rem", fontWeight: 600, backgroundColor: C.lavender }}
+                  className="px-4 py-2 rounded-xl"
+                  style={{ fontSize: "0.75rem", fontWeight: 600, backgroundColor: C.lavender, color: th.onInk}}
                   onClick={handleAdminLogin}
                 >
                   Войти

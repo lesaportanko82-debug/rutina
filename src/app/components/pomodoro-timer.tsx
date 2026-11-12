@@ -267,7 +267,7 @@ export function PomodoroTimer() {
                     className="flex-1 py-2 rounded-xl transition-all"
                     style={{
                       backgroundColor: phase === p ? phaseLabels[p].color : "#F0EDE8",
-                      color: phase === p ? "#fff" : "#9B9489",
+                      color: phase === p ? t.onInk : "#9B9489",
                       fontSize: "0.7rem",
                       fontWeight: 500,
                     }}
@@ -330,14 +330,14 @@ export function PomodoroTimer() {
                   whileTap={{ scale: 0.9 }}
                 >
                   {isRunning ? (
-                    <Pause className="w-7 h-7 text-white" />
+                    <Pause className="w-7 h-7" />
                   ) : (
-                    <Play className="w-7 h-7 text-white ml-1" />
+                    <Play className="w-7 h-7 ml-1" />
                   )}
                 </motion.button>
                 <div className="w-12 h-12 flex items-center justify-center">
                   <div className="text-center">
-                    <span className="block" style={{ fontSize: "1rem", fontWeight: 700, color: "#4A4540" }}>
+                    <span className="block" style={{ fontSize: "1rem", fontWeight: 700, color: "#4A4540"}}>
                       {sessionCount}
                     </span>
                     <span style={{ fontSize: "0.55rem", color: "#B5AFA6" }}>сессий</span>
@@ -348,19 +348,19 @@ export function PomodoroTimer() {
               {/* Stats */}
               <div className="flex gap-3">
                 <div className="flex-1 rounded-xl p-3 text-center border" style={{ backgroundColor: "#F2EFF8", borderColor: "#DDD8EC" }}>
-                  <span className="block" style={{ fontSize: "1.1rem", fontWeight: 700, color: "#9B8EC4" }}>
+                  <span className="block" style={{ fontSize: "1.1rem", fontWeight: 700, color: t.textSecondary }}>
                     {pomodoroStats.totalSessions}
                   </span>
                   <span style={{ fontSize: "0.65rem", color: "#9B9489" }}>Всего сессий</span>
                 </div>
                 <div className="flex-1 rounded-xl p-3 text-center border" style={{ backgroundColor: "#F8F3ED", borderColor: "#E8E0D4" }}>
-                  <span className="block" style={{ fontSize: "1.1rem", fontWeight: 700, color: "#C4876C" }}>
+                  <span className="block" style={{ fontSize: "1.1rem", fontWeight: 700, color: t.attention }}>
                     {pomodoroStats.totalMinutes}
                   </span>
                   <span style={{ fontSize: "0.65rem", color: "#9B9489" }}>Минут фокуса</span>
                 </div>
                 <div className="flex-1 rounded-xl p-3 text-center border" style={{ backgroundColor: "#EDF5EF", borderColor: "#D5E5D8" }}>
-                  <span className="block" style={{ fontSize: "1.1rem", fontWeight: 700, color: "#8DB596" }}>
+                  <span className="block" style={{ fontSize: "1.1rem", fontWeight: 700, color: t.accent }}>
                     {Math.round(pomodoroStats.totalMinutes / 60 * 10) / 10}
                   </span>
                   <span style={{ fontSize: "0.65rem", color: "#9B9489" }}>Часов всего</span>

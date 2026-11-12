@@ -65,7 +65,7 @@ export function DayStripe({
   celebrate?: boolean;
 }) {
   const t = useTheme();
-  const fill = muted ? "#7FA98A" : "#5B8A64";
+  const fill = muted ? "#7FA98A" : t.accent;
 
   // Момент закрытия части дня: раз в день, две десятых секунды.
   const prev = useRef<Record<string, number>>({});

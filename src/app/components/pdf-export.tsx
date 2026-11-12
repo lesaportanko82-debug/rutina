@@ -542,10 +542,10 @@ class PDFRenderer {
     // Quick stats row
     this.card(() => {
       const stats = [
-        { label: "Уровень", value: `${data.profile.level}`, color: C.sage },
-        { label: "XP", value: `${data.profile.xp}/${data.profile.xpToNext}`, color: C.lavender },
-        { label: "Серия", value: `${data.profile.streak} дн.`, color: C.terracotta },
-        { label: "Монеты", value: `${data.profile.coins}`, color: C.gold },
+        { label: "Уровень", value: `${data.profile.level}`, color: C.accent },
+        { label: "XP", value: `${data.profile.xp}/${data.profile.xpToNext}`, color: C.textSecondary },
+        { label: "Серия", value: `${data.profile.streak} дн.`, color: C.attention },
+        { label: "Монеты", value: `${data.profile.coins}`, color: C.attention },
       ];
       const colW = this.CW / stats.length;
       stats.forEach((s, i) => {
@@ -637,7 +637,7 @@ class PDFRenderer {
     const bars = active.map(h => ({
       label: `${h.icon} ${h.title}`,
       value: h.completedDates.length,
-      color: C.sage,
+      color: C.accent,
     })).sort((a, b) => b.value - a.value).slice(0, 10);
 
     this.card(() => {
@@ -648,7 +648,7 @@ class PDFRenderer {
     const streakBars = data.habits.filter(h => h.bestStreak > 0).map(h => ({
       label: `${h.icon} ${h.title}`,
       value: h.bestStreak,
-      color: C.terracotta,
+      color: C.attention,
     })).sort((a, b) => b.value - a.value).slice(0, 8);
 
     if (streakBars.length > 0) {
@@ -713,7 +713,7 @@ class PDFRenderer {
       this.sp(4);
       this.card(() => {
         this.drawBarChart(
-          topTriggers.map(([t, c]) => ({ label: t.slice(0, 25), value: c, color: C.lavender })),
+          topTriggers.map(([t, c]) => ({ label: t.slice(0, 25), value: c, color: C.textSecondary })),
           "Частые триггеры",
         );
       });
@@ -764,8 +764,8 @@ class PDFRenderer {
     if (data.tasks.length >= 3) {
       this.card(() => {
         this.drawDonutChart([
-          { label: "Выполнено", value: done.length, color: C.sage },
-          { label: "В процессе", value: pend.length, color: C.gold },
+          { label: "Выполнено", value: done.length, color: C.accent },
+          { label: "В процессе", value: pend.length, color: C.attention },
         ], "Прогресс задач", 80);
       });
     }
@@ -780,7 +780,7 @@ class PDFRenderer {
     const catBars = Object.entries(catCounts).map(([cat, { done: d, total }]) => ({
       label: catLabels[cat] || cat,
       value: d,
-      color: C.teal,
+      color: C.accent,
     }));
     if (catBars.length > 1) {
       this.card(() => {
@@ -906,14 +906,14 @@ class PDFRenderer {
     this.text(`Всего: ${data.worryEntries.length} · Проверено: ${reviewed.length} · Сбылось: ${happened.length}`, { color: C.textMuted, size: 10 });
     if (reviewed.length > 0) {
       const pct = Math.round((happened.length / reviewed.length) * 100);
-      this.text(`Из проверенных опасений сбылось только ${pct}% — большинство ваших страхов не оправдываются.`, { size: 10, color: C.sage, indent: 8 });
+      this.text(`Из проверенных опасений сбылось только ${pct}% — большинство ваших страхов не оправдываются.`, { size: 10, color: C.accent, indent: 8 });
 
       // Worry outcome donut
       this.sp(4);
       this.card(() => {
         this.drawDonutChart([
-          { label: "Не сбылось", value: reviewed.length - happened.length, color: C.sage },
-          { label: "Сбылось", value: happened.length, color: C.terracotta },
+          { label: "Не сбылось", value: reviewed.length - happened.length, color: C.accent },
+          { label: "Сбылось", value: happened.length, color: C.attention },
         ], "Исход опасений", 70);
       });
     }

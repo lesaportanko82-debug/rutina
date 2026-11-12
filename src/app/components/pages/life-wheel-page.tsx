@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { RadarChart, PolarGrid, PolarAngleAxis, Radar, ResponsiveContainer } from "recharts";
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
+import { inkFor } from "../../lib/design";
 
 const areas = [
   { id: "health", name: "Здоровье", icon: "❤️", color: "#C4876C" },
@@ -102,13 +103,13 @@ export function LifeWheelPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Колесо жизни</h1>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.ink }}>Колесо жизни</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>8 сфер, оценка от 1 до 10</p>
         </div>
         {editing && (
           <motion.button onClick={handleSave} className="p-2 rounded-xl" style={{ backgroundColor: t.sage + "18" }}
             whileTap={{ scale: 0.9 }}>
-            <Save className="w-5 h-5" style={{ color: t.sage }} />
+            <Save className="w-5 h-5" style={{ color: t.accent }} />
           </motion.button>
         )}
       </div>
@@ -131,11 +132,11 @@ export function LifeWheelPage() {
           {/* Stats */}
           <div className="grid grid-cols-2 gap-3 mt-2">
             <div className="rounded-xl p-2.5 text-center" style={{ backgroundColor: t.bgSecondary }}>
-              <p style={{ fontSize: "1.1rem", fontWeight: 700, color: t.sage }}>{avgScore}</p>
+              <p style={{ fontSize: "1.1rem", fontWeight: 700, color: t.accent }}>{avgScore}</p>
               <p style={{ fontSize: "0.6rem", color: t.textFaint }}>Средний балл</p>
             </div>
             <div className="rounded-xl p-2.5 text-center" style={{ backgroundColor: t.bgSecondary }}>
-              <p style={{ fontSize: "1.1rem", fontWeight: 700, color: balance >= 70 ? "#8DB596" : balance >= 40 ? "#C4A86C" : "#C4876C" }}>{balance}%</p>
+              <p style={{ fontSize: "1.1rem", fontWeight: 700, color: inkFor(balance >= 70 ? "#4E8A62" : balance >= 40 ? "#9E8333" : "#B4683F") }}>{balance}%</p>
               <p style={{ fontSize: "0.6rem", color: t.textFaint }}>Баланс</p>
             </div>
           </div>
@@ -148,7 +149,7 @@ export function LifeWheelPage() {
           {editing ? "Оцените каждую сферу" : "Оценки"}
         </h2>
         {!editing && (
-          <button className="px-3 py-1.5 rounded-lg" style={{ backgroundColor: t.lavender + "18", fontSize: "0.72rem", fontWeight: 600, color: t.lavender }}
+          <button className="px-3 py-1.5 rounded-lg" style={{ backgroundColor: t.lavender + "18", fontSize: "0.72rem", fontWeight: 600, color: t.text}}
             onClick={() => setEditing(true)}>
             {todayEntry ? "Обновить" : "Оценить"}
           </button>
@@ -165,7 +166,7 @@ export function LifeWheelPage() {
                 <span style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text }}>{area.name}</span>
                 <span className="ml-auto px-2 py-0.5 rounded-full" style={{
                   fontSize: "0.65rem", fontWeight: 700,
-                  backgroundColor: area.color + "18", color: area.color,
+                  backgroundColor: area.color + "18", color: t.text,
                 }}>
                   {scores[area.id]}/10
                 </span>
@@ -188,7 +189,7 @@ export function LifeWheelPage() {
 
       {editing && (
         <motion.button className="w-full rounded-xl py-3 font-semibold mb-5"
-          style={{ backgroundColor: "#5B8A64", color: "#fff", fontSize: "0.9rem" }}
+          style={{ backgroundColor: t.accent, color: t.onInk, fontSize: "0.9rem" }}
           whileTap={{ scale: 0.95 }} onClick={handleSave}>
           Сохранить оценку
         </motion.button>
@@ -200,9 +201,9 @@ export function LifeWheelPage() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
             <p style={{ fontSize: "0.78rem", fontWeight: 600, color: t.text, marginBottom: 8 }}>Инсайты</p>
             <div className="space-y-2">
-              <p style={{ fontSize: "0.72rem", color: t.textMuted }}><AppIcon icon="🌟" size={20} /><strong style={{ color: sorted[sorted.length - 1].color }}>Сильная сторона:</strong> {sorted[sorted.length - 1].name} ({scores[sorted[sorted.length - 1].id]}/10)
+              <p style={{ fontSize: "0.72rem", color: t.textMuted }}><AppIcon icon="🌟" size={20} /><strong style={{ color: inkFor(sorted[sorted.length - 1].color) }}>Сильная сторона:</strong> {sorted[sorted.length - 1].name} ({scores[sorted[sorted.length - 1].id]}/10)
               </p>
-              <p style={{ fontSize: "0.72rem", color: t.textMuted }}><AppIcon icon="🌱" size={20} /><strong style={{ color: sorted[0].color }}>Зона роста:</strong> {sorted[0].name} ({scores[sorted[0].id]}/10)
+              <p style={{ fontSize: "0.72rem", color: t.textMuted }}><AppIcon icon="🌱" size={20} /><strong style={{ color: inkFor(sorted[0].color) }}>Зона роста:</strong> {sorted[0].name} ({scores[sorted[0].id]}/10)
               </p>
               {prevEntry && (
                 <p style={{ fontSize: "0.72rem", color: t.textMuted }}>

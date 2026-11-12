@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { projectId, publicAnonKey } from "../supabase-client";
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
+import { inkFor } from "../../lib/design";
 
 const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-ff738703`;
 
@@ -78,7 +79,7 @@ const meditations: Meditation[] = [
     title: "Ясный фокус",
     subtitle: "Соберите внимание, успокойте ум",
     emoji: "🎯",
-    color: "#8DB596",
+    color: "#7EA8BE",
     colorEnd: "#7BAFB0",
     durationMin: 11,
     ambientType: "rain",
@@ -115,7 +116,7 @@ const meditations: Meditation[] = [
     title: "Снятие напряжения",
     subtitle: "Освободите тело от стресса",
     emoji: "🍃",
-    color: "#C4876C",
+    color: "#7EA8BE",
     colorEnd: "#C4A86C",
     durationMin: 14,
     ambientType: "wind",
@@ -701,7 +702,7 @@ export function MeditationPage() {
             <ArrowLeft className="w-4 h-4" style={{ color: t.textMuted }} />
           </button>
           <div>
-            <h1 className="display" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>Медитации</h1>
+            <h1 className="display" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.ink }}>Медитации</h1>
             <p style={{ fontSize: "0.72rem", color: t.textMuted }}>Голосовые практики на русском языке</p>
           </div>
         </div>
@@ -731,7 +732,7 @@ export function MeditationPage() {
                   <h3 style={{ fontSize: "0.95rem", fontWeight: 700, color: t.text, marginBottom: 2 }}>{med.title}</h3>
                   <p style={{ fontSize: "0.72rem", color: t.textMuted, lineHeight: 1.4 }}>{med.subtitle}</p>
                   <div className="flex items-center gap-3 mt-2">
-                    <span className="px-2 py-0.5 rounded-full" style={{ fontSize: "0.6rem", fontWeight: 600, backgroundColor: med.color + "15", color: med.color }}>
+                    <span className="px-2 py-0.5 rounded-full" style={{ fontSize: "0.6rem", fontWeight: 600, backgroundColor: med.color + "15", color: t.text}}>
                       ~{med.durationMin} мин
                     </span>
                     <span style={{ fontSize: "0.6rem", color: t.textFaint }}>
@@ -889,7 +890,7 @@ export function MeditationPage() {
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <span style={{ fontSize: "0.6rem", fontWeight: 600, color: selected.color }}>
+            <span style={{ fontSize: "0.6rem", fontWeight: 600, color: inkFor(selected.color) }}>
               {stepPhase === "loading" ? "Подготовка голоса..." : stepPhase === "speaking" ? "Слушайте..." : "Пауза — дышите..."}
             </span>
           </motion.div>
@@ -921,13 +922,13 @@ export function MeditationPage() {
               style={{ background: `${selected.color}` }}
               whileTap={{ scale: 0.92 }}
             >
-              {playing ? <Pause className="w-6 h-6 text-white" /> : <Play className="w-6 h-6 text-white ml-0.5" />}
+              {playing ? <Pause className="w-6 h-6" /> : <Play className="w-6 h-6 ml-0.5" />}
             </motion.button>
 
             <button
               onClick={skipStep}
               className="w-11 h-11 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: t.bgSecondary }}
+              style={{ backgroundColor: t.bgSecondary, color: t.onInk}}
               disabled={!playing}
             >
               <SkipForward className="w-4.5 h-4.5" style={{ color: playing ? t.textMuted : t.textFaint }} />
@@ -944,8 +945,8 @@ export function MeditationPage() {
             </button>
             <button
               onClick={() => { stopAll(); setSelected(null); setCompleted(false); setCurrentStep(0); }}
-              className="flex-1 py-3.5 rounded-xl text-white"
-              style={{ fontSize: "0.82rem", fontWeight: 600, background: `${selected.color}` }}
+              className="flex-1 py-3.5 rounded-xl"
+              style={{ fontSize: "0.82rem", fontWeight: 600, background: `${selected.color}`, color: th.onInk}}
             >
               Готово
             </button>

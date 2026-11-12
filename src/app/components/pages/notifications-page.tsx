@@ -97,7 +97,7 @@ export function NotificationsPage() {
   return (
     <div style={{ paddingLeft: 22, paddingRight: 22, paddingTop: 42, paddingBottom: 32 }}>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="display" style={{ fontSize: "1.35rem", color: t.text }}>
+        <h1 className="display" style={{ fontSize: "1.35rem", color: t.ink }}>
           Напоминания
         </h1>
         <motion.button
@@ -106,10 +106,10 @@ export function NotificationsPage() {
           onClick={() => { if (showForm) resetForm(); else setShowForm(true); }}
           whileTap={{ scale: 0.9 }}
         >
-          {showForm ? <X className="w-5 h-5 text-white" /> : <Plus className="w-5 h-5 text-white" />}
+          {showForm ? <X className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
         </motion.button>
       </div>
-      <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 16 }}>
+      <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 16}}>
         
       </p>
 
@@ -120,7 +120,7 @@ export function NotificationsPage() {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <BellRing className="w-5 h-5 shrink-0" style={{ color: t.gold }} />
+          <BellRing className="w-5 h-5 shrink-0" style={{ color: t.attention }} />
           <div className="flex-1">
             <span style={{ fontSize: "0.85rem", fontWeight: 500, color: t.text }}>
               Разрешите уведомления
@@ -130,8 +130,7 @@ export function NotificationsPage() {
             </p>
           </div>
           <button
-            className="px-3 py-1.5 text-white rounded-lg"
-            style={{ fontSize: "0.78rem", fontWeight: 600, backgroundColor: "#5B8A64" }}
+            className="px-3 py-1.5 rounded-lg" style={{ fontSize: "0.78rem", fontWeight: 600, backgroundColor: t.accent, color: t.onInk }}
             onClick={requestPermission}
           >
             Включить
@@ -142,11 +141,11 @@ export function NotificationsPage() {
       {/* Сводка: цифры на бумаге, без плиток */}
       <div className="flex items-baseline" style={{ gap: 36, marginBottom: 32 }}>
         <div>
-          <span className="block display-num" style={{ fontSize: "1.6rem", color: t.text }}>{reminders.filter((r) => r.enabled).length}</span>
+          <span className="block display-num" style={{ fontSize: "1.6rem", color: t.ink }}>{reminders.filter((r) => r.enabled).length}</span>
           <span style={{ fontSize: "0.72rem", color: t.textMuted }}>активных</span>
         </div>
         <div>
-          <span className="block display-num" style={{ fontSize: "1.6rem", color: t.text }}>{reminders.length}</span>
+          <span className="block display-num" style={{ fontSize: "1.6rem", color: t.ink }}>{reminders.length}</span>
           <span style={{ fontSize: "0.72rem", color: t.textMuted }}>всего</span>
         </div>
         <div>
@@ -194,7 +193,7 @@ export function NotificationsPage() {
                     style={{
                       fontSize: "0.65rem", fontWeight: 500,
                       backgroundColor: newDays.includes(i) ? t.sage : t.inputBg,
-                      color: newDays.includes(i) ? "#fff" : t.textMuted,
+                      color: newDays.includes(i) ? t.onInk : t.textMuted,
                       border: newDays.includes(i) ? "none" : `1px solid ${t.borderLight}`,
                     }}
                     onClick={() => toggleDay(i)}
@@ -255,8 +254,8 @@ export function NotificationsPage() {
               ))}
             </div>
             <motion.button
-              className="w-full text-white rounded-xl py-3"
-              style={{ fontSize: "0.9rem", fontWeight: 600, backgroundColor: t.sage }}
+              className="w-full rounded-xl py-3"
+              style={{ fontSize: "0.9rem", fontWeight: 600, backgroundColor: t.accent, color: t.onInk }}
               onClick={editingId ? handleUpdate : handleAdd}
               whileTap={{ scale: 0.98 }}
             >

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
-import { ChevronRight, Wind, Hand, LifeBuoy, PenLine, CloudRain, Brain, Moon, BarChart3, Bell, Headphones, MessageCircle, Activity, CalendarCheck, FileDown } from "lucide-react";
+import { ChevronRight, Wind, Hand, LifeBuoy, PenLine, CloudRain, Brain, Moon, BarChart3, Bell, Headphones, MessageCircle, Activity, CalendarCheck, FileDown, Compass, Mail } from "lucide-react";
 import { useTheme } from "../theme";
 
 type Item = { label: string; hint: string; path?: string; event?: string; icon: React.ComponentType<{ size?: number; color?: string }> };
@@ -36,6 +36,8 @@ const groups: { title: string; items: Item[] }[] = [
     title: "Обзор",
     items: [
       { label: "Разбор недели", hint: "Две минуты: посмотреть, ответить, поправить", path: "/app/week", icon: CalendarCheck },
+      { label: "Колесо жизни", hint: "Где сейчас перекос", path: "/app/lifewheel", icon: Compass },
+      { label: "Капсула времени", hint: "Письмо себе в будущее", path: "/app/capsule", icon: Mail },
       { label: "Статистика", hint: "Задачи, привычки, настроение", path: "/app/stats", icon: BarChart3 },
       { label: "Выгрузка для специалиста", hint: "Настроение, тревога и дневник одним PDF", path: "/app/export", icon: FileDown },
       { label: "Напоминания", hint: "Время и дни", path: "/app/notifications", icon: Bell },
