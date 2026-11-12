@@ -41,6 +41,13 @@ export const router = createBrowserRouter([
             },
           },
           {
+            path: "day",
+            lazy: async () => {
+              const { DayPage } = await import("./components/pages/day-page");
+              return { Component: DayPage };
+            },
+          },
+          {
             path: "tasks",
             lazy: async () => {
               const { TasksPage } = await import("./components/pages/tasks-page");

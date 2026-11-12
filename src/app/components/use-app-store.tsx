@@ -27,6 +27,7 @@ export interface Habit {
   category: "health" | "productivity" | "mindfulness" | "fitness";
   microVersion?: string; // minimal version for micro-habit
   stackedAfter?: string; // habitId — do this habit after another
+  timeOfDay?: "morning" | "day" | "evening"; // часть дня в «Ритме дня»
 }
 
 export interface MoodEntry {
@@ -601,6 +602,10 @@ export function useAppStore() {
     setHabits((prev) => prev.filter((h) => h.id !== id));
   }, []);
 
+  const setHabitTimeOfDay = useCallback((id: string, timeOfDay: Habit["timeOfDay"]) => {
+    setHabits((prev) => prev.map((h) => (h.id === id ? { ...h, timeOfDay } : h)));
+  }, []);
+
   const reorderHabits = useCallback((fromIndex: number, toIndex: number) => {
     setHabits((prev) => {
       const arr = [...prev];
@@ -1059,6 +1064,7 @@ export function useAppStore() {
     favoriteTools, setFavoriteTools,
     toggleTask, toggleSubtask, addTask, updateTask, deleteTask, addSubtask, deleteSubtask,
     toggleHabitToday, addHabit, deleteHabit, reorderHabits, freezeHabitToday, toggleHabitMicroToday,
+    setHabitTimeOfDay,
     setHabitStack,
     addMoodEntry, deleteMoodEntry,
     addXP,

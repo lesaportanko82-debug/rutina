@@ -7,6 +7,19 @@ import { AppIcon } from "../app-icon";
 
 const today = () => new Date().toISOString().split("T")[0];
 
+const DAY_PARTS = [
+  { key: "morning" as const, label: "Утро" },
+  { key: "day" as const, label: "День" },
+  { key: "evening" as const, label: "Вечер" },
+];
+
+function partNow(): "morning" | "day" | "evening" {
+  const h = new Date().getHours();
+  if (h < 12) return "morning";
+  if (h < 18) return "day";
+  return "evening";
+}
+
 const MOODS = [
   { name: "Радость", emoji: "😊", color: "#C4A86C" },
   { name: "Спокойствие", emoji: "😌", color: "#8DB596" },
@@ -33,6 +46,7 @@ export function TodayPage() {
   const navigate = useNavigate();
   const d = today();
   const [moodSaved, setMoodSaved] = useState(false);
+  const nowPart = partNow();
 
   const name = questionnaire.filled && questionnaire.name ? questionnaire.name : profile.name;
   const todayMood = moods.find((m) => m.date === d);
@@ -61,6 +75,35 @@ export function TodayPage() {
           {greeting()}{name && name !== "Пользователь" ? `, ${name}` : ""}
         </h1>
       </div>
+
+      {/* Ритм дня */}
+      <button
+        onClick={() => navigate("/app/day")}
+        className="w-full flex items-stretch mb-4 overflow-hidden text-left"
+        style={card}
+      >
+        {DAY_PARTS.map((p, i) => {
+          const isNow = p.key === nowPart;
+          const count = habits.filter((h) => h.timeOfDay === p.key).length;
+          return (
+            <span
+              key={p.key}
+              className="flex-1 px-3 py-3"
+              style={{
+                borderLeft: i === 0 ? "none" : `1px solid ${t.border}`,
+                background: isNow ? t.bgSecondary : "transparent",
+              }}
+            >
+              <span style={{ display: "block", fontSize: "0.8rem", fontWeight: isNow ? 700 : 500, color: isNow ? t.text : t.textMuted }}>
+                {p.label}
+              </span>
+              <span style={{ display: "block", fontSize: "0.7rem", color: t.textMuted }}>
+                {count > 0 ? `${count} привыч.` : "—"}
+              </span>
+            </span>
+          );
+        })}
+      </button>
 
       {/* Mood: one tap */}
       <div className="p-4 mb-4" style={card}>

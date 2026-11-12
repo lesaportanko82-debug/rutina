@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { enablePush, syncReminders } from "../../lib/push";
 import { useApp } from "../app-context";
 import { useTheme } from "../theme";
 import { motion, AnimatePresence } from "motion/react";
@@ -34,15 +35,31 @@ export function NotificationsPage() {
   const [newType, setNewType] = useState<"habit" | "task" | "mood" | "water" | "custom">("custom");
   const [newIcon, setNewIcon] = useState("");
 
+  const pushPayload = reminders.map((r) => ({
+    title: r.title,
+    body: r.icon ? `${r.icon} Время для: ${r.title}` : `Время для: ${r.title}`,
+    time: r.time,
+    days: r.days,
+    enabled: r.enabled,
+  }));
+
   const requestPermission = async () => {
-    if ("Notification" in window) {
-      const result = await Notification.requestPermission();
-      setPermissionStatus(result);
-      if (result === "granted") {
-        toast.success("Уведомления включены!");
-      }
-    }
+    const result = await enablePush(pushPayload);
+    setPermissionStatus(result === "ok" ? "granted" : result === "denied" ? "denied" : permissionStatus);
+    if (result === "ok") toast.success("Уведомления включены!");
+    else if (result === "denied") toast.error("Разрешение не выдано — включите уведомления в настройках браузера");
+    else if (result === "unsupported") toast.error("Браузер не поддерживает push-уведомления");
+    else toast.error("Не удалось подписаться, попробуйте ещё раз");
   };
+
+  // Держим расписание на сервере в соответствии с напоминаниями в приложении
+  const lastSynced = useRef("");
+  useEffect(() => {
+    const snapshot = JSON.stringify(pushPayload);
+    if (snapshot === lastSynced.current) return;
+    lastSynced.current = snapshot;
+    void syncReminders(pushPayload);
+  }, [reminders]);
 
   const handleAdd = () => {
     if (!newTitle.trim()) return;
