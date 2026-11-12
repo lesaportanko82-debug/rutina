@@ -583,7 +583,7 @@ export function StatsPage() {
             </div>
           )}
 
-          <button onClick={() => navigate("/anxiety")} className="w-full py-3 rounded-xl text-center"
+          <button onClick={() => navigate("/app/anxiety")} className="w-full py-3 rounded-xl text-center"
             style={{ fontSize: "0.8rem", fontWeight: 500, color: t.accent, backgroundColor: t.bgSecondary }}>
             Открыть трекер →
           </button>

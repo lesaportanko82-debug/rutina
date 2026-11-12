@@ -620,7 +620,7 @@ export function ProfilePage() {
               </button>
               {/* Notifications */}
               <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
-                onClick={() => navigate("/notifications")}>
+                onClick={() => navigate("/app/notifications")}>
                 <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
                   <Bell className="w-5 h-5" style={{ color: t.textSecondary }} />
                 </div>
@@ -631,7 +631,7 @@ export function ProfilePage() {
               </button>
               {/* Journal */}
               <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `0.5px solid ${t.borderLight}` }}
-                onClick={() => navigate("/journal")}>
+                onClick={() => navigate("/app/journal")}>
                 <div className="flex items-center justify-center" style={{ width: 22, height: 22 }}>
                   <BookOpen className="w-5 h-5" style={{ color: t.textSecondary }} />
                 </div>
