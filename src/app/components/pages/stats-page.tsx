@@ -10,6 +10,8 @@ import { getPersonalizedRecommendations } from "../recommendations-engine";
 import { useState, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { AppIcon } from "../app-icon";
+import { StripeMonth } from "../day-stripe";
+import { consistency } from "../../lib/consistency";
 
 const categoryColors: Record<string, string> = { work: "#7EA8BE", personal: "#9B8EC4", health: "#8DB596", study: "#C4A86C" };
 const categoryLabelsMap: Record<string, string> = { work: "Работа", personal: "Личное", health: "Здоровье", study: "Учёба" };
@@ -49,6 +51,16 @@ export function StatsPage() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabId>("overview");
 
+  const last30 = useMemo(() => {
+    const out: string[] = [];
+    for (let i = 29; i >= 0; i--) {
+      const dt = new Date();
+      dt.setDate(dt.getDate() - i);
+      out.push(dt.toISOString().split("T")[0]);
+    }
+    return out;
+  }, []);
+
   const completedTasks = tasks.filter((tk) => tk.completed).length;
   const avgEnergy = moods.length > 0 ? moods.reduce((s, m) => s + m.energy, 0) / moods.length : 0;
 
@@ -58,7 +70,7 @@ export function StatsPage() {
     })).filter((dd) => dd.value > 0),
   [tasks]);
 
-  const habitData = habits.map((h) => ({ name: h.icon, streak: h.streak, best: h.bestStreak, color: h.color }));
+  const habitData = habits.map((h) => ({ name: h.icon, streak: consistency(h).percent, best: h.bestStreak, color: h.color }));
 
   const moodEnergyData = useMemo(() =>
     moods.slice(-14).map((m) => ({
@@ -199,10 +211,18 @@ export function StatsPage() {
 
   return (
     <div className="px-5 pt-12 pb-8">
-      <h1 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }} className="mb-1">Статистика</h1>
-      <p style={{ fontSize: "0.78rem", color: t.textMuted, marginBottom: 14 }}>
-        
-      </p>
+      <h1 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }} className="display mb-3">Статистика</h1>
+
+      {/* Месяц как текстура: 30 полос дня подряд */}
+      {habits.length > 0 && (
+        <div className="p-4 mb-5" style={{ background: t.card, border: `1px solid ${t.border}`, borderRadius: 12 }}>
+          <div className="flex items-baseline justify-between mb-3">
+            <span style={{ fontSize: "0.9rem", fontWeight: 700, color: t.text }}>Последние 30 дней</span>
+            <span style={{ fontSize: "0.72rem", color: t.textMuted }}>утро · день · вечер</span>
+          </div>
+          <StripeMonth days={last30} habits={habits} tasks={tasks} />
+        </div>
+      )}
 
       {/* ─── Tab bar ─── */}
       <div className="flex gap-1 mb-5 overflow-x-auto pb-1 -mx-1 px-1">
@@ -231,12 +251,12 @@ export function StatsPage() {
           <div className="grid grid-cols-2 gap-3 mb-5">
             <div className="rounded-xl p-3.5 border" style={{ backgroundColor: t.lavender + "0D", borderColor: t.lavender + "20" }}>
               <TrendingUp className="w-4 h-4 mb-1.5" style={{ color: t.lavender }} />
-              <span className="block" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>{completedTasks}</span>
+              <span className="block display-num" style={{ fontSize: "1.45rem", color: t.text }}>{completedTasks}</span>
               <span style={{ fontSize: "0.68rem", color: t.textMuted }}>Задач выполнено</span>
             </div>
             <div className="rounded-xl p-3.5 border" style={{ backgroundColor: t.sage + "0D", borderColor: t.sage + "20" }}>
               <Brain className="w-4 h-4 mb-1.5" style={{ color: t.sage }} />
-              <span className="block" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>{avgEnergy.toFixed(1)}</span>
+              <span className="block display-num" style={{ fontSize: "1.45rem", color: t.text }}>{avgEnergy.toFixed(1)}</span>
               <span style={{ fontSize: "0.68rem", color: t.textMuted }}>Средняя энергия</span>
             </div>
           </div>
@@ -323,7 +343,7 @@ export function StatsPage() {
 
           {habitData.length > 0 && (
             <div className="rounded-xl p-3.5 border mb-5" style={{ backgroundColor: t.card, borderColor: t.border }}>
-              <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>Стрики привычек</span>
+              <span style={{ fontSize: "0.82rem", fontWeight: 600, color: t.text }}>Постоянство привычек, %</span>
               <div className="mt-2 h-32">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={habitData}>

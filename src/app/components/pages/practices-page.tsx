@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { ChevronRight, Wind, Hand, LifeBuoy, PenLine, CloudRain, Brain, Moon, BarChart3, Bell, Headphones, MessageCircle, Activity } from "lucide-react";
+import { ChevronRight, Wind, Hand, LifeBuoy, PenLine, CloudRain, Brain, Moon, BarChart3, Bell, Headphones, MessageCircle, Activity, CalendarCheck, FileDown } from "lucide-react";
 import { useTheme } from "../theme";
 
 type Item = { label: string; hint: string; path?: string; event?: string; icon: React.ComponentType<{ size?: number; color?: string }> };
@@ -34,7 +34,9 @@ const groups: { title: string; items: Item[] }[] = [
   {
     title: "Обзор",
     items: [
+      { label: "Разбор недели", hint: "Две минуты: посмотреть, ответить, поправить", path: "/app/week", icon: CalendarCheck },
       { label: "Статистика", hint: "Задачи, привычки, настроение", path: "/app/stats", icon: BarChart3 },
+      { label: "Выгрузка для специалиста", hint: "Настроение, тревога и дневник одним PDF", path: "/app/export", icon: FileDown },
       { label: "Напоминания", hint: "Время и дни", path: "/app/notifications", icon: Bell },
     ],
   },
@@ -49,7 +51,7 @@ export function PracticesPage() {
   };
   return (
     <div className="px-5 pt-6 pb-8">
-      <h1 className="mb-5" style={{ fontSize: "1.5rem", fontWeight: 700, color: t.text }}>Практики</h1>
+      <h1 className="display mb-5" style={{ fontSize: "1.5rem", fontWeight: 700, color: t.text }}>Практики</h1>
       {groups.map((g) => (
         <div key={g.title} className="mb-5">
           <p className="mb-2" style={{ fontSize: "0.72rem", fontWeight: 600, color: t.textMuted, textTransform: "uppercase", letterSpacing: "0.04em" }}>

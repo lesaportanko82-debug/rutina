@@ -139,7 +139,7 @@ export function AnxietyPage() {
           <ArrowLeft className="w-4.5 h-4.5" style={{ color: t.textSecondary }} />
         </button>
         <div>
-          <h1 style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>
+          <h1 className="display" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>
             Трекер тревоги
           </h1>
           <p style={{ fontSize: "0.72rem", color: t.textMuted }}>

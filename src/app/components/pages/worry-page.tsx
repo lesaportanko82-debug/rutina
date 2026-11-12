@@ -100,7 +100,7 @@ export function WorryPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Дневник тревог</h1>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Дневник тревог</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Записать тревогу и проверить позже, сбылась ли</p>
         </div>
         <button onClick={() => setShowForm(true)} className="p-2 rounded-xl" style={{ backgroundColor: t.sage + "18" }}>

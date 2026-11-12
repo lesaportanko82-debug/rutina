@@ -135,7 +135,7 @@ export function GroundingPage() {
           <ArrowLeft className="w-4.5 h-4.5" style={{ color: t.textSecondary }} />
         </button>
         <div className="flex-1">
-          <h1 style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>
+          <h1 className="display" style={{ fontSize: "1.2rem", fontWeight: 700, color: t.text }}>
             Заземление 5-4-3-2-1
           </h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>

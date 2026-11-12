@@ -247,7 +247,7 @@ export function Dashboard() {
       >
         <div>
           <p style={{ fontSize: "0.82rem", color: t.textMuted }}>{greetings()}</p>
-          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, lineHeight: 1.2, color: t.text }}>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, lineHeight: 1.2, color: t.text }}>
             {displayName}
           </h1>
         </div>

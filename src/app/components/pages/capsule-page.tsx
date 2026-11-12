@@ -72,7 +72,7 @@ export function CapsulePage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Капсула времени</h1>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Капсула времени</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Письмо будущему себе</p>
         </div>
         <button onClick={() => setShowForm(true)} className="p-2 rounded-xl" style={{ backgroundColor: t.lavender + "18" }}>

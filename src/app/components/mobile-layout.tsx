@@ -338,14 +338,14 @@ export function MobileLayout() {
           fontFamily: "'Manrope', system-ui, sans-serif",
           height: stableHeight ? `${stableHeight}px` : '100dvh',
           minHeight: stableHeight ? `${stableHeight}px` : '100dvh',
-          background: darkMode
-            ? "#1A1918"
-            : "#F0EDE8",
+          background: t.bgTertiary,
+          transition: "background-color 1.2s ease",
         }}
       >
         <div
           className="w-full max-w-[430px] md:rounded-xl md:border flex flex-col overflow-hidden relative"
           data-mobile-root
+          data-theme={darkMode ? "dark" : "light"}
           style={{
             borderColor: darkMode ? "#3A373430" : "#E8E3DC60",
             height: stableHeight ? `${containerHeight}px` : '100dvh',
@@ -408,8 +408,8 @@ export function MobileLayout() {
             transition={{ duration: 0.25, ease: "easeInOut" }}
             style={{
               pointerEvents: inputFocused ? "none" : "auto",
-              backgroundColor: darkMode ? "#1A1918" : "#FAF8F5",
-              borderTop: `1px solid ${darkMode ? "#3A3734" : "#E8E3DC"}`,
+              backgroundColor: t.bg,
+              borderTop: `1px solid ${t.navBorder}`,
               zIndex: 10,
             }}
           >

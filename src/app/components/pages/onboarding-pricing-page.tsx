@@ -185,7 +185,7 @@ export function OnboardingPricingPage() {
             </motion.div>
           </div>
 
-          <h1 className="text-4xl font-bold mb-4" style={{ color: t.text, lineHeight: 1.2 }}>
+          <h1 className="display text-4xl font-bold mb-4" style={{ color: t.text, lineHeight: 1.2 }}>
             Порядок в дне —<br />порядок в жизни
           </h1>
 

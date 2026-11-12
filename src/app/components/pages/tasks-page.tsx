@@ -91,7 +91,7 @@ export function TasksPage() {
   return (
     <div className="px-5 pt-14 pb-8">
       <div className="flex items-center justify-between mb-2">
-        <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>
+        <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>
           Задачи
         </h1>
         <motion.button

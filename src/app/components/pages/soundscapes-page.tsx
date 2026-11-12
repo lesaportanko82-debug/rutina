@@ -502,7 +502,7 @@ export function SoundscapesPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Звуки природы</h1>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Звуки природы</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Фоновые звуки для расслабления и фокуса</p>
         </div>
       </div>

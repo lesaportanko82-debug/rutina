@@ -1,9 +1,14 @@
 import { useMemo, useState } from "react";
+import { InkCheck } from "../ink";
 import { useNavigate } from "react-router";
 import { Plus, Check, ChevronRight, Timer } from "lucide-react";
 import { useApp } from "../app-context";
 import { useTheme } from "../theme";
 import { AppIcon } from "../app-icon";
+import { DayStripe, buildStripe } from "../day-stripe";
+import { consistency } from "../../lib/consistency";
+import { computeInsights } from "../../lib/insights";
+import { weekReviewDone } from "../../lib/week";
 
 const today = () => new Date().toISOString().split("T")[0];
 
@@ -28,6 +33,15 @@ const MOODS = [
   { name: "Тревога", emoji: "😰", color: "#B88FA7" },
 ];
 
+/** Практика в ответ на настроение: не библиотека, а одно уместное предложение */
+const MOOD_PRACTICE: Record<string, { text: string; action: string; path?: string; event?: string }> = {
+  "Тревога": { text: "Тревожно — можно заземлиться за три минуты.", action: "Заземление 5-4-3-2-1", path: "/app/anxiety/grounding" },
+  "Усталость": { text: "Устали — мышцам поможет короткое расслабление.", action: "Релаксация, 4 минуты", path: "/app/pmr" },
+  "Раздражение": { text: "Раздражение хорошо снимает медленное дыхание.", action: "Дыхание 4-7-8", event: "open-breathing" },
+  "Грусть": { text: "Грустно — иногда легче, если это записать.", action: "Открыть дневник", path: "/app/journal" },
+  "Задумчивость": { text: "Много мыслей — их можно выгрузить на бумагу.", action: "Открыть дневник", path: "/app/journal" },
+};
+
 function greeting() {
   const h = new Date().getHours();
   if (h < 5) return "Доброй ночи";
@@ -41,15 +55,20 @@ function dateLabel() {
 }
 
 export function TodayPage() {
-  const { tasks, habits, moods, profile, questionnaire, toggleTask, toggleHabitToday, addMoodEntry } = useApp();
+  const { tasks, habits, moods, reminders, anxietyEntries, profile, questionnaire, toggleTask, toggleHabitToday, addMoodEntry } = useApp();
   const t = useTheme();
   const navigate = useNavigate();
   const d = today();
   const [moodSaved, setMoodSaved] = useState(false);
   const nowPart = partNow();
+  const insight = useMemo(() => computeInsights(habits, moods, anxietyEntries), [habits, moods, anxietyEntries]);
+  const stripe = useMemo(() => buildStripe(d, habits, tasks, reminders), [d, habits, tasks, reminders]);
 
   const name = questionnaire.filled && questionnaire.name ? questionnaire.name : profile.name;
   const todayMood = moods.find((m) => m.date === d);
+  const wd = new Date().getDay();
+  const showWeekReview = (wd === 0 || wd === 1) && (habits.length > 0 || moods.length > 0) && !weekReviewDone();
+  const suggestion = todayMood ? MOOD_PRACTICE[todayMood.mood] : undefined;
   const openTasks = useMemo(() => tasks.filter((x) => !x.completed), [tasks]);
   const habitsDone = habits.filter((h) => h.completedDates.includes(d)).length;
 
@@ -71,38 +90,28 @@ export function TodayPage() {
       {/* Header */}
       <div className="mb-5">
         <p style={{ fontSize: "0.8rem", color: t.textMuted, textTransform: "capitalize" }}>{dateLabel()}</p>
-        <h1 style={{ fontSize: "1.5rem", fontWeight: 700, color: t.text, lineHeight: 1.2 }}>
+        <h1 className="display" style={{ fontSize: "1.3rem", color: t.text, lineHeight: 1.25 }}>
           {greeting()}{name && name !== "Пользователь" ? `, ${name}` : ""}
         </h1>
       </div>
 
-      {/* Ритм дня */}
-      <button
-        onClick={() => navigate("/app/day")}
-        className="w-full flex items-stretch mb-4 overflow-hidden text-left"
-        style={card}
-      >
-        {DAY_PARTS.map((p, i) => {
-          const isNow = p.key === nowPart;
-          const count = habits.filter((h) => h.timeOfDay === p.key).length;
-          return (
-            <span
-              key={p.key}
-              className="flex-1 px-3 py-3"
-              style={{
-                borderLeft: i === 0 ? "none" : `1px solid ${t.border}`,
-                background: isNow ? t.bgSecondary : "transparent",
-              }}
-            >
-              <span style={{ display: "block", fontSize: "0.8rem", fontWeight: isNow ? 700 : 500, color: isNow ? t.text : t.textMuted }}>
+      {/* Полоса дня */}
+      <button onClick={() => navigate("/app/day")} className="w-full px-4 py-4 mb-4 text-left" style={card}>
+        <DayStripe parts={stripe} highlight={nowPart} height={10} />
+        <div className="flex mt-2">
+          {DAY_PARTS.map((p) => {
+            const isNow = p.key === nowPart;
+            const part = stripe.find((s) => s.key === p.key);
+            return (
+              <span key={p.key} className="flex-1" style={{ fontSize: "0.72rem", color: isNow ? t.text : t.textMuted, fontWeight: isNow ? 700 : 500 }}>
                 {p.label}
+                {part && part.total > 0 && (
+                  <span style={{ color: t.textMuted, fontWeight: 500 }}> {part.done}/{part.total}</span>
+                )}
               </span>
-              <span style={{ display: "block", fontSize: "0.7rem", color: t.textMuted }}>
-                {count > 0 ? `${count} привыч.` : "—"}
-              </span>
-            </span>
-          );
-        })}
+            );
+          })}
+        </div>
       </button>
 
       {/* Mood: one tap */}
@@ -114,12 +123,26 @@ export function TodayPage() {
           </button>
         </div>
         {todayMood || moodSaved ? (
-          <p style={{ fontSize: "0.85rem", color: t.textSecondary }}>
-            Сегодня: {todayMood?.mood ?? "записано"}.{" "}
-            <button onClick={() => navigate("/app/mood")} style={{ color: "#5B8A64", fontWeight: 600 }}>
-              Изменить
-            </button>
-          </p>
+          <>
+            <p style={{ fontSize: "0.85rem", color: t.textSecondary }}>
+              Сегодня: {todayMood?.mood ?? "записано"}.{" "}
+              <button onClick={() => navigate("/app/mood")} style={{ color: "#5B8A64", fontWeight: 600 }}>
+                Изменить
+              </button>
+            </p>
+            {suggestion && (
+              <div className="mt-3 pt-3" style={{ borderTop: `1px solid ${t.border}` }}>
+                <p style={{ fontSize: "0.84rem", color: t.text, marginBottom: 8 }}>{suggestion.text}</p>
+                <button
+                  onClick={() => (suggestion.event ? document.dispatchEvent(new CustomEvent(suggestion.event)) : navigate(suggestion.path!))}
+                  className="px-3 py-2 rounded-lg"
+                  style={{ background: "#5B8A64", color: "#fff", fontSize: "0.82rem", fontWeight: 600 }}
+                >
+                  {suggestion.action}
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="flex gap-2">
             {MOODS.map((m) => (
@@ -137,6 +160,39 @@ export function TodayPage() {
           </div>
         )}
       </div>
+
+      {/* Разбор недели: в воскресенье и понедельник, пока не пройден */}
+      {showWeekReview && (
+        <button onClick={() => navigate("/app/week")} className="w-full p-4 mb-4 text-left flex items-center justify-between" style={{ ...card, borderColor: "#5B8A64" }}>
+          <span>
+            <span style={{ display: "block", fontSize: "0.92rem", fontWeight: 700, color: t.text }}>Разбор недели</span>
+            <span style={{ fontSize: "0.78rem", color: t.textMuted }}>Две минуты, чтобы закрыть неделю</span>
+          </span>
+          <ChevronRight size={16} color={t.textMuted} />
+        </button>
+      )}
+
+      {/* Наблюдения: приложение отвечает на данные */}
+      {(insight.insights.length > 0 || (insight.daysCollected >= 3 && insight.daysCollected < insight.daysNeeded)) && (
+        <div className="p-4 mb-4" style={card}>
+          <span style={sectionTitle}>Наблюдения</span>
+          {insight.insights.length > 0 ? (
+            <div className="mt-2 space-y-3">
+              {insight.insights.map((it) => (
+                <div key={it.id}>
+                  <p style={{ fontSize: "0.86rem", color: t.text, lineHeight: 1.45 }}>{it.text}</p>
+                  <p style={{ fontSize: "0.7rem", color: t.textMuted, marginTop: 2 }}>{it.basis}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="mt-2" style={{ fontSize: "0.84rem", color: t.textSecondary, lineHeight: 1.45 }}>
+              Пока собираю данные: {insight.daysCollected} из {insight.daysNeeded} дней с настроением.
+              Раньше любые выводы были бы догадкой.
+            </p>
+          )}
+        </div>
+      )}
 
       {/* Habits */}
       <div className="flex items-center justify-between mb-2">
@@ -167,13 +223,13 @@ export function TodayPage() {
                   className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
                   style={{ border: `1.5px solid ${done ? "#5B8A64" : t.borderLight}`, background: done ? "#5B8A64" : "transparent" }}
                 >
-                  {done && <Check size={14} color="white" strokeWidth={3} />}
+                  {done && <InkCheck size={15} />}
                 </span>
                 <AppIcon icon={h.icon} size={18} color={h.color} />
                 <span className="flex-1" style={{ fontSize: "0.9rem", color: t.text, textDecoration: done ? "line-through" : "none" }}>
                   {h.title}
                 </span>
-                {h.streak > 0 && <span style={{ fontSize: "0.72rem", color: t.textMuted }}>{h.streak} дн.</span>}
+                {(() => { const c = consistency(h); return c.window >= 5 ? <span style={{ fontSize: "0.72rem", color: t.textMuted }}>{c.percent}%</span> : null; })()}
               </button>
             );
           })}

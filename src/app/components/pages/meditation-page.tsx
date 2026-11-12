@@ -701,7 +701,7 @@ export function MeditationPage() {
             <ArrowLeft className="w-4 h-4" style={{ color: t.textMuted }} />
           </button>
           <div>
-            <h1 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>Медитации</h1>
+            <h1 className="display" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>Медитации</h1>
             <p style={{ fontSize: "0.72rem", color: t.textMuted }}>Голосовые практики на русском языке</p>
           </div>
         </div>

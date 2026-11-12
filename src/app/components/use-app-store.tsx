@@ -349,6 +349,8 @@ export function useAppStore() {
   const [pomodoroStats, setPomodoroStats] = useState<{ totalSessions: number; totalMinutes: number }>(() => loadState("routine_pomodoro_stats", { totalSessions: 0, totalMinutes: 0 }));
   const [questionnaire, setQuestionnaire] = useState<Questionnaire>(() => loadState("routine_questionnaire", defaultQuestionnaire));
   const [darkMode, setDarkMode] = useState<boolean>(() => loadState("routine_dark_mode", false));
+  // Интерфейс теплеет к вечеру; можно выключить, если мешает
+  const [dayTinting, setDayTinting] = useState<boolean>(() => loadState("routine_day_tinting", true));
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>(() => loadState("routine_journal", []));
   const [onboardingDone, setOnboardingDoneState] = useState<boolean>(() => loadState("routine_onboarding", false));
   const [celebrationEvent, setCelebrationEvent] = useState<string | null>(null);
@@ -392,6 +394,7 @@ export function useAppStore() {
   useEffect(() => { localStorage.setItem("routine_pomodoro_stats", JSON.stringify(pomodoroStats)); syncToServer("routine_pomodoro_stats", pomodoroStats); }, [pomodoroStats]);
   useEffect(() => { localStorage.setItem("routine_questionnaire", JSON.stringify(questionnaire)); syncToServer("routine_questionnaire", questionnaire); }, [questionnaire]);
   useEffect(() => { localStorage.setItem("routine_dark_mode", JSON.stringify(darkMode)); syncToServer("routine_dark_mode", darkMode); }, [darkMode]);
+  useEffect(() => { localStorage.setItem("routine_day_tinting", JSON.stringify(dayTinting)); syncToServer("routine_day_tinting", dayTinting); }, [dayTinting]);
   useEffect(() => { localStorage.setItem("routine_journal", JSON.stringify(journalEntries)); syncToServer("routine_journal", journalEntries); }, [journalEntries]);
   useEffect(() => { localStorage.setItem("routine_onboarding", JSON.stringify(onboardingDone)); syncToServer("routine_onboarding", onboardingDone); }, [onboardingDone]);
   useEffect(() => { localStorage.setItem("routine_seen_tours", JSON.stringify(seenTours)); syncToServer("routine_seen_tours", seenTours); }, [seenTours]);
@@ -457,9 +460,10 @@ export function useAppStore() {
     }));
   }, []); // runs once on mount
 
-  const triggerCelebration = useCallback((event: string) => {
-    setCelebrationEvent(event);
-    setTimeout(() => setCelebrationEvent(null), 3000);
+  // Всплывающие «поздравления» за уровни, серии и ачивки отключены вместе с игровым слоем:
+  // они перекрывали экран и противоречили спокойному тону приложения.
+  const triggerCelebration = useCallback((_event: string) => {
+    void setCelebrationEvent;
   }, []);
 
   const addXP = useCallback((amount: number) => {
@@ -710,6 +714,10 @@ export function useAppStore() {
   // ─── Dark Mode ───
   const toggleDarkMode = useCallback(() => {
     setDarkMode((prev) => !prev);
+  }, []);
+
+  const toggleDayTinting = useCallback(() => {
+    setDayTinting((prev) => !prev);
   }, []);
 
   // ─── Journal ───
@@ -1056,7 +1064,8 @@ export function useAppStore() {
 
   return {
     tasks, habits, moods, profile, pomodoroSettings, reminders, pomodoroStats, questionnaire,
-    darkMode, journalEntries, onboardingDone, celebrationEvent, seenTours, seenTips,
+    darkMode, dayTinting, toggleDayTinting,
+    journalEntries, onboardingDone, celebrationEvent, seenTours, seenTips,
     dailyIntentions, eveningCheckins, anxietyEntries, plantState,
     worryEntries, bingoCards, cogDistortionTags, sosSettings,
     challenges, lifeWheelEntries, capsules, softAchievements, focusHabit, syncStatus,

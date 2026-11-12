@@ -311,7 +311,7 @@ export function MoodPage() {
     <div className="px-5 pt-14 pb-8">
       {/* Header */}
       <div className="mb-5">
-        <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: th.text }} className="mb-0.5">
+        <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: th.text }} className="display mb-0.5">
           Настроение
         </h1>
         <p style={{ fontSize: "0.82rem", color: th.textMuted }}>

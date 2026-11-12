@@ -1,9 +1,11 @@
 import { useState, useMemo } from "react";
+import { InkCheck } from "../ink";
 import { useApp } from "../app-context";
+import { consistency, consistencyLabel, averageConsistency } from "../../lib/consistency";
 import { suggestedHabits } from "../use-app-store";
 import { useTheme } from "../theme";
 import { motion, AnimatePresence } from "motion/react";
-import { Plus, Flame, Trophy, CheckCircle2, X, Sparkles, Trash2, Search, ChevronDown, ChevronUp, Star, Check, Snowflake, Focus, Zap } from "lucide-react";
+import { Plus, Activity, Flame, Trophy, CheckCircle2, X, Sparkles, Trash2, Search, ChevronDown, ChevronUp, Star, Check, Snowflake, Focus, Zap } from "lucide-react";
 import { CompassionateCard } from "../compassionate-messages";
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
@@ -102,7 +104,7 @@ export function HabitsPage() {
   const defaultColors = ["#9B8EC4", "#7EA8BE", "#C4876C", "#7BAFB0", "#C4A86C", "#8DB596", "#B88FA7", "#A3907A"];
 
   const d = today();
-  const totalStreak = habits.reduce((sum, h) => sum + h.streak, 0);
+  const avgConsistency = averageConsistency(habits);
   const doneToday = habits.filter((h) => h.completedDates.includes(d)).length;
   const existingTitles = useMemo(() => new Set(habits.map((h) => h.title.toLowerCase())), [habits]);
 
@@ -189,7 +191,7 @@ export function HabitsPage() {
   return (
     <div className="px-5 pt-14 pb-8">
       <div className="flex items-center justify-between mb-2">
-        <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: th.text }}>Привычки</h1>
+        <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: th.text }}>Привычки</h1>
         {mode === "list" ? (
           <motion.button
             className="w-10 h-10 rounded-xl flex items-center justify-center shadow-sm"
@@ -219,22 +221,15 @@ export function HabitsPage() {
       {/* Stats */}
       {mode === "list" && (
         <div className="flex gap-3 mb-5">
-          <GlassPanel darkMode={darkMode} color={th.gold} className="flex-1 rounded-xl p-3 text-center">
-            <Flame className="w-5 h-5 mx-auto mb-1" style={{ color: th.gold }} />
-            <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: th.text }}>{totalStreak}</span>
-            <span style={{ fontSize: "0.65rem", color: th.textMuted }}>Общий стрик</span>
-          </GlassPanel>
           <GlassPanel darkMode={darkMode} color={th.sage} className="flex-1 rounded-xl p-3 text-center">
             <CheckCircle2 className="w-5 h-5 mx-auto mb-1" style={{ color: th.sage }} />
-            <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: th.text }}>{doneToday}/{habits.length}</span>
+            <span className="block display-num" style={{ fontSize: "1.3rem", color: th.text }}>{doneToday}/{habits.length}</span>
             <span style={{ fontSize: "0.65rem", color: th.textMuted }}>Сегодня</span>
           </GlassPanel>
           <GlassPanel darkMode={darkMode} color={th.lavender} className="flex-1 rounded-xl p-3 text-center">
-            <Trophy className="w-5 h-5 mx-auto mb-1" style={{ color: th.lavender }} />
-            <span className="block" style={{ fontSize: "1.2rem", fontWeight: 700, color: th.text }}>
-              {Math.max(...habits.map((h) => h.bestStreak), 0)}
-            </span>
-            <span style={{ fontSize: "0.65rem", color: th.textMuted }}>Лучший стрик</span>
+            <Activity className="w-5 h-5 mx-auto mb-1" style={{ color: th.lavender }} />
+            <span className="block display-num" style={{ fontSize: "1.3rem", color: th.text }}>{avgConsistency}%</span>
+            <span style={{ fontSize: "0.65rem", color: th.textMuted }}>Постоянство</span>
           </GlassPanel>
         </div>
       )}
@@ -354,7 +349,7 @@ export function HabitsPage() {
                               backgroundColor: isSelected ? th.sage : "transparent",
                             }}
                           >
-                            {isSelected && <Check className="w-4 h-4 text-white" />}
+                            {isSelected && <InkCheck size={16} />}
                           </div>
                         )}
                       </motion.div>
@@ -480,7 +475,7 @@ export function HabitsPage() {
               {habits.map((habit, i) => {
                 const isDoneToday = habit.completedDates.includes(d);
                 const isFrozenToday = (habit.frozenDates || []).includes(d);
-                const progress = habit.target > 0 ? Math.min(habit.streak / habit.target, 1) : 0;
+                const cons = consistency(habit);
                 const isExpanded = expandedHabit === habit.id;
                 const heatmapData = showHeatmap === habit.id ? generateHeatmap(habit.completedDates) : [];
 
@@ -521,17 +516,18 @@ export function HabitsPage() {
                             )}
                           </div>
                           <div className="flex items-center gap-1.5">
-                            <Flame className="w-3.5 h-3.5" style={{ color: th.gold }} />
-                            <span style={{ fontSize: "0.8rem", fontWeight: 600, color: th.gold }}>{habit.streak}</span>
+                            <span style={{ fontSize: "0.78rem", fontWeight: 600, color: th.textSecondary }}>{consistencyLabel(cons)}</span>
                             {isExpanded ? <ChevronUp className="w-3.5 h-3.5 ml-1" style={{ color: th.textFaint }} /> : <ChevronDown className="w-3.5 h-3.5 ml-1" style={{ color: th.textFaint }} />}
                           </div>
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
                           <div className="flex-1 rounded-full h-2" style={{ backgroundColor: th.border }}>
                             <motion.div className="h-2 rounded-full" style={{ backgroundColor: habit.color, opacity: 0.65 }}
-                              initial={{ width: 0 }} animate={{ width: `${progress * 100}%` }} transition={{ delay: 0.2 + i * 0.05, duration: 0.5 }} />
+                              initial={{ width: 0 }} animate={{ width: `${cons.percent}%` }} transition={{ delay: 0.2 + i * 0.05, duration: 0.5 }} />
                           </div>
-                          <span style={{ fontSize: "0.65rem", color: th.textMuted }}>{habit.streak}/{habit.target}</span>
+                          <span style={{ fontSize: "0.65rem", color: th.textMuted }}>
+                            {cons.percent}%{cons.current > 1 ? ` · ${cons.current} подряд` : ""}
+                          </span>
                         </div>
                       </div>
                     </div>

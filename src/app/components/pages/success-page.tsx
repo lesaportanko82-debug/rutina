@@ -102,7 +102,7 @@ export function SuccessPage() {
           transition={{ delay: 0.3 }}
           className="text-center mb-8"
         >
-          <h1 className="text-3xl font-bold mb-3" style={{ color: t.text, lineHeight: 1.2 }}>
+          <h1 className="display text-3xl font-bold mb-3" style={{ color: t.text, lineHeight: 1.2 }}>
             Оплата прошла успешно!
           </h1>
           <p className="text-lg" style={{ color: t.textMuted, lineHeight: 1.6 }}>

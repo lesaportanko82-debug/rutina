@@ -237,7 +237,7 @@ export function AdminPage({ onLogout }: AdminPageProps) {
               <span style={{ fontSize: "1.2rem" }}>&#128737;</span>
             </div>
             <div>
-              <h1 style={{ fontSize: "1.2rem", fontWeight: 800, color: C.text }}>Админ-панель</h1>
+              <h1 className="display" style={{ fontSize: "1.2rem", fontWeight: 800, color: C.text }}>Админ-панель</h1>
               <p style={{ fontSize: "0.7rem", color: C.textMuted }}>Управление пользователями</p>
             </div>
           </div>

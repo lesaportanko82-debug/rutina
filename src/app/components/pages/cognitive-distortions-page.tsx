@@ -154,7 +154,7 @@ export function CognitiveDistortionsPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div className="flex-1">
-          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Ловушки мышления</h1>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>Ловушки мышления</h1>
           <p style={{ fontSize: "0.7rem", color: t.textMuted }}>Справочник, журнал, паттерны</p>
         </div>
         <button onClick={() => setShowLogForm(true)} className="p-2 rounded-xl" style={{ backgroundColor: t.lavender + "18" }}>

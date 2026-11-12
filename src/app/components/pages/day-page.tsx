@@ -1,9 +1,11 @@
 import { useMemo } from "react";
+import { InkCheck } from "../ink";
 import { useNavigate } from "react-router";
 import { Check, ChevronLeft, Clock, Sun, Sunset, Sunrise } from "lucide-react";
 import { useApp } from "../app-context";
 import { useTheme } from "../theme";
 import { AppIcon } from "../app-icon";
+import { DayStripe, buildStripe } from "../day-stripe";
 
 const today = () => new Date().toISOString().split("T")[0];
 
@@ -45,7 +47,8 @@ export function DayPage() {
       day: { habits: [], reminders: [], tasks: [] },
       evening: { habits: [], reminders: [], tasks: [] },
     };
-    for (const h of habits) if (h.timeOfDay) out[h.timeOfDay].habits.push(h);
+    // Привычка без назначенной части дня живёт в «Дне» — так она видна и в полосе, и здесь
+    for (const h of habits) out[h.timeOfDay ?? "day"].habits.push(h);
     for (const r of reminders) {
       if (!r.enabled) continue;
       if (r.days.length && !r.days.includes(weekday)) continue;
@@ -58,18 +61,20 @@ export function DayPage() {
     return out;
   }, [habits, reminders, tasks, d, weekday]);
 
-  const unplaced = habits.filter((h) => !h.timeOfDay);
-
   return (
     <div className="px-5 pt-6 pb-8">
       <button onClick={() => navigate("/app")} className="flex items-center gap-1 mb-4" style={{ fontSize: "0.82rem", color: t.textMuted }}>
         <ChevronLeft size={16} /> Сегодня
       </button>
 
-      <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text, marginBottom: 4 }}>Ритм дня</h1>
-      <p style={{ fontSize: "0.85rem", color: t.textSecondary, marginBottom: 20 }}>
+      <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text, marginBottom: 4 }}>Ритм дня</h1>
+      <p style={{ fontSize: "0.85rem", color: t.textSecondary, marginBottom: 14 }}>
         Привычки и напоминания, разложенные по частям дня.
       </p>
+
+      <div className="mb-5">
+        <DayStripe parts={buildStripe(d, habits, tasks, reminders)} highlight={now} height={12} />
+      </div>
 
       <div className="space-y-4">
         {PARTS.map(({ key, label, hint, icon: Icon }) => {
@@ -93,24 +98,41 @@ export function DayPage() {
                 <div className="space-y-2">
                   {g.habits.map((h) => {
                     const done = h.completedDates.includes(d);
+                    const unplaced = !h.timeOfDay;
                     return (
-                      <button
-                        key={h.id}
-                        onClick={() => toggleHabitToday(h.id)}
-                        className="w-full flex items-center gap-3 text-left"
-                        style={{ opacity: done ? 0.6 : 1 }}
-                      >
-                        <span
-                          className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
-                          style={{ border: `1.5px solid ${done ? "#5B8A64" : t.borderLight}`, background: done ? "#5B8A64" : "transparent" }}
+                      <div key={h.id}>
+                        <button
+                          onClick={() => toggleHabitToday(h.id)}
+                          className="w-full flex items-center gap-3 text-left"
+                          style={{ opacity: done ? 0.6 : 1 }}
                         >
-                          {done && <Check size={12} color="white" strokeWidth={3} />}
-                        </span>
-                        <AppIcon icon={h.icon} size={16} color={h.color} />
-                        <span style={{ fontSize: "0.88rem", color: t.text, textDecoration: done ? "line-through" : "none" }}>
-                          {h.title}
-                        </span>
-                      </button>
+                          <span
+                            className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+                            style={{ border: `1.5px solid ${done ? "#5B8A64" : t.borderLight}`, background: done ? "#5B8A64" : "transparent" }}
+                          >
+                            {done && <InkCheck size={13} />}
+                          </span>
+                          <AppIcon icon={h.icon} size={16} color={h.color} />
+                          <span style={{ fontSize: "0.88rem", color: t.text, textDecoration: done ? "line-through" : "none" }}>
+                            {h.title}
+                          </span>
+                        </button>
+                        {unplaced && (
+                          <div className="flex items-center gap-1.5 mt-1.5 mb-1 pl-8">
+                            <span style={{ fontSize: "0.7rem", color: t.textMuted }}>когда удобнее?</span>
+                            {PARTS.map((p) => (
+                              <button
+                                key={p.key}
+                                onClick={() => setHabitTimeOfDay(h.id, p.key)}
+                                className="px-2 py-0.5 rounded-md"
+                                style={{ background: t.bgSecondary, border: `1px solid ${t.border}`, fontSize: "0.7rem", color: t.textSecondary }}
+                              >
+                                {p.label}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     );
                   })}
 
@@ -139,37 +161,6 @@ export function DayPage() {
           );
         })}
       </div>
-
-      {unplaced.length > 0 && (
-        <div className="mt-5">
-          <p style={{ fontSize: "0.88rem", fontWeight: 700, color: t.text, marginBottom: 4 }}>Без части дня</p>
-          <p style={{ fontSize: "0.8rem", color: t.textMuted, marginBottom: 10 }}>
-            Выберите, когда вам удобнее это делать — привычка встанет в нужное место дня.
-          </p>
-          <div className="space-y-2">
-            {unplaced.map((h) => (
-              <div key={h.id} className="px-4 py-3" style={card}>
-                <div className="flex items-center gap-2 mb-2">
-                  <AppIcon icon={h.icon} size={16} color={h.color} />
-                  <span style={{ fontSize: "0.88rem", color: t.text }}>{h.title}</span>
-                </div>
-                <div className="flex gap-2">
-                  {PARTS.map((p) => (
-                    <button
-                      key={p.key}
-                      onClick={() => setHabitTimeOfDay(h.id, p.key)}
-                      className="flex-1 py-2 rounded-lg"
-                      style={{ background: t.bgSecondary, border: `1px solid ${t.border}`, fontSize: "0.78rem", color: t.text }}
-                    >
-                      {p.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {reminders.length === 0 && (
         <button onClick={() => navigate("/app/notifications")} className="w-full mt-4 px-4 py-3 text-left" style={card}>

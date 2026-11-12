@@ -147,7 +147,7 @@ export function SOSPage() {
           <ArrowLeft className="w-5 h-5" style={{ color: t.text }} />
         </button>
         <div>
-          <h1 style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>SOS</h1>
+          <h1 className="display" style={{ fontSize: "1.4rem", fontWeight: 700, color: t.text }}>SOS</h1>
           <p style={{ fontSize: "0.72rem", color: t.textMuted }}>Быстрые инструменты на случай паники</p>
         </div>
       </div>

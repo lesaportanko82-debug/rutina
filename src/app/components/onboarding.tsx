@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { InkCheck } from "./ink";
 import { Check, ArrowRight } from "lucide-react";
 import { useApp } from "./app-context";
 import { useTheme } from "./theme";
@@ -76,7 +77,7 @@ export function Onboarding() {
                     className="w-6 h-6 rounded-full flex items-center justify-center"
                     style={{ background: on ? "#5B8A64" : "transparent", border: `1.5px solid ${on ? "#5B8A64" : t.borderLight}` }}
                   >
-                    {on && <Check size={14} color="white" strokeWidth={3} />}
+                    {on && <InkCheck size={15} />}
                   </span>
                 </button>
               );

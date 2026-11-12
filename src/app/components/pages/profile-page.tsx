@@ -4,9 +4,10 @@ import { PdfExportModal } from "../pdf-export-modal";
 import { clearLocalUserData, flushSync } from "../supabase-sync";
 import { useState, useRef, useEffect } from "react";
 import { useApp } from "../app-context";
+import { averageConsistency } from "../../lib/consistency";
 import { useTheme } from "../theme";
 import { motion, AnimatePresence } from "motion/react";
-import { Flame, Star, Lock, CheckCircle2, Coins, ChevronRight, Edit3, Moon, Sun, Download, Bell, BookOpen, RotateCcw, Droplets, Heart, LogOut, Camera, Loader2, FileText, Eye, EyeOff, KeyRound, UserPen, X, Check } from "lucide-react";
+import { Activity, Flame, Star, Lock, CheckCircle2, Coins, ChevronRight, Edit3, Moon, Sun, Download, Bell, BookOpen, RotateCcw, Droplets, Heart, LogOut, Camera, Loader2, FileText, Eye, EyeOff, KeyRound, UserPen, X, Check } from "lucide-react";
 import { useNavigate } from "react-router";
 import { supabase, projectId, publicAnonKey } from "../supabase-client";
 import { AppIcon } from "../app-icon";
@@ -60,7 +61,7 @@ const motivationOptions = [
 ];
 
 export function ProfilePage() {
-  const { profile, tasks, habits, moods, questionnaire, saveQuestionnaire, resetQuestionnaire, darkMode, toggleDarkMode, exportData, resetTours, seenTours, seenTips, softAchievements, plantState, waterPlant, interactPlant, renamePlant, journalEntries, pomodoroStats, anxietyEntries, worryEntries, sleepEntries } = useApp();
+  const { profile, tasks, habits, moods, questionnaire, saveQuestionnaire, resetQuestionnaire, darkMode, toggleDarkMode, dayTinting, toggleDayTinting, exportData, resetTours, seenTours, seenTips, softAchievements, plantState, waterPlant, interactPlant, renamePlant, journalEntries, pomodoroStats, anxietyEntries, worryEntries, sleepEntries } = useApp();
   const t = useTheme();
   const navigate = useNavigate();
   const [showQuestionnaire, setShowQuestionnaire] = useState(false);
@@ -280,11 +281,13 @@ export function ProfilePage() {
     return !next || profile.level < next.minLevel;
   });
 
+  const avgConsistency = averageConsistency(habits);
+
   const tier = getTier(profile.level);
   const stats = [
     { label: "Задач выполнено", value: completedTasks, icon: CheckCircle2, color: t.sage },
     { label: "Привычек", value: habits.length, icon: Star, color: t.gold },
-    { label: "Дней подряд", value: profile.streak, icon: Flame, color: t.terracotta },
+    { label: "Постоянство", value: avgConsistency, icon: Activity, color: t.terracotta, suffix: "%" },
   ];
 
   const handleSave = () => { saveQuestionnaire(formData); setShowQuestionnaire(false); };
@@ -529,7 +532,7 @@ export function ProfilePage() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <span style={{ fontSize: "2.2rem", fontWeight: 700 }} className="text-white">{((questionnaire.filled && questionnaire.name) || profile.name || "?").trim().charAt(0).toUpperCase()}</span>
+                      <span style={{ fontSize: "2rem" }} className="text-white display-num">{((questionnaire.filled && questionnaire.name) || profile.name || "?").trim().charAt(0).toUpperCase()}</span>
                     </div>
                   )}
                 </motion.div>
@@ -564,7 +567,7 @@ export function ProfilePage() {
                   )}
                 </motion.button>
               </div>
-              <h1 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>
+              <h1 className="display" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>
                 {questionnaire.filled && questionnaire.name ? questionnaire.name : profile.name}
               </h1>
             </motion.div>
@@ -585,6 +588,21 @@ export function ProfilePage() {
                 <div className="w-11 h-6 rounded-full transition-colors" style={{ backgroundColor: darkMode ? t.sage : t.textFaint }}>
                   <motion.div className="w-5 h-5 rounded-full bg-white shadow-sm mt-0.5"
                     animate={{ x: darkMode ? 22 : 2 }} transition={{ type: "spring", stiffness: 500, damping: 30 }} />
+                </div>
+              </button>
+              {/* Оттенок по времени суток */}
+              <button className="w-full p-4 flex items-center gap-3" style={{ borderBottom: `1px solid ${t.border}` }}
+                onClick={toggleDayTinting}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: t.bgSecondary }}>
+                  <Sun className="w-5 h-5" style={{ color: t.terracotta }} />
+                </div>
+                <div className="flex-1 text-left">
+                  <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Оттенок по времени суток</span>
+                  <p style={{ fontSize: "0.72rem", color: t.textMuted }}>Утром светлее, к вечеру теплее и тише</p>
+                </div>
+                <div className="w-11 h-6 rounded-full transition-colors" style={{ backgroundColor: dayTinting ? t.sage : t.textFaint }}>
+                  <motion.div className="w-5 h-5 rounded-full bg-white shadow-sm mt-0.5"
+                    animate={{ x: dayTinting ? 22 : 2 }} transition={{ type: "spring", stiffness: 500, damping: 30 }} />
                 </div>
               </button>
               {/* Edit questionnaire */}
@@ -755,7 +773,7 @@ export function ProfilePage() {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.15 + i * 0.05 }}>
                     <stat.icon className="w-5 h-5 mb-2" style={{ color: stat.color }} />
-                    <span className="block" style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>{stat.value.toLocaleString()}</span>
+                    <span className="block display-num" style={{ fontSize: "1.45rem", color: t.text }}>{stat.value.toLocaleString()}{stat.suffix ?? ""}</span>
                     <span style={{ fontSize: "0.7rem", color: t.textMuted }}>{stat.label}</span>
                   </motion.div>
                 </GlassPanel>
