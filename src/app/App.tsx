@@ -48,10 +48,18 @@ function PWASetup() {
     })();
 
     if (!isInIframe && "serviceWorker" in navigator) {
+      // Когда новый воркер берёт управление — перезагружаем, чтобы не сидеть на старом бандле
+      let reloaded = false;
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (reloaded) return;
+        reloaded = true;
+        window.location.reload();
+      });
       navigator.serviceWorker
         .register("/sw.js", { scope: "/" })
         .then((reg) => {
           console.log("[PWA] Service Worker registered:", reg.scope);
+          reg.update().catch(() => {});
         })
         .catch((err) => {
           // Non-fatal: app works without SW
