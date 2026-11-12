@@ -683,10 +683,13 @@ export function LeafMascot() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const data = await res.json();
-      const rawReply = data.reply || "Прости, я задумался... Попробуй ещё раз ";
+      const rawReply = data.reply || "Прости, я задумался... Попробуй ещё раз";
 
       // Clean up any markdown/formatting artifacts the model might still produce
       const reply = rawReply
+        // системные эмодзи в ответах не показываем — в приложении единый набор иконок
+        .replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu, "")
+        .replace(/[ \t]{2,}/g, " ")
         .replace(/\*\*(.+?)\*\*/g, "$1") // **bold**
         .replace(/\*(.+?)\*/g, "$1") // *italic*
         .replace(/__(.+?)__/g, "$1") // __underline__

@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
+import { InkFace } from "../ink";
 
 const today = () => new Date().toISOString().split("T")[0];
 
@@ -95,20 +96,13 @@ function MoodWheel({
             </g>
           );
         })}
-        {/* Emoji labels */}
-        {moodOptions.map((_, i) => {
+        {/* Лица настроения, нарисованные пером */}
+        {moodOptions.map((m, i) => {
           const pos = emojiPos(i);
           return (
-            <text
-              key={`emoji-${i}`}
-              x={pos.x}
-              y={pos.y}
-              textAnchor="middle"
-              dominantBaseline="central"
-              style={{ fontSize: "1.4rem", cursor: "pointer", pointerEvents: "none" }}
-            >
-              {moodOptions[i].emoji}
-            </text>
+            <g key={`face-${i}`} transform={`translate(${pos.x - 13}, ${pos.y - 13})`} style={{ pointerEvents: "none" }}>
+              <InkFace mood={m.name} size={26} color={th.text} />
+            </g>
           );
         })}
         {/* Center text */}
@@ -116,9 +110,9 @@ function MoodWheel({
           {selectedMood !== null ? moodOptions[selectedMood].name : "Как вы?"}
         </text>
         {selectedMood !== null && (
-          <text x={cx} y={cy + 14} textAnchor="middle" style={{ fontSize: "1.5rem" }}>
-            {moodOptions[selectedMood].emoji}
-          </text>
+          <g transform={`translate(${cx - 14}, ${cy + 2})`}>
+            <InkFace mood={moodOptions[selectedMood].name} size={28} color={th.text} tint={moodOptions[selectedMood].color} />
+          </g>
         )}
       </svg>
     </div>
@@ -151,7 +145,7 @@ function MoodMapCard({
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <AppIcon icon={moodData.emoji} size={40} color={moodData.color} />
+            <InkFace mood={moodData.name} size={44} color={th.text} tint={moodData.color} />
           </motion.span>
           <div>
             <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: th.text }}>{entry.mood}</h3>
@@ -352,7 +346,7 @@ export function MoodPage() {
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", stiffness: 400 }}
                   >
-                    {moodOptions.find((m) => m.name === day.entry!.mood)?.emoji || "😊"}
+                    <InkFace mood={day.entry!.mood} size={20} color={th.text} tint={day.entry!.color} />
                   </motion.span>
                 ) : (
                   <span style={{ fontSize: "0.65rem", color: th.textFaint }}>—</span>
@@ -367,11 +361,11 @@ export function MoodPage() {
           <GlassPanel darkMode={darkMode} color={th.sage} className="rounded-xl mt-3 px-3 py-2">
             <div className="flex items-center justify-between" style={{ fontSize: "0.72rem", color: th.textMuted }}>
               <span>
-                📊 {weeklyStats.filledDays}/7 дней · Энергия ⌀{weeklyStats.avgEnergy}
+                {weeklyStats.filledDays}/7 дней · энергия в среднем {weeklyStats.avgEnergy}
               </span>
               {weeklyStats.dominantMood && (
-                <span>
-                  {moodOptions.find((m) => m.name === weeklyStats.dominantMood)?.emoji}{" "}
+                <span className="inline-flex items-center gap-1.5">
+                  <InkFace mood={weeklyStats.dominantMood} size={16} color={th.textSecondary} />
                   {weeklyStats.dominantMood}
                 </span>
               )}
@@ -423,7 +417,7 @@ export function MoodPage() {
                   onClick={() => setEnergy(val)}
                   whileTap={{ scale: 0.92 }}
                 >
-                  {val === 1 ? "😴" : val === 2 ? "😕" : val === 3 ? "😐" : val === 4 ? "😊" : "🔥"}
+                  <span className="display-num" style={{ fontSize: "0.95rem" }}>{val}</span>
                 </motion.button>
               ))}
             </div>
@@ -462,7 +456,7 @@ export function MoodPage() {
             whileTap={{ scale: 0.98 }}
             disabled={selectedMood === null}
           >
-            {saved ? "✨ Сохранено!" : isEditing ? "Обновить настроение" : "Сохранить настроение"}
+            {saved ? "Сохранено" : isEditing ? "Обновить настроение" : "Сохранить настроение"}
           </motion.button>
         </>
       ) : null}
@@ -512,9 +506,7 @@ export function MoodPage() {
                       }}
                     >
                       {cell.entry ? (
-                        <span style={{ fontSize: "0.7rem" }}>
-                          {moodOptions.find((m) => m.name === cell.entry!.mood)?.emoji || "·"}
-                        </span>
+                        <InkFace mood={cell.entry!.mood} size={17} color={th.text} tint={cell.entry!.color} />
                       ) : (
                         <span style={{ fontSize: "0.6rem", color: th.textFaint }}>{cell.day}</span>
                       )}
@@ -539,7 +531,7 @@ export function MoodPage() {
               <div key={mood.name}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="flex items-center gap-1.5" style={{ fontSize: "0.78rem", color: th.text }}>
-                    <AppIcon icon={mood.emoji} size={15} color={mood.color} /> {mood.name}
+                    <InkFace mood={mood.name} size={15} color={th.textSecondary} tint={mood.color} /> {mood.name}
                   </span>
                   <span style={{ fontSize: "0.7rem", color: th.textMuted }}>
                     {mood.count}x ({mood.pct.toFixed(0)}%)
@@ -563,7 +555,7 @@ export function MoodPage() {
       {/* Empty state */}
       {moods.length === 0 && !showInput && (
         <div className="text-center py-10">
-          <span style={{ fontSize: "2.5rem" }}>🌈</span>
+          <span className="inline-flex"><InkFace mood="calm" size={44} color={th.textMuted} /></span>
           <p style={{ fontSize: "0.9rem", color: th.textMuted, marginTop: 8 }}>
             Начните отслеживать настроение
           </p>

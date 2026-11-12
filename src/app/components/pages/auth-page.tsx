@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Eye, EyeOff, Loader2, Sparkles, ArrowRight, User, Lock, Shield, Mail } from "lucide-react";
 import { supabase } from "../supabase-client";
+import { projectId, publicAnonKey } from "../../../../utils/supabase/info";
 import { AmbientBlobs, SparkleField, GradientOrb, MeshGradientBg } from "../ambient-elements";
 
 const C = {
@@ -17,6 +18,17 @@ const C = {
   card: "#F5F0E8",
   border: "#E8E3DC",
 };
+
+const API_BASE = `https://${projectId}.supabase.co/functions/v1/make-server-ff738703`;
+
+/** Сообщения Supabase приходят по-английски — показываем человеку понятный текст */
+function ruAuthError(message?: string): string {
+  if (!message) return "Ошибка входа";
+  if (message.includes("Invalid login credentials")) return "Неверный email или пароль";
+  if (message.includes("Email not confirmed")) return "Почта не подтверждена. Напишите в поддержку — подтвердим вручную";
+  if (message.toLowerCase().includes("rate limit")) return "Слишком много попыток. Подождите минуту и попробуйте снова";
+  return message;
+}
 
 interface AuthPageProps {
   onAuth: (user: { id: string; name: string; accessToken: string }) => void | Promise<void>;
@@ -105,27 +117,21 @@ export function AuthPage({ onAuth }: AuthPageProps) {
 
     try {
       if (mode === "signup") {
-        const { data: signUpData, error: signUpErr } = await supabase.auth.signUp({
-          email: email.trim(),
-          password,
-          options: { data: { name: name.trim() } },
+        // Регистрация идёт через сервер: аккаунт создаётся сразу подтверждённым,
+        // потому что почтовый сервер для писем-подтверждений не подключён.
+        const res = await fetch(`${API_BASE}/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${publicAnonKey}` },
+          body: JSON.stringify({ name: name.trim(), email: email.trim(), password }),
         });
-        if (signUpErr) {
+        const body = await res.json().catch(() => ({} as { error?: string }));
+        if (!res.ok) {
           setError(
-            signUpErr.message.includes("already registered") || signUpErr.message.includes("already been registered")
-              ? "Этот email уже зарегистрирован"
-              : signUpErr.message || "Ошибка регистрации"
+            res.status === 409
+              ? "Этот email уже зарегистрирован — войдите на вкладке «Вход»"
+              : body.error || "Не получилось зарегистрироваться, попробуйте ещё раз"
           );
           setLoading(false);
-          return;
-        }
-        // If session returned immediately (email confirm disabled), use it
-        if (signUpData.session) {
-          await onAuth({
-            id: signUpData.session.user.id,
-            name: name.trim(),
-            accessToken: signUpData.session.access_token,
-          });
           return;
         }
         // Otherwise sign in explicitly
@@ -134,7 +140,7 @@ export function AuthPage({ onAuth }: AuthPageProps) {
           password,
         });
         if (signInErr || !signInData.session) {
-          setError("Регистрация успешна, но не удалось войти: " + (signInErr?.message || ""));
+          setError("Аккаунт создан, но войти не получилось: " + ruAuthError(signInErr?.message));
           setLoading(false);
           return;
         }
@@ -149,9 +155,7 @@ export function AuthPage({ onAuth }: AuthPageProps) {
           password,
         });
         if (signInErr || !signInData.session) {
-          setError(signInErr?.message === "Invalid login credentials"
-            ? "Неверный email или пароль"
-            : (signInErr?.message || "Ошибка входа"));
+          setError(ruAuthError(signInErr?.message));
           setLoading(false);
           return;
         }

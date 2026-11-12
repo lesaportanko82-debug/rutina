@@ -31,12 +31,13 @@ function getLevelLabel(level: number): string {
   return "Очень высокая тревога";
 }
 
+/** Ключ значка для уровня тревоги; рисуется линейной иконкой через AppIcon */
 function getLevelEmoji(level: number): string {
-  if (level <= 2) return "";
-  if (level <= 4) return "";
-  if (level <= 6) return "";
-  if (level <= 8) return "";
-  return "";
+  if (level <= 2) return "🌿";
+  if (level <= 4) return "🌤️";
+  if (level <= 6) return "🌥️";
+  if (level <= 8) return "🌧️";
+  return "⛈️";
 }
 
 export function AnxietyPage() {
@@ -362,7 +363,7 @@ export function AnxietyPage() {
             >
               <div className="flex items-center justify-between mb-1.5">
                 <div className="flex items-center gap-2">
-                  <span style={{ fontSize: "0.9rem" }}>{getLevelEmoji(entry.level)}</span>
+                  <AppIcon icon={getLevelEmoji(entry.level)} size={16} color={getLevelColor(entry.level)} />
                   <span style={{ fontSize: "0.82rem", fontWeight: 600, color: getLevelColor(entry.level) }}>
                     {entry.level}/10
                   </span>
@@ -445,7 +446,7 @@ export function AnxietyPage() {
                     Уровень тревоги
                   </label>
                   <div className="flex items-center gap-1.5">
-                    <span style={{ fontSize: "0.9rem" }}>{getLevelEmoji(level)}</span>
+                    <AppIcon icon={getLevelEmoji(level)} size={16} color={getLevelColor(level)} />
                     <span style={{ fontSize: "1rem", fontWeight: 700, color: getLevelColor(level) }}>{level}</span>
                     <span style={{ fontSize: "0.72rem", color: t.textMuted }}>/10</span>
                   </div>

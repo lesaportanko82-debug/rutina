@@ -94,13 +94,14 @@ export function HabitsPage() {
   const [selectedCatalogHabits, setSelectedCatalogHabits] = useState<Set<string>>(new Set());
 
   const [newTitle, setNewTitle] = useState("");
-  const [newIcon, setNewIcon] = useState("");
+  const [newIcon, setNewIcon] = useState("🎯");
   const [newColor, setNewColor] = useState("#9B8EC4");
   const [newTarget, setNewTarget] = useState(7);
   const [newCategory, setNewCategory] = useState<"health" | "productivity" | "mindfulness" | "fitness">("health");
   const [newMicroVersion, setNewMicroVersion] = useState("");
 
-  const defaultIcons = ["", "", "", "", "", "", "", "", "", "", "", ""];
+  // Значки хранятся как ключи и всегда рисуются линейными иконками через AppIcon
+  const defaultIcons = ["🧘", "📚", "💪", "💧", "🏃", "📝", "🎯", "🌱", "☀️", "🧠", "🎨", "🎵"];
   const defaultColors = ["#9B8EC4", "#7EA8BE", "#C4876C", "#7BAFB0", "#C4A86C", "#8DB596", "#B88FA7", "#A3907A"];
 
   const d = today();
@@ -599,7 +600,7 @@ export function HabitsPage() {
                               >
                                 <option value="">Без связки</option>
                                 {habits.filter((h) => h.id !== habit.id).map((h) => (
-                                  <option key={h.id} value={h.id}>{h.icon} {h.title}</option>
+                                  <option key={h.id} value={h.id}>{h.title}</option>
                                 ))}
                               </select>
                               {habit.stackedAfter && (() => {

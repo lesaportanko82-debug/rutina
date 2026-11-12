@@ -12,7 +12,8 @@ import { type LucideIcon, Leaf, Droplets, Salad, Pill, Sunrise, Moon, CandyOff, 
   Flame, Volume2, CloudRain, Shield,
   CircleDot, Star, Feather, Orbit, Check,
   PersonStanding, Ear, Grab, CircleAlert, Frown, Angry, Meh, SmilePlus,
-  Hourglass, Package, Zap } from "lucide-react";
+  Hourglass, Package, Zap,
+  AlarmClock, AppWindow, Bell, CalendarDays, Compass, Gift, Handshake, Lightbulb, Lock, Mic, Paperclip, Pointer, Repeat, TrendingUp, Trophy, Wrench } from "lucide-react";
 
 const iconMap: Record<string, LucideIcon> = {
   // Nature / Plants
@@ -196,6 +197,51 @@ const iconMap: Record<string, LucideIcon> = {
   "\u{1F7E2}": CircleDot,
   "\u{1F534}": CircleAlert,
   "\u{1FAC0}": HeartHandshake,
+
+  // Добавлено: всё, что раньше проваливалось в системные эмодзи
+  "\u{1F343}": Leaf,
+  "\u{1F342}": Leaf,
+  "\u{1F337}": Flower2,
+  "\u{1FAB4}": Sprout,
+  "\u2600\uFE0F": Sun,
+  "\u2600": Sun,
+  "\u{1F325}\uFE0F": Cloud,
+  "\u{1F325}": Cloud,
+  "\u26C8\uFE0F": CloudLightning,
+  "\u26C8": CloudLightning,
+  "\u{1F4A1}": Lightbulb,
+  "\u{1F49A}": Heart,
+  "\u{1F499}": Heart,
+  "\u{1FAE7}": Droplets,
+  "\u{1F514}": Bell,
+  "\u{1F501}": Repeat,
+  "\u23F0": AlarmClock,
+  "\u{1F3C6}": Trophy,
+  "\u{1F9E0}": Brain,
+  "\u2B50": Star,
+  "\u{1F4AB}": Sparkles,
+  "\u{1FA9F}": AppWindow,
+  "\u{1F54A}\uFE0F": Feather,
+  "\u{1F54A}": Feather,
+  "\u{1F9F0}": Wrench,
+  "\u{1F9ED}": Compass,
+  "\u{1F446}": Pointer,
+  "\u{1F4CE}": Paperclip,
+  "\u{1F5D3}\uFE0F": CalendarDays,
+  "\u{1F5D3}": CalendarDays,
+  "\u{1F4C5}": CalendarDays,
+  "\u{1F91D}": Handshake,
+  "\u{1F4C8}": TrendingUp,
+  "\u{1F381}": Gift,
+  "\u{1F37D}": Utensils,
+  "\u{1F6CF}\uFE0F": BedDouble,
+  "\u{1F6CF}": BedDouble,
+  "\u{1F512}": Lock,
+  "\u{1F590}": Hand,
+  "\u{1F399}": Mic,
+  "\u{1F399}\uFE0F": Mic,
+  "\u{1F449}": Pointer,
+  "\u2713": Check,
 };
 
 interface AppIconProps {
@@ -206,7 +252,7 @@ interface AppIconProps {
 }
 
 export function AppIcon({ icon, size = 16, color, className }: AppIconProps) {
-  const LucideComponent = iconMap[icon];
+  const LucideComponent = iconMap[icon] ?? iconMap[icon.replace(/\uFE0F/g, "")] ?? iconMap[icon + "\uFE0F"];
 
   if (LucideComponent) {
     return (
@@ -219,6 +265,18 @@ export function AppIcon({ icon, size = 16, color, className }: AppIconProps) {
           strokeWidth: 1.8,
           flexShrink: 0,
         }}
+      />
+    );
+  }
+
+  // Системные эмодзи не показываем никогда: неизвестный значок заменяется
+  // нейтральным листком, чтобы набор иконок оставался единым.
+  const isPlainText = icon.length > 0 && /^[\x20-\x7E\u0400-\u04FF]+$/.test(icon);
+  if (!isPlainText) {
+    return (
+      <Leaf
+        className={className}
+        style={{ width: size, height: size, color: color || "currentColor", strokeWidth: 1.8, flexShrink: 0 }}
       />
     );
   }

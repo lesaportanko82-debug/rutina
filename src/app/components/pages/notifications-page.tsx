@@ -18,7 +18,8 @@ const typeOptions = [
   { value: "custom", label: "Другое", icon: "✨" },
 ] as const;
 
-const iconOptions = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
+// Значки хранятся как ключи и всегда рисуются линейными иконками через AppIcon
+const iconOptions = ["🔔", "⏰", "💧", "🧘", "📚", "💪", "📋", "😊", "🍽️", "🛏️", "🏃", "🎯", "☀️", "🌙", "✨", "🧠"];
 
 export function NotificationsPage() {
   const { reminders, toggleReminder, addReminder, deleteReminder, updateReminder, darkMode } = useApp();
@@ -33,11 +34,11 @@ export function NotificationsPage() {
   const [newTime, setNewTime] = useState("09:00");
   const [newDays, setNewDays] = useState<number[]>([1, 2, 3, 4, 5]);
   const [newType, setNewType] = useState<"habit" | "task" | "mood" | "water" | "custom">("custom");
-  const [newIcon, setNewIcon] = useState("");
+  const [newIcon, setNewIcon] = useState("🔔");
 
   const pushPayload = reminders.map((r) => ({
     title: r.title,
-    body: r.icon ? `${r.icon} Время для: ${r.title}` : `Время для: ${r.title}`,
+    body: `Время для: ${r.title}`,
     time: r.time,
     days: r.days,
     enabled: r.enabled,
@@ -77,7 +78,7 @@ export function NotificationsPage() {
 
   const resetForm = () => {
     setNewTitle(""); setNewTime("09:00"); setNewDays([1, 2, 3, 4, 5]);
-    setNewType("custom"); setNewIcon(""); setShowForm(false); setEditingId(null);
+    setNewType("custom"); setNewIcon("🔔"); setShowForm(false); setEditingId(null);
   };
 
   const startEdit = (id: string) => {
@@ -242,7 +243,7 @@ export function NotificationsPage() {
                   }}
                   onClick={() => setNewType(tItem.value)}
                 >
-                  {tItem.icon} {tItem.label}
+                  <span className="inline-flex items-center gap-1.5"><AppIcon icon={tItem.icon} size={14} />{tItem.label}</span>
                 </button>
               ))}
             </div>

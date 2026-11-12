@@ -6,7 +6,7 @@ import { Plus, X, Trash2, Brain } from "lucide-react";
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
 
-const moodTags = [" Хорошо", " Спокойно", " Задумчиво", " Грустно", " Вдохновлённо", " Устало"];
+const moodTags = ["Хорошо", "Спокойно", "Задумчиво", "Грустно", "Вдохновлённо", "Устало"];
 
 const distortionOptions = [
   { id: "catastrophizing", name: "Катастрофизация", icon: "🌪️" },
@@ -203,7 +203,7 @@ export function JournalPage() {
                     return (
                       <span key={tag.id} className="px-2 py-0.5 rounded-full"
                         style={{ fontSize: "0.6rem", fontWeight: 500, backgroundColor: t.lavender + "12", color: t.lavender }}>
-                        {def?.icon || ""} {def?.name || tag.distortion}
+                        {def?.name || tag.distortion}
                       </span>
                     );
                   })}

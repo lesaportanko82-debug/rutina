@@ -6,8 +6,9 @@ import { ArrowLeft, Moon, Sun, Star } from "lucide-react";
 import { useNavigate } from "react-router";
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
+import { InkFace, FACE_SCALE } from "../ink";
 
-const qualityLabels = ["", "😫 Ужасно", "😟 Плохо", "😐 Нормально", "😊 Хорошо", "😴 Отлично"];
+const qualityLabels = ["", "Ужасно", "Плохо", "Нормально", "Хорошо", "Отлично"];
 const qualityColors = ["", "#C4876C", "#C4A86C", "#A3ADB8", "#7EA8BE", "#9B8EC4"];
 
 const sleepFactors = [
@@ -100,7 +101,7 @@ export function SleepPage() {
               }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setQuality(q)}>
-              <span style={{ fontSize: "1.3rem" }}>{qualityLabels[q].split(" ")[0]}</span>
+              <InkFace mood={FACE_SCALE[q - 1]} size={26} color={t.text} tint={quality === q ? qualityColors[q] : undefined} />
             </motion.button>
           ))}
         </div>
@@ -192,7 +193,7 @@ export function SleepPage() {
         }}
         whileTap={{ scale: 0.98 }}
         onClick={handleSave}>
-        {saved ? "✓ Сохранено" : "Сохранить"}
+        {saved ? "Сохранено" : "Сохранить"}
       </motion.button>
 
       {/* Stats */}
@@ -247,7 +248,7 @@ export function SleepPage() {
                 <div key={entry.id} className="flex-1 text-center">
                   <div className="w-full aspect-square rounded-lg flex items-center justify-center mb-0.5"
                     style={{ backgroundColor: qualityColors[entry.quality] + "18" }}>
-                    <span style={{ fontSize: "0.7rem" }}>{qualityLabels[entry.quality]?.split(" ")[0]}</span>
+                    <InkFace mood={FACE_SCALE[Math.min(Math.max(entry.quality, 1), 5) - 1]} size={18} color={t.text} />
                   </div>
                   <span style={{ fontSize: "0.5rem", color: t.textFaint }}>{entry.hours}ч</span>
                 </div>

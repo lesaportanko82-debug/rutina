@@ -6,6 +6,7 @@ import { useApp } from "../app-context";
 import { useTheme } from "../theme";
 import { AppIcon } from "../app-icon";
 import { DayStripe, buildStripe } from "../day-stripe";
+import { InkFace } from "../ink";
 import { consistency } from "../../lib/consistency";
 import { computeInsights } from "../../lib/insights";
 import { weekReviewDone } from "../../lib/week";
@@ -26,11 +27,11 @@ function partNow(): "morning" | "day" | "evening" {
 }
 
 const MOODS = [
-  { name: "Радость", emoji: "😊", color: "#C4A86C" },
-  { name: "Спокойствие", emoji: "😌", color: "#8DB596" },
-  { name: "Задумчивость", emoji: "🤔", color: "#7EA8BE" },
-  { name: "Усталость", emoji: "😴", color: "#A3907A" },
-  { name: "Тревога", emoji: "😰", color: "#B88FA7" },
+  { name: "Радость", color: "#C4A86C" },
+  { name: "Спокойствие", color: "#8DB596" },
+  { name: "Задумчивость", color: "#7EA8BE" },
+  { name: "Усталость", color: "#A3907A" },
+  { name: "Тревога", color: "#B88FA7" },
 ];
 
 /** Практика в ответ на настроение: не библиотека, а одно уместное предложение */
@@ -126,7 +127,7 @@ export function TodayPage() {
           <>
             <p style={{ fontSize: "0.85rem", color: t.textSecondary }}>
               Сегодня: {todayMood?.mood ?? "записано"}.{" "}
-              <button onClick={() => navigate("/app/mood")} style={{ color: "#5B8A64", fontWeight: 600 }}>
+              <button onClick={() => navigate("/app/mood")} style={{ color: "#5B8A64", fontWeight: 600, fontSize: "inherit" }}>
                 Изменить
               </button>
             </p>
@@ -153,7 +154,7 @@ export function TodayPage() {
                 style={{ background: t.bgSecondary, border: `1px solid ${t.border}` }}
                 aria-label={m.name}
               >
-                <span style={{ fontSize: "1.35rem", lineHeight: 1 }}>{m.emoji}</span>
+                <InkFace mood={m.name} size={28} color={t.text} tint={m.color} />
                 <span style={{ fontSize: "0.6rem", color: t.textMuted }}>{m.name}</span>
               </button>
             ))}

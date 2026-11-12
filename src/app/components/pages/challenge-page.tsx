@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import type { Challenge, ChallengeDay } from "../use-app-store";
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
+import { InkCheck } from "../ink";
 
 const challengeTasks: { task: string; icon: string }[] = [
   { task: "Скажите себе 3 комплимента", icon: "💌" },
@@ -225,7 +226,7 @@ export function ChallengePage() {
                     {day.day}
                   </span>
                   <span style={{ fontSize: day.completed ? "0.85rem" : "0.75rem" }}>
-                    {day.completed ? "✅" : <AppIcon icon={day.icon} size={day.completed ? 14 : 12} />}
+                    {day.completed ? <InkCheck size={13} color="#5B8A64" /> : <AppIcon icon={day.icon} size={12} />}
                   </span>
                   {isToday && !day.completed && (
                     <motion.div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full"

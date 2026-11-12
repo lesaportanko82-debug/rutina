@@ -11,6 +11,7 @@ import { useState, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { AppIcon } from "../app-icon";
 import { StripeMonth } from "../day-stripe";
+import { InkFace } from "../ink";
 import { consistency } from "../../lib/consistency";
 
 const categoryColors: Record<string, string> = { work: "#7EA8BE", personal: "#9B8EC4", health: "#8DB596", study: "#C4A86C" };
@@ -70,7 +71,7 @@ export function StatsPage() {
     })).filter((dd) => dd.value > 0),
   [tasks]);
 
-  const habitData = habits.map((h) => ({ name: h.icon, streak: consistency(h).percent, best: h.bestStreak, color: h.color }));
+  const habitData = habits.map((h) => ({ name: h.title.length > 9 ? h.title.slice(0, 8) + "…" : h.title, streak: consistency(h).percent, best: h.bestStreak, color: h.color }));
 
   const moodEnergyData = useMemo(() =>
     moods.slice(-14).map((m) => ({
@@ -347,7 +348,7 @@ export function StatsPage() {
               <div className="mt-2 h-32">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={habitData}>
-                    <XAxis dataKey="name" tick={{ fontSize: 14 }} axisLine={false} tickLine={false} />
+                    <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} axisLine={false} tickLine={false} />
                     <YAxis hide />
                     <Bar dataKey="streak" radius={[6, 6, 0, 0]}>
                       {habitData.map((dd) => (<Cell key={dd.name} fill={dd.color} opacity={0.65} />))}
@@ -398,7 +399,7 @@ export function StatsPage() {
                 <div className="flex-1 space-y-1 pl-3">
                   {moodDistribution.map((dd) => (
                     <div key={dd.name} className="flex items-center gap-2">
-                      <span style={{ fontSize: "0.72rem" }}>{moodOptionsMap[dd.name]?.emoji || ""}</span>
+                      <InkFace mood={dd.name} size={16} color={t.textSecondary} />
                       <span style={{ fontSize: "0.72rem", color: t.textSecondary }}>{dd.name}</span>
                       <span className="ml-auto" style={{ fontSize: "0.68rem", fontWeight: 600, color: t.textMuted }}>{dd.value}</span>
                     </div>

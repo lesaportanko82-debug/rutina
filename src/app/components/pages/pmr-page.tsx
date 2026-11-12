@@ -6,6 +6,7 @@ import { ArrowLeft, Play, RotateCcw } from "lucide-react";
 import { useNavigate } from "react-router";
 import { GlassPanel } from "../ambient-elements";
 import { AppIcon } from "../app-icon";
+import { InkCheck } from "../ink";
 
 interface PMRStep {
   muscle: string;
@@ -293,7 +294,7 @@ export function PMRPage() {
                     border: isCurrent ? `2px solid ${phaseColor}40` : `1px solid ${t.border}`,
                   }}>
                   <span style={{ fontSize: isDone ? "0.55rem" : "0.7rem", filter: isDone ? "none" : i > stepIdx ? "grayscale(0.5) opacity(0.5)" : "none" }}>
-                    {isDone ? "✅" : <AppIcon icon={s.icon} size={isDone ? 10 : 12} />}
+                    {isDone ? <InkCheck size={12} color="#5B8A64" /> : <AppIcon icon={s.icon} size={12} />}
                   </span>
                 </div>
               );

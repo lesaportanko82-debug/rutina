@@ -90,7 +90,7 @@ export function WorryPage() {
     return "#B8696C";
   };
 
-  const catIcon = (id: string) => categories.find((c) => c.id === id)?.icon || "";
+  const catIcon = (id: string) => categories.find((c) => c.id === id)?.icon || "📌";
 
   return (
     <div className="px-5 pt-14 pb-8">

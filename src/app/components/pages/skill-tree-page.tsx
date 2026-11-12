@@ -207,7 +207,7 @@ function computeSkillTree(habits: any[], moods: any[], journalEntries: any[], an
 }
 
 const levelNames = ["Новичок", "Ученик", "Практик", "Мастер", "Эксперт", "Легенда"];
-const levelStars = ["", "", "", "", "", ""];
+const levelStars = ["", "ур. 1", "ур. 2", "ур. 3", "ур. 4", "ур. 5"];
 
 export function SkillTreePage() {
   const { habits, moods, journalEntries, anxietyEntries, pomodoroStats, tasks } = useApp();
@@ -306,7 +306,7 @@ export function SkillTreePage() {
                           {node.name}
                         </p>
                         <span style={{ fontSize: "0.6rem", color: node.color, fontWeight: 600 }}>
-                          {node.unlocked ? levelNames[node.level] : ""}
+                          {node.unlocked ? levelNames[node.level] : "закрыто"}
                         </span>
                       </div>
                       <p style={{ fontSize: "0.62rem", color: t.textFaint }}>{node.description}</p>
@@ -330,7 +330,7 @@ export function SkillTreePage() {
 
                     {/* Level stars */}
                     {node.unlocked && node.level > 0 && (
-                      <span style={{ fontSize: "0.6rem" }}>{levelStars[node.level]}</span>
+                      <span style={{ fontSize: "0.62rem", color: t.textMuted, fontWeight: 600 }}>{levelStars[node.level]}</span>
                     )}
                   </motion.div>
                 );
