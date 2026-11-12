@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useTheme } from "../theme";
 import { useApp } from "../app-context";
+import { consumeUsage, limitMessage } from "../../lib/usage-limits";
 import { ArrowLeft, Play, Pause, SkipForward, Volume2, VolumeX, RotateCcw, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router";
 import { projectId, publicAnonKey } from "../supabase-client";
@@ -282,6 +283,8 @@ async function fetchTTSAudio(text: string): Promise<string> {
     .replace(/\, /g,",...") // extend comma pauses  
     .replace(/— /g, "—...") // extend dash pauses
     .replace(/\? /g, "?..."); // extend question pauses
+
+  if (!consumeUsage("tts")) throw new Error(limitMessage.tts);
 
   const res = await fetch(`${API_BASE}/tts`, {
     method: "POST",

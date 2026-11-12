@@ -285,7 +285,6 @@ export function ProfilePage() {
     { label: "Задач выполнено", value: completedTasks, icon: CheckCircle2, color: t.sage },
     { label: "Привычек", value: habits.length, icon: Star, color: t.gold },
     { label: "Дней подряд", value: profile.streak, icon: Flame, color: t.terracotta },
-    { label: "Монет", value: profile.coins, icon: Coins, color: t.lavender },
   ];
 
   const handleSave = () => { saveQuestionnaire(formData); setShowQuestionnaire(false); };
@@ -518,7 +517,7 @@ export function ProfilePage() {
                 {/* Avatar circle */}
                 <motion.div
                   className="w-24 h-24 rounded-full shadow-sm mx-auto overflow-hidden relative"
-                  style={{ background: tier.gradient }}
+                  style={{ background: "#5B8A64" }}
                   whileTap={{ scale: 0.95 }}
                 >
                   {avatarUrl ? (
@@ -530,7 +529,7 @@ export function ProfilePage() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <span style={{ fontSize: "2.5rem", fontWeight: 800 }} className="text-white">{profile.level}</span>
+                      <span style={{ fontSize: "2.2rem", fontWeight: 700 }} className="text-white">{((questionnaire.filled && questionnaire.name) || profile.name || "?").trim().charAt(0).toUpperCase()}</span>
                     </div>
                   )}
                 </motion.div>
@@ -568,10 +567,6 @@ export function ProfilePage() {
               <h1 style={{ fontSize: "1.3rem", fontWeight: 700, color: t.text }}>
                 {questionnaire.filled && questionnaire.name ? questionnaire.name : profile.name}
               </h1>
-              <span className="inline-block px-3 py-1 rounded-full mt-1"
-                style={{ backgroundColor: tier.color + "18", color: tier.color, fontSize: "0.75rem", fontWeight: 600 }}>
-                <AppIcon icon={tier.icon} size={13} color={tier.color} className="inline-block mr-1" /> {tier.name}
-              </span>
             </motion.div>
 
             {/* Settings section */}
@@ -753,197 +748,6 @@ export function ProfilePage() {
                 </div>
               </motion.div>
             )}
-
-            {/* ═══ Plant Companion Widget ═══ */}
-            <motion.div className="rounded-xl p-4 mb-5 border overflow-hidden relative"
-              style={{ backgroundColor: t.card, borderColor: t.sage + "30" }}
-              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.09 }}>
-              <div className="flex items-start gap-4">
-                {/* Plant visual */}
-                <motion.div
-                  className="w-20 h-20 rounded-xl flex items-center justify-center shrink-0 relative"
-                  style={{ background: `${t.sage}15`, border: `1px solid ${t.sage}20` }}
-                  animate={{ y: [0, -3, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  <span style={{ fontSize: "2.5rem" }}>
-                    {(() => {
-                      const gp = plantState.growthPoints;
-                      if (gp >= 200) return "";
-                      if (gp >= 150) return "";
-                      if (gp >= 100) return "";
-                      if (gp >= 70) return "";
-                      if (gp >= 40) return "";
-                      if (gp >= 15) return "";
-                      return "";
-                    })()}
-                  </span>
-                  {plantState.butterflies > 0 && (
-                    <motion.span
-                      className="absolute -top-1 -right-1"
-                      style={{ fontSize: "0.8rem" }}
-                      animate={{ y: [0, -3, 0], x: [0, 2, 0] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    ><AppIcon icon="🦋" size={20} /></motion.span>
-                  )}
-                </motion.div>
-
-                {/* Plant info */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span style={{ fontSize: "0.9rem", fontWeight: 700, color: t.text }}>{plantState.name}</span>
-                    <span className="px-2 py-0.5 rounded-full" style={{ fontSize: "0.6rem", fontWeight: 600, backgroundColor: t.sage + "18", color: t.sage }}>
-                      {plantState.growthPoints} GP
-                    </span>
-                  </div>
-
-                  {/* Health bar */}
-                  <div className="mb-1.5">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <span style={{ fontSize: "0.6rem", color: t.textMuted }}>Здоровье</span>
-                      <span style={{ fontSize: "0.6rem", color: plantState.health > 50 ? t.sage : t.terracotta }}>{plantState.health}%</span>
-                    </div>
-                    <div className="w-full rounded-full h-1.5" style={{ backgroundColor: t.border }}>
-                      <motion.div className="h-1.5 rounded-full" style={{ backgroundColor: plantState.health > 50 ? "#8DB596" : plantState.health > 25 ? "#C4A86C" : "#C4876C" }}
-                        animate={{ width: `${plantState.health}%` }} transition={{ duration: 0.5 }} />
-                    </div>
-                  </div>
-
-                  {/* Water bar */}
-                  <div className="mb-1.5">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <span style={{ fontSize: "0.6rem", color: t.textMuted }}>Вода</span>
-                      <span style={{ fontSize: "0.6rem", color: "#7EA8BE" }}>{plantState.waterLevel}%</span>
-                    </div>
-                    <div className="w-full rounded-full h-1.5" style={{ backgroundColor: t.border }}>
-                      <motion.div className="h-1.5 rounded-full" style={{ backgroundColor: "#7EA8BE" }}
-                        animate={{ width: `${plantState.waterLevel}%` }} transition={{ duration: 0.5 }} />
-                    </div>
-                  </div>
-
-                  {/* Happiness bar */}
-                  <div>
-                    <div className="flex items-center justify-between mb-0.5">
-                      <span style={{ fontSize: "0.6rem", color: t.textMuted }}>Счастье</span>
-                      <span style={{ fontSize: "0.6rem", color: "#B88FA7" }}>{plantState.happiness}%</span>
-                    </div>
-                    <div className="w-full rounded-full h-1.5" style={{ backgroundColor: t.border }}>
-                      <motion.div className="h-1.5 rounded-full" style={{ backgroundColor: "#B88FA7" }}
-                        animate={{ width: `${plantState.happiness}%` }} transition={{ duration: 0.5 }} />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action buttons */}
-              <div className="flex gap-2 mt-3">
-                <motion.button
-                  className="flex-1 py-2 rounded-xl border flex items-center justify-center gap-1.5"
-                  style={{ backgroundColor: "#7EA8BE12", borderColor: "#7EA8BE30" }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={waterPlant}
-                >
-                  <Droplets className="w-3.5 h-3.5" style={{ color: "#7EA8BE" }} />
-                  <span style={{ fontSize: "0.72rem", fontWeight: 600, color: "#7EA8BE" }}>Полить</span>
-                </motion.button>
-                <motion.button
-                  className="flex-1 py-2 rounded-xl border flex items-center justify-center gap-1.5"
-                  style={{ backgroundColor: "#B88FA712", borderColor: "#B88FA730" }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={interactPlant}
-                >
-                  <Heart className="w-3.5 h-3.5" style={{ color: "#B88FA7" }} />
-                  <span style={{ fontSize: "0.72rem", fontWeight: 600, color: "#B88FA7" }}>Погладить</span>
-                </motion.button>
-              </div>
-
-              {/* Plant age */}
-              {plantState.createdAt && (
-                <p style={{ fontSize: "0.6rem", color: t.textFaint, textAlign: "center", marginTop: 6 }}>
-                  С вами {Math.max(1, Math.round((Date.now() - new Date(plantState.createdAt + "T12:00:00").getTime()) / 86400000))} {
-                    (() => {
-                      const d = Math.max(1, Math.round((Date.now() - new Date(plantState.createdAt + "T12:00:00").getTime()) / 86400000));
-                      if (d % 10 === 1 && d % 100 !== 11) return "день";
-                      if ([2,3,4].includes(d % 10) && ![12,13,14].includes(d % 100)) return "дня";
-                      return "дней";
-                    })()
-                  } {plantState.totalInteractions > 0 && `· ${plantState.totalInteractions} взаимодействий`}
-                </p>
-              )}
-            </motion.div>
-
-            {/* XP bar */}
-            <GlassPanel darkMode={darkMode} color={t.sage} className="rounded-xl p-4 mb-5"
-              style={{}}>
-              <div className="flex items-center justify-between mb-2">
-                <span style={{ fontSize: "0.8rem", fontWeight: 500, color: t.textMuted }}>Уровень {profile.level} → {profile.level + 1}</span>
-                <span style={{ fontSize: "0.8rem", fontWeight: 600, color: t.sage }}>{profile.xp}/{profile.xpToNext} XP</span>
-              </div>
-              <div className="w-full rounded-full h-3" style={{ backgroundColor: darkMode ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)" }}>
-                <motion.div className="h-3 rounded-full" style={{ background: "#8DB596" }}
-                  initial={{ width: 0 }} animate={{ width: `${levelProgress}%` }} transition={{ delay: 0.3, duration: 1 }} />
-              </div>
-              <p style={{ fontSize: "0.7rem", color: t.textFaint, marginTop: 6 }}>Ещё {profile.xpToNext - profile.xp} XP — вы почти у цели!</p>
-            </GlassPanel>
-
-            {/* Tier roadmap */}
-            <GlassPanel darkMode={darkMode} color={tier.color} className="rounded-xl p-4 mb-5">
-              <div className="flex items-center gap-2 mb-3">
-                <AppIcon icon={tier.icon} size={18} color={tier.color} />
-                <span style={{ fontSize: "0.85rem", fontWeight: 600, color: t.text }}>Путь роста</span>
-                <span className="ml-auto px-2 py-0.5 rounded-full" style={{ fontSize: "0.65rem", fontWeight: 600, backgroundColor: tier.color + "18", color: tier.color }}>
-                  {tier.name}
-                </span>
-              </div>
-              <div className="flex items-center gap-0.5 overflow-x-auto pb-2 -mx-1 px-1">
-                {allTiers.map((tr, i) => {
-                  const isReached = i <= currentTierIndex;
-                  const isCurrent = i === currentTierIndex;
-                  const nextTier = allTiers[i + 1];
-                  const tierProgress = isCurrent && nextTier
-                    ? Math.min(((profile.level - tr.minLevel) / (nextTier.minLevel - tr.minLevel)) * 100, 100)
-                    : isReached ? 100 : 0;
-
-                  return (
-                    <div key={tr.name} className="flex flex-col items-center shrink-0" style={{ width: 32 }}>
-                      <motion.div
-                        className="w-7 h-7 rounded-full flex items-center justify-center mb-1 relative"
-                        style={{
-                          backgroundColor: isReached ? tr.color + "25" : t.bgSecondary,
-                          border: isCurrent ? `2px solid ${tr.color}` : `1px solid ${isReached ? tr.color + "40" : t.border}`,
-                        }}
-                        animate={isCurrent ? { scale: [1, 1.1, 1] } : {}}
-                        transition={{ duration: 2, repeat: Infinity }}
-                      >
-                        <span style={{ fontSize: "0.7rem", opacity: isReached ? 1 : 0.4 }}><AppIcon icon={tr.icon} size={12} color={isReached ? tr.color : undefined} /></span>
-                      </motion.div>
-                      <span style={{
-                        fontSize: "0.45rem",
-                        fontWeight: isCurrent ? 700 : 500,
-                        color: isCurrent ? tr.color : isReached ? t.textMuted : t.textFaint,
-                        textAlign: "center",
-                        lineHeight: 1.1,
-                      }}>
-                        {tr.minLevel}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              {allTiers[currentTierIndex + 1] && (
-                <p style={{ fontSize: "0.68rem", color: t.textMuted, marginTop: 4, textAlign: "center" }}>
-                  До «{allTiers[currentTierIndex + 1].name}» {allTiers[currentTierIndex + 1].icon} — ещё {allTiers[currentTierIndex + 1].minLevel - profile.level} {
-                    (() => {
-                      const n = allTiers[currentTierIndex + 1].minLevel - profile.level;
-                      if (n % 10 === 1 && n % 100 !== 11) return "уровень";
-                      if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "уровня";
-                      return "уровней";
-                    })()
-                  }
-                </p>
-              )}
-            </GlassPanel>
-
             {/* Stats grid */}
             <div className="grid grid-cols-2 gap-3 mb-6">
               {stats.map((stat, i) => (
@@ -957,57 +761,6 @@ export function ProfilePage() {
                 </GlassPanel>
               ))}
             </div>
-
-            {/* Soft Achievements - care-focused */}
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-              <div className="flex items-center justify-between mb-4">
-                <span style={{ fontSize: "0.95rem", fontWeight: 600, color: t.text }}>Достижения заботы</span>
-                <span className="px-2.5 py-1 rounded-full" style={{ fontSize: "0.75rem", fontWeight: 600, backgroundColor: t.lavender + "18", color: t.lavender }}>
-                  {softAchievements.filter((a) => a.unlocked).length}/{softAchievements.length}
-                </span>
-              </div>
-              <p style={{ fontSize: "0.72rem", color: t.textMuted, marginBottom: 10, fontStyle: "italic" }}>
-                Не за продуктивность, а за заботу о себе
-              </p>
-              <div className="grid grid-cols-2 gap-3">
-                {softAchievements.map((ach, i) => {
-                  const catColors: Record<string, string> = {
-                    care: "#B88FA7", growth: "#8DB596", courage: "#C4876C", connection: "#7EA8BE", awareness: "#9B8EC4",
-                  };
-                  const catLabels: Record<string, string> = {
-                    care: "Забота", growth: "Рост", courage: "Смелость", connection: "Связь", awareness: "Осознанность",
-                  };
-                  const color = catColors[ach.category] || t.textFaint;
-                  return (
-                    <motion.div key={ach.id} className="rounded-xl p-3.5 border"
-                      style={{
-                        backgroundColor: ach.unlocked ? color + "10" : t.bgSecondary,
-                        borderColor: ach.unlocked ? color + "25" : t.border,
-                        opacity: ach.unlocked ? 1 : 0.55,
-                      }}
-                      initial={{ opacity: 0, y: 10 }} animate={{ opacity: ach.unlocked ? 1 : 0.55, y: 0 }} transition={{ delay: 0.4 + i * 0.03 }}>
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <AppIcon icon={ach.icon} size={20} color={ach.unlocked ? ach.color : undefined} />
-                        {!ach.unlocked && <Lock className="w-3 h-3" style={{ color: t.textFaint }} />}
-                      </div>
-                      <span style={{ fontSize: "0.78rem", fontWeight: 600, color: ach.unlocked ? t.text : t.textFaint }}>{ach.title}</span>
-                      <p style={{ fontSize: "0.62rem", lineHeight: 1.3, color: t.textMuted, marginTop: 2 }}>{ach.description}</p>
-                      <span className="inline-block mt-1.5 px-2 py-0.5 rounded-full"
-                        style={{ fontSize: "0.55rem", fontWeight: 600, backgroundColor: color + "15", color }}>
-                        {catLabels[ach.category]}
-                      </span>
-                      {ach.unlocked && ach.unlockedAt && (
-                        <span className="block" style={{ fontSize: "0.55rem", color, marginTop: 3 }}>
-                           {new Date(ach.unlockedAt).toLocaleDateString("ru-RU")}
-                        </span>
-                      )}
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </motion.div>
-
-
           </motion.div>
         )}
       </AnimatePresence>

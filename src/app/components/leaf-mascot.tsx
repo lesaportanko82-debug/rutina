@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, Send, Volume2, VolumeX, Trash2, ArrowRight } from "lucide-react";
 import { useTheme } from "./theme";
 import { useApp } from "./app-context";
+import { consumeUsage, limitMessage } from "../lib/usage-limits";
 import { useNavigate } from "react-router";
 import { projectId, publicAnonKey } from "./supabase-client";
 import { syncToServer } from "./supabase-sync";
@@ -660,6 +661,13 @@ export function LeafMascot() {
     setInput("");
     setIsTyping(true);
     setMascotMood("thinking");
+
+    if (!consumeUsage("chat")) {
+      setIsTyping(false);
+      setMascotMood("happy");
+      setMessages((prev) => [...prev, { id: "a" + Date.now(), role: "assistant", content: limitMessage.chat, timestamp: Date.now() }]);
+      return;
+    }
 
     try {
       const allMessages = [...messages, userMsg].map((m) => ({ role: m.role, content: m.content }));
